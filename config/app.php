@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Facade;
 return [
 
     /*
@@ -13,7 +14,12 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Englishing'),
+    'debug_blacklist' => [
+      '_COOKIE' => array_keys($_COOKIE),
+      '_SERVER' => array_keys($_SERVER),
+      '_ENV' => array_keys($_ENV),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -122,5 +128,9 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+     'aliases' => Facade::defaultAliases()->merge([
+        'Helpers' =>  App\Helpers\Helpers::class,
+        'Honeypots' => Modules\Utility\Libraries\MyConst\Honeypots::class,
+    ])->toArray(),
 
 ];

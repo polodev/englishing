@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'mobile',
     ];
 
     /**
@@ -56,5 +58,61 @@ class User extends Authenticatable
             ->explode(' ')
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
+    }
+
+    /**
+     * Check if the user has a specific role
+     *
+     * @param string $role
+     * @return bool
+     */
+    public function hasRole(string $role): bool
+    {
+        return $this->role === $role;
+    }
+
+    /**
+     * Check if the user has any of the given roles
+     *
+     * @param array|string $roles
+     * @return bool
+     */
+    public function hasAnyRole(array|string $roles): bool
+    {
+        if (is_string($roles)) {
+            return $this->hasRole($roles);
+        }
+
+        foreach ($roles as $role) {
+            if ($this->hasRole($role)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if the user has all of the given roles
+     *
+     * @param array $roles
+     * @return bool
+     */
+    public function hasAllRoles(array $roles): bool
+    {
+        // Since our implementation only supports a single role per user,
+        // this will only return true if there's exactly one role in the array
+        // and the user has that role
+        return count($roles) === 1 && $this->hasRole($roles[0]);
+    }
+
+    /**
+     * Check if the user is an admin
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->hasRole('admin');
     }
 }

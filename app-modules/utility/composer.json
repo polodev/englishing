@@ -1,0 +1,24 @@
+{
+	"name": "modules/utility",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\Utility\\": "src/",
+			"Modules\\Utility\\Tests\\": "tests/",
+			"Modules\\Utility\\Database\\Factories\\": "database/factories/",
+			"Modules\\Utility\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\Utility\\Providers\\UtilityServiceProvider"
+			]
+		}
+	}
+}
