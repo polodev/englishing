@@ -36,10 +36,28 @@ new #[Layout('components.layouts.auth')] class extends Component {
 }; ?>
 
 <div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Create an account')" :description="__('Enter your details below to create your account')" />
+    <!-- Englishing Logo -->
+    <x-englishing-logo>
+        {{ __('Create an account') }}
+    </x-englishing-logo>
 
     <!-- Session Status -->
     <x-auth-session-status class="text-center" :status="session('status')" />
+    
+    <!-- Google Login Button -->
+    <x-google-button>
+        {{ __('Sign up with Google') }}
+    </x-google-button>
+    
+    <!-- Divider -->
+    <div class="relative my-2">
+        <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">{{ __('Or continue with email') }}</span>
+        </div>
+    </div>
 
     <form wire:submit="register" class="flex flex-col gap-6">
         <!-- Name -->

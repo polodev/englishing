@@ -12,6 +12,7 @@
         "php": "^8.2",
         "internachi/modular": "^2.3",
         "laravel/framework": "^12.0",
+        "laravel/socialite": "^5.18",
         "laravel/telescope": "^5.6",
         "laravel/tinker": "^2.10.1",
         "livewire/flux": "^2.0",

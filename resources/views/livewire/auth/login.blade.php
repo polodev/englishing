@@ -74,10 +74,28 @@ new #[Layout('components.layouts.auth')] class extends Component {
 }; ?>
 
 <div class="flex flex-col gap-6">
-    <x-auth-header :title="__('Log in to your account')" :description="__('Enter your email and password below to log in')" />
+    <!-- Englishing Logo -->
+    <x-englishing-logo>
+        {{ __('Log in to your account') }}
+    </x-englishing-logo>
 
     <!-- Session Status -->
     <x-auth-session-status class="text-center" :status="session('status')" />
+    
+    <!-- Google Login Button -->
+    <x-google-button>
+        {{ __('Sign in with Google') }}
+    </x-google-button>
+    
+    <!-- Divider -->
+    <div class="relative my-2">
+        <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">{{ __('Or continue with email') }}</span>
+        </div>
+    </div>
 
     <form wire:submit="login" class="flex flex-col gap-6">
         <!-- Email Address -->
@@ -123,4 +141,6 @@ new #[Layout('components.layouts.auth')] class extends Component {
             <flux:link :href="route('register')" wire:navigate>{{ __('Sign up') }}</flux:link>
         </div>
     @endif
+
+
 </div>
