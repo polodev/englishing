@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "385843405c564a802f21904e620cb0ac",
+    "content-hash": "591d096afd33da548e938dac1018ec16",
     "packages": [
         {
             "name": "brick/math",
@@ -3065,6 +3065,38 @@
                 }
             ],
             "time": "2025-02-26T06:38:01+00:00"
+        },
+        {
+            "name": "modules/locale",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/locale",
+                "reference": "b9967fcf8467519575ea3e14a7c88568b0b31770"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Locale\\Providers\\LocaleServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Locale\\": "src/",
+                    "Modules\\Locale\\Tests\\": "tests/",
+                    "Modules\\Locale\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Locale\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
         },
         {
             "name": "modules/ui-frontend",

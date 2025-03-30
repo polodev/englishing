@@ -16,6 +16,7 @@
         "livewire/flux": "^2.0",
         "livewire/volt": "^1.7.0",
         "mcamara/laravel-localization": "^2.3",
+        "modules/locale": "*",
         "modules/ui-frontend": "*",
         "modules/utility": "*"
     },

@@ -2,7 +2,6 @@
 
 namespace App\Helpers;
 
-use App\Helpers\Traits\RoleHelpers;
 
 /**
  * Main Helpers class that provides static utility methods
@@ -10,5 +9,6 @@ use App\Helpers\Traits\RoleHelpers;
  */
 class Helpers
 {
-    use RoleHelpers;
+    use \App\Helpers\Traits\RoleHelpers;
+    use \Modules\Locale\Libraries\HelperFunctionsLocaleTrait;
 }
