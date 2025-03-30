@@ -27,10 +27,7 @@
 </head>
 <body class="font-['Miriam_Libre'] antialiased h-full bg-gray-50 dark:bg-gray-900" x-data="{ darkMode: localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches), sidebarOpen: window.innerWidth >= 768 }">
     <div class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <x-ui-frontend::partials.header />
-
-        <!-- Navigation -->
+        <!-- Navigation (includes header) -->
         <x-ui-frontend::partials.nav />
 
         <!-- Main Content with Sidebar -->
