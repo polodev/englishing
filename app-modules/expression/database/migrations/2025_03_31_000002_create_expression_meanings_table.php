@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('words', function (Blueprint $table) {
+        Schema::create('expression_meanings', function (Blueprint $table) {
             $table->id();
-            $table->string('word');
-            $table->string('slug')->unique();
-            $table->string('phonetic')->nullable();
-            $table->string('part_of_speech')->nullable();
-            $table->string('source')->nullable();
+            $table->foreignId('expression_id')->constrained()->onDelete('cascade');
+            $table->text('meaning');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('words');
+        Schema::dropIfExists('expression_meanings');
     }
 };

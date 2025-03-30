@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('words', function (Blueprint $table) {
+        Schema::create('sentence_transliterations', function (Blueprint $table) {
             $table->id();
-            $table->string('word');
-            $table->string('slug')->unique();
-            $table->string('phonetic')->nullable();
-            $table->string('part_of_speech')->nullable();
-            $table->string('source')->nullable();
+            $table->foreignId('sentence_translation_id')->constrained()->onDelete('cascade');
+            $table->text('bn_transliteration')->nullable();
+            $table->text('hi_transliteration')->nullable();
+            $table->text('es_transliteration')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('words');
+        Schema::dropIfExists('sentence_transliterations');
     }
 };

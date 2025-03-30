@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('word_id')->constrained()->onDelete('cascade');
             $table->text('meaning');
             $table->string('slug')->unique();
+            $table->string('source')->nullable();
             $table->timestamps();
         });
     }

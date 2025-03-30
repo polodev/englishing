@@ -10,16 +10,21 @@ word_connections(word_id_1, word_id_2, type[synonyms, antonyms])
 word can have multiple meanings
 word has only one pronunciation
 meaning can have only one translations
-meaning can have only one transliteration
+translation can have only one transliteration
 word_connections is a pivot table
 ````
 
 # sentence
-sentences(id, sentence, sentence_250, slug)  # sentence itself a meaning
+sentences(id, sentence, slug, source)  # sentence itself a meaning
 sentence_pronunciations (id, word_id, bn_pronunciation, hi_pronunciation, es_pronunciation)
 sentence_translations(id, sentence_id, bn_sentence, hi_sentence, es_sentence)  
 sentence_transliterations(id, sentence_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
 
+```relation
+sentence can have only one translations
+sentence can have only one pronunciation
+sentence_translations can have only one transliteration
+```
 
 # expression
 expressions(id, expression, type, slug)  
@@ -28,6 +33,14 @@ expression_pronunciations (id, word_id, bn_pronunciation, hi_pronunciation, es_p
 expression_meaning_translations(id, expression_meaning_id, bn_meaning, hi_meaning, es_meaning)  
 expression_meaning_transliterations(id, expression_meaning_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
 expression_connections(expression_id_1, expression_id_2, type[synonyms, antonyms])  
+
+```relation
+expression can have multiple meanings
+expression has only one pronunciation
+meaning can have only one translations
+translation can have only one transliteration
+expression_connections is a pivot table
+````
 
 # articles
 series(id, user_id, title, content)  
