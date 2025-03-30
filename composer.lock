@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d773c2fc5e1f054220518f1d5458b877",
+    "content-hash": "a0c388f8daf87afe2bf6ed11c13bb3fb",
     "packages": [
         {
             "name": "brick/math",
@@ -3347,6 +3347,230 @@
             "time": "2025-02-26T06:38:01+00:00"
         },
         {
+            "name": "modules/article",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/article",
+                "reference": "46a544a4a83930ad6ef5cea1a069dc3dae0aadab"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Article\\Providers\\ArticleServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Article\\": "src/",
+                    "Modules\\Article\\Tests\\": "tests/",
+                    "Modules\\Article\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Article\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/article-conversation",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/article-conversation",
+                "reference": "48e279c8a2bb4444b470694f0f9dcac67c71e750"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\ArticleConversation\\Providers\\ArticleConversationServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\ArticleConversation\\": "src/",
+                    "Modules\\ArticleConversation\\Tests\\": "tests/",
+                    "Modules\\ArticleConversation\\Database\\Factories\\": "database/factories/",
+                    "Modules\\ArticleConversation\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/article-expression",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/article-expression",
+                "reference": "5700d495e0f72bb2a5e17342f6e0738097e72f36"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\ArticleExpression\\Providers\\ArticleExpressionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\ArticleExpression\\": "src/",
+                    "Modules\\ArticleExpression\\Tests\\": "tests/",
+                    "Modules\\ArticleExpression\\Database\\Factories\\": "database/factories/",
+                    "Modules\\ArticleExpression\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/article-sentence",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/article-sentence",
+                "reference": "a6984b9bea84d440ee50056d268f4a77684a7fd5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\ArticleSentence\\Providers\\ArticleSentenceServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\ArticleSentence\\": "src/",
+                    "Modules\\ArticleSentence\\Tests\\": "tests/",
+                    "Modules\\ArticleSentence\\Database\\Factories\\": "database/factories/",
+                    "Modules\\ArticleSentence\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/article-table",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/article-table",
+                "reference": "7ca31b15ecd107c0115070488b9f6d52482afb66"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\ArticleTable\\Providers\\ArticleTableServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\ArticleTable\\": "src/",
+                    "Modules\\ArticleTable\\Tests\\": "tests/",
+                    "Modules\\ArticleTable\\Database\\Factories\\": "database/factories/",
+                    "Modules\\ArticleTable\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/article-word",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/article-word",
+                "reference": "4ea8bdd238ec95ffb58612fd7168c848fb716928"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\ArticleWord\\Providers\\ArticleWordServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\ArticleWord\\": "src/",
+                    "Modules\\ArticleWord\\Tests\\": "tests/",
+                    "Modules\\ArticleWord\\Database\\Factories\\": "database/factories/",
+                    "Modules\\ArticleWord\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/expression",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/expression",
+                "reference": "3ab5321d2385603d06bbd04ecf79eb1c416d3cf3"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Expression\\Providers\\ExpressionServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Expression\\": "src/",
+                    "Modules\\Expression\\Tests\\": "tests/",
+                    "Modules\\Expression\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Expression\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "modules/locale",
             "version": "1.0",
             "dist": {
@@ -3368,6 +3592,38 @@
                     "Modules\\Locale\\Tests\\": "tests/",
                     "Modules\\Locale\\Database\\Factories\\": "database/factories/",
                     "Modules\\Locale\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/sentence",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/sentence",
+                "reference": "a2a1a44be26d3d3b0858f3e3055cfae0c6b54f64"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Sentence\\Providers\\SentenceServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Sentence\\": "src/",
+                    "Modules\\Sentence\\Tests\\": "tests/",
+                    "Modules\\Sentence\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Sentence\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [
@@ -3432,6 +3688,38 @@
                     "Modules\\Utility\\Tests\\": "tests/",
                     "Modules\\Utility\\Database\\Factories\\": "database/factories/",
                     "Modules\\Utility\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/word",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/word",
+                "reference": "7aa38610516e162ea1dffe3f00553cf9bd616c34"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Word\\Providers\\WordServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Word\\": "src/",
+                    "Modules\\Word\\Tests\\": "tests/",
+                    "Modules\\Word\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Word\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [

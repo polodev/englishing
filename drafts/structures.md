@@ -6,6 +6,14 @@ word_meaning_translations(id, word_meaning_id, bn_meaning, hi_meaning, es_meanin
 word_meaning_transliterations(id, word_meaning_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
 word_connections(word_id_1, word_id_2, type[synonyms, antonyms])  
 
+```relation
+word can have multiple meanings
+word has only one pronunciation
+meaning can have only one translations
+meaning can have only one transliteration
+word_connections is a pivot table
+````
+
 # sentence
 sentences(id, sentence, sentence_250, slug)  # sentence itself a meaning
 sentence_pronunciations (id, word_id, bn_pronunciation, hi_pronunciation, es_pronunciation)

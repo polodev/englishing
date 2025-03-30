@@ -19,9 +19,18 @@
         "livewire/livewire": "^3.6",
         "livewire/volt": "^1.7.0",
         "mcamara/laravel-localization": "^2.3",
+        "modules/article": "*",
+        "modules/article-conversation": "*",
+        "modules/article-expression": "*",
+        "modules/article-sentence": "*",
+        "modules/article-table": "*",
+        "modules/article-word": "*",
+        "modules/expression": "*",
         "modules/locale": "*",
+        "modules/sentence": "*",
         "modules/ui-frontend": "*",
         "modules/utility": "*",
+        "modules/word": "*",
         "opcodesio/log-viewer": "^3.15"
     },
     "require-dev": {
