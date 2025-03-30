@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\UiFrontend\Http\Controllers\AccountController;
+use Modules\UiFrontend\Http\Controllers\ExampleController;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 use Modules\UiFrontend\Http\Controllers\UiFrontendController;
 
@@ -24,14 +25,14 @@ Route::middleware(['web'])->group(function () {
       Route::get('/ui-frontends', [UiFrontendController::class, 'index'])->name('index');
 
       // Account Routes
-      Route::prefix('account')->name('account.')->group(function () {
-        Route::get('/dashboard', [AccountController::class, 'dashboard'])->name('dashboard');
-        Route::get('/profile', [AccountController::class, 'profile'])->name('profile');
-        Route::get('/bookmarks', [AccountController::class, 'bookmarks'])->name('bookmarks');
-        Route::get('/liked', [AccountController::class, 'liked'])->name('liked');
-        Route::get('/completed', [AccountController::class, 'completed'])->name('completed');
-        Route::get('/courses', [AccountController::class, 'courses'])->name('courses');
-        Route::get('/settings', [AccountController::class, 'settings'])->name('settings');
+      Route::prefix('example')->name('example.')->group(function () {
+        Route::get('/dashboard', [ExampleController::class, 'dashboard'])->name('dashboard');
+        Route::get('/profile', [ExampleController::class, 'profile'])->name('profile');
+        Route::get('/bookmarks', [ExampleController::class, 'bookmarks'])->name('bookmarks');
+        Route::get('/liked', [ExampleController::class, 'liked'])->name('liked');
+        Route::get('/completed', [ExampleController::class, 'completed'])->name('completed');
+        Route::get('/courses', [ExampleController::class, 'courses'])->name('courses');
+        Route::get('/settings', [ExampleController::class, 'settings'])->name('settings');
       });
     });
   });

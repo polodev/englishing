@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use Livewire\Livewire;  
 
 Route::group(['prefix' => LaravelLocalization::setLocale()], function(){
     Route::get('/', function () {
@@ -22,5 +23,10 @@ Route::group(['prefix' => LaravelLocalization::setLocale()], function(){
     });
 
     require __DIR__.'/auth.php';
+
+    Livewire::setUpdateRoute(function ($handle) {
+        return Route::post('/livewire/update', $handle);
+    });
+
 });
 

@@ -1,4 +1,13 @@
 import Alpine from 'alpinejs';
+import persist from '@alpinejs/persist';
+
+// Create a custom navigation plugin for Alpine.js
+Alpine.plugin(persist);
+
+// Add navigate function for Livewire compatibility
+Alpine.navigate = (url) => {
+    window.location.href = url;
+};
 
 window.Alpine = Alpine;
 
