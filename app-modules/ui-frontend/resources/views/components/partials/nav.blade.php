@@ -101,7 +101,13 @@
                             <div>
                                 <button @click="open = !open" class="flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" id="user-menu-button">
                                     <span class="sr-only">{{ __('Open user menu') }}</span>
-                                    <img class="h-8 w-8 rounded-full object-cover" src="{{ auth()->user()->profile_photo_url ?? asset('img/default-avatar.png') }}" alt="{{ auth()->user()->name }}">
+                                    @if(isset(auth()->user()->profile_photo_url))
+                                        <img class="h-8 w-8 rounded-full object-cover" src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }}">
+                                    @else
+                                        <div class="h-8 w-8 rounded-full flex items-center justify-center bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white text-sm font-medium">
+                                            {{ auth()->user()->initials() }}
+                                        </div>
+                                    @endif
                                 </button>
                             </div>
                             <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 focus:outline-none z-50" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">

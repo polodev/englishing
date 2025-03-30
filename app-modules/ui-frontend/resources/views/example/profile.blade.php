@@ -16,7 +16,13 @@
                         <div class="space-y-4">
                             <div class="flex items-center">
                                 <div class="flex-shrink-0">
-                                    <img class="h-16 w-16 rounded-full object-cover" src="{{ auth()->user()->profile_photo_url ?? asset('img/default-avatar.png') }}" alt="{{ auth()->user()->name ?? 'User' }}">
+                                    @if(isset(auth()->user()->profile_photo_url))
+                                        <img class="h-16 w-16 rounded-full object-cover" src="{{ auth()->user()->profile_photo_url }}" alt="{{ auth()->user()->name }}">
+                                    @else
+                                        <div class="h-16 w-16 rounded-full flex items-center justify-center bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white">
+                                            {{ auth()->user() ? auth()->user()->initials() : 'U' }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="ml-4">
                                     <div class="relative bg-gray-100 dark:bg-gray-600 py-2 px-3 border border-gray-300 dark:border-gray-500 rounded-md shadow-sm">
