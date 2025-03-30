@@ -24,12 +24,16 @@
     <!-- Styles -->
     @livewireStyles
     @stack('styles')
+    
+    <style>
+        [x-cloak] { display: none !important; }
+    </style>
 </head>
-<body class="font-['Miriam_Libre'] antialiased h-full bg-gray-100 dark:bg-gray-900" x-data="{ darkMode: localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) }">
+<body class="font-['Miriam_Libre'] antialiased h-full bg-gray-100 dark:bg-gray-900" x-data="{ 
+    darkMode: localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches), 
+    mobileMenuOpen: false
+}" :class="{ 'dark': darkMode }">
     <div class="min-h-screen flex flex-col">
-        <!-- Header -->
-        <x-ui-frontend::partials.header />
-        
         <!-- Navigation -->
         <x-ui-frontend::partials.nav />
         
