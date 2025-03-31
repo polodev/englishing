@@ -43,12 +43,17 @@ expression_connections is a pivot table
 ````
 
 # articles
-series(id, user_id, title, content)  
+series(id, user_id, title, slug, content)  
 series_translations(id, series_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
-sections(id, user_id, series_id, title, content)  
+sections(id, user_id, series_id, title, slug, content, display_order)  
 section_translations(id, section_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
-articles(id, user_id, series_id, section_id, type, title, content, excerpt, is_premium, scratchpad)  
+articles(id, user_id, series_id, section_id, type, title, slug, content, display_order, excerpt, is_premium, scratchpad)  
 article_translations(id, article_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content, bn_excerpt, hi_excerpt, es_excerpt)
+
+in article model make a helper function for getting title and link of associated article for same series with section. just an array having article id, title, slug
+like following
+
+
 
 # article-table
 article_tables(id, article_id, display_order, title, user_id, type)  

@@ -17,6 +17,20 @@ nav style. can be choose theme dark and light theme for tailwind. can change web
 
 flowbite could be an option. user avatar. when click upon avatar show dropdown menu like login, register, logout. profile dashboard
 
+```
+[
+    {
+        "id": 1,
+        "title": "title",
+        "slug": "slug",
+        "display_order": 1,
+        "section": "",
+        "series": "",
+        "is_current": true
+    },
+]
+```
+
 
 
 
