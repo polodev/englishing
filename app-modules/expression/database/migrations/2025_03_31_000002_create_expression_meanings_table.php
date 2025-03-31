@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('expression_meanings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('expression_id')->constrained()->onDelete('cascade');
+            $table->foreignId('expression_id');
             $table->text('meaning');
             $table->timestamps();
         });

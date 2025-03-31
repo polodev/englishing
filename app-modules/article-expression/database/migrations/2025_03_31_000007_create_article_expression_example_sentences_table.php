@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('article_expression_example_sentences', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_expression_set_list_id')->constrained()->onDelete('cascade');
+            $table->foreignId('article_expression_set_list_id');
             $table->text('sentence');
             $table->string('slug');
             $table->timestamps();

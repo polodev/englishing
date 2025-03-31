@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('article_word_meanings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_word_set_list_id')->constrained()->onDelete('cascade');
+            $table->foreignId('article_word_set_list_id');
             $table->text('meaning');
-            $table->integer('display_order')->nullable()->default(0);
             $table->timestamps();
         });
     }

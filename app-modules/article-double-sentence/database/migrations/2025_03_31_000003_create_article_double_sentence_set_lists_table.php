@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('article_double_sentence_set_lists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_double_sentence_set_id')->constrained()->onDelete('cascade');
+            $table->foreignId('article_double_sentence_set_id');
             $table->text('sentence_1');
             $table->string('sentence_1_slug');
             $table->text('sentence_2');

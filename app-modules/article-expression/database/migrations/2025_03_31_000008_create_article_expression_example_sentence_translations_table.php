@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('article_expression_example_sentence_translations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_expression_example_sentence_id')->constrained()->onDelete('cascade');
+            $table->foreignId('article_expression_example_sentence_id');
             $table->text('bn_sentence')->nullable();
             $table->text('hi_sentence')->nullable();
             $table->text('es_sentence')->nullable();

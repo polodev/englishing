@@ -1,3 +1,7 @@
+remove all fillable property from all models and add 
+`protected $guarded = []`. easy to add more field 
+
+
 - setup internachi
 - setup homepage 
 

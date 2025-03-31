@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('article_conversation_messages', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_conversation_id')->constrained()->onDelete('cascade');
+            $table->foreignId('article_conversation_id');
             $table->string('speaker'); // speaker_1, speaker_2, speaker_3
             $table->text('message');
             $table->string('slug');

@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('expression_connections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('expression_id_1')->constrained('expressions')->onDelete('cascade');
-            $table->foreignId('expression_id_2')->constrained('expressions')->onDelete('cascade');
+            $table->foreignId('expression_id_1');
+            $table->foreignId('expression_id_2');
             $table->string('type'); // 'synonyms', 'antonyms'
             $table->timestamps();
             
-            // Ensure unique combinations
-            $table->unique(['expression_id_1', 'expression_id_2', 'type']);
+            // Ensure unique combinations with a shorter index name
+            $table->unique(['expression_id_1', 'expression_id_2', 'type'], 'expr_connections_unique');
         });
     }
 

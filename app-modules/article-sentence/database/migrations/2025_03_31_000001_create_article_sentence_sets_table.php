@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('article_sentence_sets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('article_id')->nullable();
             $table->integer('display_order')->nullable()->default(0);
             $table->string('title')->nullable();
             $table->text('content')->nullable();
+            $table->text('static_content_1')->nullable();
+            $table->text('static_content_2')->nullable();
             $table->timestamps();
         });
     }

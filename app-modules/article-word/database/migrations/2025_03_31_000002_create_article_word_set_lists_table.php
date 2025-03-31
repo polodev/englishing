@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('article_word_set_lists', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_word_set_id')->constrained()->onDelete('cascade');
+            $table->foreignId('article_word_set_id');
             $table->integer('display_order')->nullable()->default(0);
             $table->string('word');
             $table->string('slug');
-            $table->string('position')->nullable();
             $table->string('phonetic')->nullable();
+            $table->string('part_of_speech')->nullable();
+            $table->text('static_content_1')->nullable();
+            $table->text('static_content_2')->nullable();
             $table->string('parts_of_speech')->nullable();
             $table->timestamps();
         });

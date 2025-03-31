@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('sentence_pronunciations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('sentence_id')->constrained()->onDelete('cascade');
+            $table->foreignId('sentence_id');
             $table->string('bn_pronunciation')->nullable();
             $table->string('hi_pronunciation')->nullable();
             $table->string('es_pronunciation')->nullable();

@@ -29,6 +29,7 @@
         "modules/expression": "*",
         "modules/locale": "*",
         "modules/sentence": "*",
+        "modules/tag": "*",
         "modules/ui-frontend": "*",
         "modules/utility": "*",
         "modules/word": "*",

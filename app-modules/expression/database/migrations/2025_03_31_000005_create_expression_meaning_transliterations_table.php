@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('expression_meaning_transliterations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('expression_meaning_translation_id')->constrained()->onDelete('cascade');
+            $table->foreignId('expression_meaning_translation_id');
             $table->text('bn_transliteration')->nullable();
             $table->text('hi_transliteration')->nullable();
             $table->text('es_transliteration')->nullable();
