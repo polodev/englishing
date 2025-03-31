@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Theme</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        [x-cloak] { display: none !important; }
+
+        .sidebar-transition {
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-gray-100" x-data="{ sidebarOpen: true, mobileMenuOpen: false }">
+    <!-- Mobile Navigation -->
+    <div x-cloak x-show="mobileMenuOpen" class="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 lg:hidden"
+         x-transition:enter="transition-opacity ease-linear duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-linear duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+        <div class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg">
+            <div class="flex items-center justify-between p-4 border-b">
+                <div class="flex items-center">
+                    <img src="https://via.placeholder.com/40" alt="Logo" class="w-8 h-8 mr-2">
+                    <span class="text-xl font-semibold">Dashboard</span>
+                </div>
+                <button @click="mobileMenuOpen = false" class="p-2 text-gray-500 rounded-md hover:bg-gray-100">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md bg-gray-100">
+                            <i class="fas fa-home w-6"></i>
+                            <span class="ml-3">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
+                            <i class="fas fa-chart-bar w-6"></i>
+                            <span class="ml-3">Analytics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
+                            <i class="fas fa-users w-6"></i>
+                            <span class="ml-3">Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
+                            <i class="fas fa-box w-6"></i>
+                            <span class="ml-3">Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
+                            <i class="fas fa-cog w-6"></i>
+                            <span class="ml-3">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Desktop Sidebar -->
+    <aside :class="{'w-64': sidebarOpen, 'w-16': !sidebarOpen}"
+           class="fixed inset-y-0 left-0 z-40 bg-white shadow-lg sidebar-transition hidden lg:block">
+        <div class="flex flex-col h-full">
+            <div class="flex items-center justify-between p-4 border-b">
+                <div class="flex items-center" :class="{'justify-center w-full': !sidebarOpen}">
+                    <img src="https://via.placeholder.com/40" alt="Logo" class="w-8 h-8" :class="{'mr-2': sidebarOpen}">
+                    <span class="text-xl font-semibold" x-show="sidebarOpen">Dashboard</span>
+                </div>
+                <button @click="sidebarOpen = !sidebarOpen" class="p-1 text-gray-500 rounded-md hover:bg-gray-100" x-show="sidebarOpen">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <nav class="flex-1 p-4">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md bg-gray-100" :class="{'justify-center': !sidebarOpen}">
+                            <i class="fas fa-home" :class="{'w-6': sidebarOpen}"></i>
+                            <span class="ml-3" x-show="sidebarOpen">Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100" :class="{'justify-center': !sidebarOpen}">
+                            <i class="fas fa-chart-bar" :class="{'w-6': sidebarOpen}"></i>
+                            <span class="ml-3" x-show="sidebarOpen">Analytics</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100" :class="{'justify-center': !sidebarOpen}">
+                            <i class="fas fa-users" :class="{'w-6': sidebarOpen}"></i>
+                            <span class="ml-3" x-show="sidebarOpen">Customers</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100" :class="{'justify-center': !sidebarOpen}">
+                            <i class="fas fa-box" :class="{'w-6': sidebarOpen}"></i>
+                            <span class="ml-3" x-show="sidebarOpen">Products</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100" :class="{'justify-center': !sidebarOpen}">
+                            <i class="fas fa-cog" :class="{'w-6': sidebarOpen}"></i>
+                            <span class="ml-3" x-show="sidebarOpen">Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="p-4 border-t" x-show="sidebarOpen">
+                <div class="flex items-center">
+                    <img src="https://via.placeholder.com/40" alt="User" class="w-8 h-8 rounded-full mr-2">
+                    <div>
+                        <p class="text-sm font-medium">John Doe</p>
+                        <p class="text-xs text-gray-500">Admin</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-4 border-t text-center" x-show="!sidebarOpen">
+                <img src="https://via.placeholder.com/40" alt="User" class="w-8 h-8 rounded-full mx-auto">
+            </div>
+        </div>
+    </aside>
+
+    <!-- Topbar -->
+    <header class="fixed top-0 right-0 z-30 flex items-center justify-between w-full h-16 px-4 bg-white shadow-sm" :class="{'lg:pl-64': sidebarOpen, 'lg:pl-16': !sidebarOpen}">
+        <div class="flex items-center lg:hidden">
+            <button @click="mobileMenuOpen = true" class="p-2 text-gray-500 rounded-md hover:bg-gray-100">
+                <i class="fas fa-bars"></i>
+            </button>
+            <img src="https://via.placeholder.com/40" alt="Logo" class="w-8 h-8 ml-2">
+            <span class="ml-2 text-xl font-semibold">Dashboard</span>
+        </div>
+        <div class="hidden lg:block">
+            <button @click="sidebarOpen = !sidebarOpen" class="p-2 text-gray-500 rounded-md hover:bg-gray-100" x-show="!sidebarOpen">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="flex items-center ml-auto">
+            <div class="relative hidden md:block">
+                <input type="text" placeholder="Search..." class="w-64 py-2 pl-10 pr-4 text-sm bg-gray-100 border border-transparent rounded-md focus:outline-none focus:border-gray-300">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <i class="fas fa-search text-gray-400"></i>
+                </div>
+            </div>
+            <button class="p-2 ml-4 text-gray-500 rounded-md hover:bg-gray-100">
+                <i class="fas fa-bell"></i>
+            </button>
+            <button class="p-2 ml-2 text-gray-500 rounded-md hover:bg-gray-100">
+                <i class="fas fa-envelope"></i>
+            </button>
+            <div class="relative ml-4" x-data="{profileOpen: false}">
+                <button @click="profileOpen = !profileOpen" class="flex items-center">
+                    <img src="https://via.placeholder.com/40" alt="User" class="w-8 h-8 rounded-full">
+                    <span class="ml-2 text-sm font-medium hidden md:block">John Doe</span>
+                    <i class="ml-1 fas fa-chevron-down text-xs hidden md:block"></i>
+                </button>
+                <div x-cloak x-show="profileOpen" @click.away="profileOpen = false" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-user mr-2"></i> Profile
+                    </a>
+                    <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-16 transition-all duration-300" :class="{'lg:pl-64': sidebarOpen, 'lg:pl-16': !sidebarOpen}">
+        <!-- Empty main content as requested -->
+        <h3>lorem title</h3>
+        <p>lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quod.</p>
+    </main>
+</body>
+</html>

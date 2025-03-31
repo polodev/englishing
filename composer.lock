@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "316e1ae2d8da277ca1b6772b7944cec3",
+    "content-hash": "618b077b06b07a327a39c9390a89ac00",
     "packages": [
         {
             "name": "brick/math",
@@ -3688,6 +3688,38 @@
                     "Modules\\Tag\\Tests\\": "tests/",
                     "Modules\\Tag\\Database\\Factories\\": "database/factories/",
                     "Modules\\Tag\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/ui-backend",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/ui-backend",
+                "reference": "0a8677ec9431e53d275b94426d42fe427001136b"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\UiBackend\\Providers\\UiBackendServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\UiBackend\\": "src/",
+                    "Modules\\UiBackend\\Tests\\": "tests/",
+                    "Modules\\UiBackend\\Database\\Factories\\": "database/factories/",
+                    "Modules\\UiBackend\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [

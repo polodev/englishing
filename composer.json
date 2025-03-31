@@ -30,6 +30,7 @@
         "modules/locale": "*",
         "modules/sentence": "*",
         "modules/tag": "*",
+        "modules/ui-backend": "*",
         "modules/ui-frontend": "*",
         "modules/utility": "*",
         "modules/word": "*",

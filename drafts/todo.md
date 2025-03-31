@@ -1,3 +1,27 @@
+ui-frontend module is for frontend layout. 
+```
+<x-ui-frontend::layout>
+    <x-slot name="header">
+        <h1 class="text-2xl font-bold">{{ __('Home') }}</h1>
+    </x-slot>
+    Hello world from content block
+</x-ui-frontend::layout>
+
+```
+
+now I want to add a layout for admin panel. made a modules name ui-backend
+want to access using <x-ui-backend::layout></x-ui-backend::layout>
+
+
+what I expect. sidebar menu toggleable. use flowbite like ui-frontend. please keep 
+top of the sidebar user profile link, avatar/initials, logout
+then sidebar menu item. now keep just # link. keep fixed layout. please use alpinejs, tailwindjs. only lighttheme. no need to be added darktheme in dashboard. you can mimic example image
+
+
+
+
+
+
 remove all fillable property from all models and add 
 `protected $guarded = []`. easy to add more field 
 
@@ -22,6 +46,10 @@ nav style. can be choose theme dark and light theme for tailwind. can change web
 flowbite could be an option. user avatar. when click upon avatar show dropdown menu like login, register, logout. profile dashboard
 
 ```
+
+
+
+
 [
     {
         "id": 1,

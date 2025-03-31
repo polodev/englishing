@@ -21,14 +21,6 @@ class RoleServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // @role('admin')
-        Blade::directive('role', function ($role) {
-            return "<?php if(auth()->check() && auth()->user()->hasRole({$role})): ?>";
-        });
-
-        Blade::directive('endrole', function () {
-            return "<?php endif; ?>";
-        });
 
         // @hasrole('admin')
         Blade::directive('hasrole', function ($role) {
