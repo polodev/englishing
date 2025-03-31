@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\User;
 
-class Section extends Model
+class Course extends Model
 {
     use HasFactory;
 
@@ -20,15 +20,13 @@ class Section extends Model
      */
     protected $fillable = [
         'user_id',
-        'series_id',
         'title',
         'slug',
         'content',
-        'display_order',
     ];
 
     /**
-     * Get the user that owns the section.
+     * Get the user that owns the course.
      */
     public function user(): BelongsTo
     {
@@ -36,23 +34,15 @@ class Section extends Model
     }
 
     /**
-     * Get the series that owns the section.
-     */
-    public function series(): BelongsTo
-    {
-        return $this->belongsTo(Series::class);
-    }
-
-    /**
-     * Get the translation for the section.
+     * Get the translation for the course.
      */
     public function translation(): HasOne
     {
-        return $this->hasOne(SectionTranslation::class);
+        return $this->hasOne(CourseTranslation::class);
     }
 
     /**
-     * Get the articles for the section.
+     * Get the articles for the course.
      */
     public function articles(): HasMany
     {

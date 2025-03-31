@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class SectionTranslation extends Model
+class CourseTranslation extends Model
 {
     use HasFactory;
 
@@ -16,7 +16,7 @@ class SectionTranslation extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'section_id',
+        'course_id',
         'bn_title',
         'hi_title',
         'es_title',
@@ -26,10 +26,10 @@ class SectionTranslation extends Model
     ];
 
     /**
-     * Get the section that owns the translation.
+     * Get the course that owns the translation.
      */
-    public function section(): BelongsTo
+    public function course(): BelongsTo
     {
-        return $this->belongsTo(Section::class);
+        return $this->belongsTo(Course::class);
     }
 }

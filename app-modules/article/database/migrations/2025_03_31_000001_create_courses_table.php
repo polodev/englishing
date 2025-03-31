@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sections', function (Blueprint $table) {
+        Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->foreignId('series_id');
             $table->string('title');
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->text('content')->nullable();
-            $table->integer('display_order')->default(0);
             $table->timestamps();
-            
-            // Create a unique index on series_id and slug
-            $table->unique(['series_id', 'slug']);
         });
     }
 
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sections');
+        Schema::dropIfExists('courses');
     }
 };
