@@ -19,8 +19,7 @@ class Article extends Model
      */
     protected $fillable = [
         'user_id',
-        'series_id',
-        'section_id',
+        'course_id',
         'type',
         'title',
         'slug',
@@ -49,19 +48,11 @@ class Article extends Model
     }
 
     /**
-     * Get the series that owns the article.
+     * Get the course that owns the article.
      */
-    public function series(): BelongsTo
+    public function course(): BelongsTo
     {
-        return $this->belongsTo(Series::class)->withDefault();
-    }
-
-    /**
-     * Get the section that owns the article.
-     */
-    public function section(): BelongsTo
-    {
-        return $this->belongsTo(Section::class)->withDefault();
+        return $this->belongsTo(Course::class)->withDefault();
     }
 
     /**
@@ -73,51 +64,38 @@ class Article extends Model
     }
 
     /**
-     * Get associated articles in the same series and section.
-     * Returns an array of articles with id, title, slug, display_order, section, series, and is_current flag.
-     * Only returns results if the article is under a series.
+     * Get associated articles in the same course.
+     * Returns an array of articles with id, title, slug, display_order, translation titles, and is_current flag.
+     * Only returns results if the article is under a course.
      *
      * @return array
      */
     public function getAssociatedArticles(): array
     {
-        // If this article isn't associated with a series, return empty array
-        if (!$this->series_id) {
+        // If this article isn't associated with a course, return empty array
+        if (!$this->course_id) {
             return [];
         }
 
         $query = self::where('id', '!=', $this->id)
-            ->where('series_id', $this->series_id);
-
-
+            ->where('course_id', $this->course_id);
 
         $articles = $query->orderBy('display_order')
-            ->with(['section:id,title', 'series:id,title'])
-            ->select('id', 'title', 'slug', 'display_order', 'section_id', 'series_id')
+            ->with(['translation'])
+            ->select('id', 'title', 'slug', 'display_order')
             ->get();
 
         // Format the results to match the expected output
         $formattedArticles = $articles->map(function($article) {
-            $sectionTitle = '';
-            $seriesTitle = '';
-
-            // Get section title if section_id exists
-            if ($article->section_id && $article->section) {
-                $sectionTitle = $article->section->title;
-            }
-
-            // Get series title if series_id exists
-            if ($article->series_id && $article->series) {
-                $seriesTitle = $article->series->title;
-            }
 
             return [
                 'id' => $article->id,
                 'title' => $article->title,
+                'bn_title' => $article->translation?->bn_title,
+                'hi_title' => $article->translation?->hi_title,
+                'es_title' => $article->translation?->es_title,
                 'slug' => $article->slug,
                 'display_order' => $article->display_order,
-                'section' => $sectionTitle,
-                'series' => $seriesTitle,
                 'is_current' => false
             ];
         })->toArray();

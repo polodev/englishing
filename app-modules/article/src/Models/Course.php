@@ -2,12 +2,12 @@
 
 namespace Modules\Article\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Course extends Model
 {
@@ -47,5 +47,36 @@ class Course extends Model
     public function articles(): HasMany
     {
         return $this->hasMany(Article::class);
+    }
+    
+    /**
+     * Get associated articles for this course.
+     * Returns an array of articles with id, title, slug, display_order, translation titles, and is_current flag.
+     *
+     * @return array
+     */
+    public function getAssociatedArticles(): array
+    {
+        $articles = $this->articles()
+            ->orderBy('display_order')
+            ->with(['translation'])
+            ->select('id', 'title', 'slug', 'display_order')
+            ->get();
+
+        // Format the results to match the expected output
+        $formattedArticles = $articles->map(function($article) {
+            return [
+                'id' => $article->id,
+                'title' => $article->title,
+                'bn_title' => $article->translation?->bn_title,
+                'hi_title' => $article->translation?->hi_title,
+                'es_title' => $article->translation?->es_title,
+                'slug' => $article->slug,
+                'display_order' => $article->display_order,
+                'is_current' => false
+            ];
+        })->toArray();
+
+        return $formattedArticles;
     }
 }
