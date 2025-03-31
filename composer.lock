@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0c388f8daf87afe2bf6ed11c13bb3fb",
+    "content-hash": "22f0037300fd0ef206ceec87b214d977",
     "packages": [
         {
             "name": "brick/math",
@@ -3400,6 +3400,38 @@
                     "Modules\\ArticleConversation\\Tests\\": "tests/",
                     "Modules\\ArticleConversation\\Database\\Factories\\": "database/factories/",
                     "Modules\\ArticleConversation\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/article-double-sentence",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/article-double-sentence",
+                "reference": "a52343729ec4910dae2cb5cecd24b7c9ace86aad"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\ArticleDoubleSentence\\Providers\\ArticleDoubleSentenceServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\ArticleDoubleSentence\\": "src/",
+                    "Modules\\ArticleDoubleSentence\\Tests\\": "tests/",
+                    "Modules\\ArticleDoubleSentence\\Database\\Factories\\": "database/factories/",
+                    "Modules\\ArticleDoubleSentence\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [

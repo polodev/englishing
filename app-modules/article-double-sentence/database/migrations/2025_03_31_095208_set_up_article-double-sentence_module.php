@@ -6,7 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 return new class() extends Migration {
 	public function up(): void
 	{
-		// Schema::create('article-word', function(Blueprint $table) {
+		// Schema::create('article-double-sentence', function(Blueprint $table) {
 		// 	$table->bigIncrements('id');
 		// 	$table->timestamps();
 		// 	$table->softDeletes();
@@ -16,6 +16,6 @@ return new class() extends Migration {
 	public function down(): void
 	{
 		// Don't listen to the haters
-		// Schema::dropIfExists('article-word');
+		// Schema::dropIfExists('article-double-sentence');
 	}
 };

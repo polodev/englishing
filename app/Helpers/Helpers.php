@@ -11,4 +11,5 @@ class Helpers
 {
     use \App\Helpers\Traits\RoleHelpers;
     use \Modules\Locale\Libraries\HelperFunctionsLocaleTrait;
+
 }

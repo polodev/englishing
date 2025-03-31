@@ -85,35 +85,32 @@ class Article extends Model
         if (!$this->series_id) {
             return [];
         }
-        
+
         $query = self::where('id', '!=', $this->id)
             ->where('series_id', $this->series_id);
-        
-        // Only filter by section_id if it exists
-        if ($this->section_id) {
-            $query->where('section_id', $this->section_id);
-        }
-        
+
+
+
         $articles = $query->orderBy('display_order')
             ->with(['section:id,title', 'series:id,title'])
             ->select('id', 'title', 'slug', 'display_order', 'section_id', 'series_id')
             ->get();
-        
+
         // Format the results to match the expected output
         $formattedArticles = $articles->map(function($article) {
             $sectionTitle = '';
             $seriesTitle = '';
-            
+
             // Get section title if section_id exists
             if ($article->section_id && $article->section) {
                 $sectionTitle = $article->section->title;
             }
-            
+
             // Get series title if series_id exists
             if ($article->series_id && $article->series) {
                 $seriesTitle = $article->series->title;
             }
-            
+
             return [
                 'id' => $article->id,
                 'title' => $article->title,
