@@ -87,7 +87,6 @@
                                     <th>Translations</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-                                    <th>Actions</th>
                                 </tr>
                             </thead>
                         </table>
@@ -130,8 +129,7 @@
                 { data: 'pronunciation_text', name: 'pronunciation_text', searchable: false },
                 { data: 'translations', name: 'translations', searchable: false },
                 { data: 'created_at_formatted', name: 'created_at' },
-                { data: 'updated_at_formatted', name: 'updated_at' },
-                { data: 'action', name: 'action', orderable: false, searchable: false }
+                { data: 'updated_at_formatted', name: 'updated_at' }
             ],
             order: [[0, 'desc']]
         });
@@ -146,28 +144,6 @@
             $('#created-from').val('');
             $('#created-to').val('');
             wordsTable.draw();
-        });
-
-        // Delete word functionality
-        $(document).on('click', '.delete-word', function() {
-            const wordId = $(this).data('id');
-            
-            if (confirm('Are you sure you want to delete this word?')) {
-                $.ajax({
-                    url: `/dashboard/words/${wordId}`,
-                    type: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function() {
-                        wordsTable.draw();
-                        alert('Word deleted successfully!');
-                    },
-                    error: function() {
-                        alert('An error occurred while deleting the word.');
-                    }
-                });
-            }
         });
     });
 </script>

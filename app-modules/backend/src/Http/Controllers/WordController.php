@@ -114,16 +114,21 @@ class WordController
             ->addColumn('updated_at_formatted', function (Word $word) {
                 return $word->updated_at->format('Y-m-d H:i:s');
             })
-            ->addColumn('action', function (Word $word) {
+            ->addColumn('id', function (Word $word) {
                 return sprintf(
-                    '<a href="%s" class="btn btn-sm btn-primary">View</a> '.
-
-                    '<button data-id="%s" class="btn btn-sm btn-danger delete-word">Delete</button>',
+                    '<a href="%s">%s</a>',
                     route('backend::words.show', $word->id),
                     $word->id
                 );
             })
-            ->rawColumns(['action', 'translations'])
+            ->addColumn('word', function (Word $word) {
+                return sprintf(
+                    '<a href="%s">%s</a>',
+                    route('backend::words.show', $word->id),
+                    $word->word
+                );
+            })
+            ->rawColumns(['id', 'word', 'translations'])
             ->toJson();
     }
 
