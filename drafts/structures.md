@@ -43,11 +43,9 @@ expression_connections is a pivot table
 ````
 
 # articles
-series(id, user_id, title, slug, content)  
-series_translations(id, series_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
-sections(id, user_id, series_id, title, slug, content, display_order)  
-section_translations(id, section_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
-articles(id, user_id, series_id, section_id, type, title, slug, content, display_order, excerpt, is_premium, scratchpad)  
+courses(id, user_id, title, slug)  
+courses_translations(id, course_id, bn_title, hi_title, es_title)
+articles(id, user_id, course_id, section_id, type, title, slug, content, display_order, excerpt, is_premium, scratchpad)  
 article_translations(id, article_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content, bn_excerpt, hi_excerpt, es_excerpt)
 
 in article model make a helper function for getting title and link of associated article for same series with section. just an array having article id, title, slug
@@ -67,7 +65,7 @@ article_table_cell_transliterations(id, article_table_cell_translation_id, bn_tr
 # article-word
 article_word_sets (id, article_id, display_order, title, content, column_order, static_content_1, static_content_2 ) # eg column_order ['word', 'meaning', 'meaning_translations', 'example_sentences', 'example_sentence_translations', 'expression', 'expression_meaning', 'expression_meaning_translation']
 article_word_set_translations (id, article_word_set_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
-article_word_set_lists(id, article_word_set_id, display_order, word, slug, position, phonetic, parts_of_speech, static_content_1, static_content_2 )  
+article_word_set_lists(id, article_word_set_id, display_order, word, slug, phonetic, parts_of_speech, static_content_1, static_content_2 )  
 article_word_meanings(id, article_word_set_list_id, meaning)  
 article_word_meaning_translations(id, article_word_meaning_id, bn_meaning, hi_meaning, es_meaning)  
 article_word_meaning_transliterations(id, article_word_meaning_translation_id, bn_transliteration, hi_transliteration, es_transliteration)

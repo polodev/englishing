@@ -1,0 +1,24 @@
+{
+	"name": "modules/backend",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\Backend\\": "src/",
+			"Modules\\Backend\\Tests\\": "tests/",
+			"Modules\\Backend\\Database\\Factories\\": "database/factories/",
+			"Modules\\Backend\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\Backend\\Providers\\BackendServiceProvider"
+			]
+		}
+	}
+}

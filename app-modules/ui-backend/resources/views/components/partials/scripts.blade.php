@@ -1,8 +1,14 @@
 <!-- Alpine.js -->
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{{ asset('vendor/flatpickr/flatpickr.min.js') }}"></script>
+<script src="{{ asset('vendor/datatables/js/jquery.dataTables.min.js') }}"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.0/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
+
+
 
 <!-- Custom Scripts -->
 <script>
@@ -14,7 +20,7 @@
                 this.open = !this.open;
             }
         }));
-        
+
         Alpine.data('dropdown', () => ({
             open: false,
             toggle() {
@@ -25,46 +31,38 @@
             }
         }));
     });
-    
-    // Function to initialize charts
-    function initCharts() {
-        // Only initialize if chart elements exist
-        const chartElements = document.querySelectorAll('.chart-container');
-        if (chartElements.length === 0) return;
-        
-        // Sample chart initialization - can be customized per chart
-        chartElements.forEach(container => {
-            const ctx = container.querySelector('canvas').getContext('2d');
-            const chartType = container.dataset.chartType || 'line';
-            const chartId = container.dataset.chartId;
-            
-            // Default configuration - should be customized based on data attributes
-            const config = {
-                type: chartType,
-                data: {
-                    labels: JSON.parse(container.dataset.labels || '[]'),
-                    datasets: JSON.parse(container.dataset.datasets || '[]')
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        }
-                    }
-                }
-            };
-            
-            // Create the chart
-            new Chart(ctx, config);
+
+
+
+
+</script>
+
+<script>
+    // for datatable pageNumber navigate
+    function dataTableNavigate(dataTableName) {
+      var params_for_datatable_page_number = new URLSearchParams(window.location.search)
+      var dt_page_number = parseInt(params_for_datatable_page_number.get('page'))
+      if (dt_page_number) {
+        dt_page_number--
+        dataTableName.on('init.dt', function(e) {
+          dataTableName.page(dt_page_number).draw(false);
         });
-    }
-    
-    // Initialize charts when the DOM is loaded
-    document.addEventListener('DOMContentLoaded', initCharts);
+      }
+
+      const searchURL = new URL(window.location);
+      dataTableName.on('draw.dt', function() {
+        var info = dataTableName.page.info();
+        searchURL.searchParams.set('page', (info.page + 1));
+        window.history.replaceState({}, '', searchURL);
+      });
+
+      // Go to Datatable page
+      $('#datatable-page-number-button').on('click', function() {
+        var page_number = parseInt($('#datatable-page-number').val());
+        if (page_number) {
+          page_number--
+          dataTableName.page(page_number).draw(false);
+        }
+      })
+    } // ending dataTableNavigate fn
 </script>

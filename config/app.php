@@ -131,6 +131,7 @@ return [
      'aliases' => Facade::defaultAliases()->merge([
         'Helpers' =>  App\Helpers\Helpers::class,
         'Honeypots' => Modules\Utility\Libraries\MyConst\Honeypots::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ])->toArray(),
 
 ];

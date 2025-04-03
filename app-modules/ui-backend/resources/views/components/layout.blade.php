@@ -17,17 +17,23 @@
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <script src="{{ asset('vendor/jquery/jquery.js') }}"></script>
+
     <!-- Flowbite CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet" />
-    
+    <script src="{{ asset('vendor/flatpickr/flatpickr.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('vendor/datatables/css/jquery.dataTables.min.css') }}">
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
+
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    
+
     <!-- Styles -->
     @livewireStyles
     @stack('styles')
-    
+
     <style>
         [x-cloak] { display: none !important; }
         .sidebar-transition {
@@ -35,7 +41,7 @@
         }
     </style>
 </head>
-<body class="font-['Miriam_Libre'] antialiased h-full bg-gray-100" 
+<body class="font-['Miriam_Libre'] antialiased h-full bg-gray-100"
       x-data="{
         sidebarOpen: true,
         mobileMenuOpen: false,
@@ -51,9 +57,9 @@
           // Save the sidebar state in localStorage
           localStorage.setItem('sidebarOpen', JSON.stringify(this.sidebarOpen));
         }
-      }" 
+      }"
       x-init="init()">
-    
+
     <!-- Mobile Navigation -->
     <div x-cloak x-show="mobileMenuOpen" class="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 lg:hidden"
          x-transition:enter="transition-opacity ease-linear duration-300"
@@ -120,13 +126,13 @@
             </nav>
         </div>
     </div>
-    
+
     <!-- Topbar -->
     <x-ui-backend::partials.topnav />
-    
+
     <!-- Desktop Sidebar -->
     <x-ui-backend::partials.sidebar />
-    
+
     <!-- Main Content Area -->
     <main class="pt-16 transition-all duration-300" :class="{'lg:pl-64': sidebarOpen, 'lg:pl-16': !sidebarOpen}">
         <div class="p-4">
@@ -135,16 +141,16 @@
                     {{ $header }}
                 </div>
             @endif
-            
+
             {{ $slot }}
         </div>
     </main>
-    
+
     <!-- Scripts -->
     <x-ui-backend::partials.scripts />
     @livewireScripts
     @stack('scripts')
-    
+
     <!-- Flowbite JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
 </body>
