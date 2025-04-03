@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('expression');
             $table->string('type');
+            $table->string('source')->nullable();
             $table->string('slug')->unique();
             $table->timestamps();
         });
