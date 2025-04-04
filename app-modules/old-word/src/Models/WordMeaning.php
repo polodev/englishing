@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class WordMeaning extends Model
 {
@@ -20,8 +21,6 @@ class WordMeaning extends Model
         'word_id',
         'meaning',
         'slug',
-        'source',
-        'display_order',
     ];
 
     /**
@@ -33,10 +32,10 @@ class WordMeaning extends Model
     }
 
     /**
-     * Get the translations for this meaning.
+     * Get the translation for the word meaning.
      */
-    public function translations(): HasMany
+    public function translation(): HasOne
     {
-        return $this->hasMany(WordTranslation::class, 'meaning_id');
+        return $this->hasOne(WordMeaningTranslation::class);
     }
 }

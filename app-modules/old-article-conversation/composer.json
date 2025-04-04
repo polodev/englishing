@@ -1,0 +1,24 @@
+{
+	"name": "modules/article-conversation",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\ArticleConversation\\": "src/",
+			"Modules\\ArticleConversation\\Tests\\": "tests/",
+			"Modules\\ArticleConversation\\Database\\Factories\\": "database/factories/",
+			"Modules\\ArticleConversation\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\ArticleConversation\\Providers\\ArticleConversationServiceProvider"
+			]
+		}
+	}
+}

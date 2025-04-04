@@ -4,37 +4,20 @@ namespace Modules\Word\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Spatie\Translatable\HasTranslations;
 
 class Word extends Model
 {
-    use HasFactory, HasTranslations;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
-    protected $guarded = [];
-
-    /**
-     * The attributes that are translatable.
-     *
-     * @var array<int, string>
-     */
-    public $translatable = [
-        'pronunciation',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'pronunciation' => 'array',
+    protected $fillable = [
+        'word',
+        'slug',
     ];
 
     /**
@@ -46,33 +29,31 @@ class Word extends Model
     }
 
     /**
-     * Get the translations for the word.
+     * Get the pronunciation for the word.
      */
-    public function translations(): HasMany
+    public function pronunciation()
     {
-        return $this->hasMany(WordTranslation::class);
+        return $this->hasOne(WordPronunciation::class);
     }
 
     /**
      * Get all connected words for this word (as word_id_1).
      */
-    public function connections(): BelongsToMany
+    public function connections()
     {
         return $this->belongsToMany(Word::class, 'word_connections', 'word_id_1', 'word_id_2')
-            ->withPivot('type')
-            ->withTimestamps();
+            ->withPivot('type');
     }
 
     /**
      * Get all connected words for this word (as word_id_2).
      */
-    public function connectionsInverse(): BelongsToMany
+    public function connectionsInverse()
     {
         return $this->belongsToMany(Word::class, 'word_connections', 'word_id_2', 'word_id_1')
-            ->withPivot('type')
-            ->withTimestamps();
+            ->withPivot('type');
     }
-
+    
     /**
      * Get the synonyms for this word.
      */
@@ -80,10 +61,10 @@ class Word extends Model
     {
         // Get synonyms where this word is word_id_1
         $synonyms1 = $this->connections()->wherePivot('type', 'synonyms');
-
+        
         // Get synonyms where this word is word_id_2
         $synonyms2 = $this->connectionsInverse()->wherePivot('type', 'synonyms');
-
+        
         // Return all synonyms
         return $synonyms1->get()->merge($synonyms2->get());
     }
@@ -95,14 +76,14 @@ class Word extends Model
     {
         // Get antonyms where this word is word_id_1
         $antonyms1 = $this->connections()->wherePivot('type', 'antonyms');
-
+        
         // Get antonyms where this word is word_id_2
         $antonyms2 = $this->connectionsInverse()->wherePivot('type', 'antonyms');
-
+        
         // Return all antonyms
         return $antonyms1->get()->merge($antonyms2->get());
     }
-
+    
     /**
      * Get all synonyms for this word.
      *
@@ -112,7 +93,7 @@ class Word extends Model
     {
         return $this->synonyms();
     }
-
+    
     /**
      * Get all antonyms for this word.
      *
@@ -122,7 +103,7 @@ class Word extends Model
     {
         return $this->antonyms();
     }
-
+    
     /**
      * Attach a synonym to this word.
      *
@@ -134,7 +115,7 @@ class Word extends Model
         $wordId = $word instanceof Word ? $word->id : $word;
         $this->connections()->attach($wordId, ['type' => 'synonyms']);
     }
-
+    
     /**
      * Attach an antonym to this word.
      *

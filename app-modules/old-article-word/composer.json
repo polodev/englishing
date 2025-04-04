@@ -1,0 +1,24 @@
+{
+	"name": "modules/article-word",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\ArticleWord\\": "src/",
+			"Modules\\ArticleWord\\Tests\\": "tests/",
+			"Modules\\ArticleWord\\Database\\Factories\\": "database/factories/",
+			"Modules\\ArticleWord\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\ArticleWord\\Providers\\ArticleWordServiceProvider"
+			]
+		}
+	}
+}

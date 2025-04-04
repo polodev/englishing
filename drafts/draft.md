@@ -1,3 +1,38 @@
+article
+article-conversation
+article-double-sentence
+article-expression
+article-sentence
+article-table
+article-word
+expression
+sentence
+word
+
+rm -rf app-modules/article/database/migrations/*php
+rm -rf app-modules/article-conversation/database/migrations/*php
+rm -rf app-modules/article-double-sentence/database/migrations/*php
+rm -rf app-modules/article-expression/database/migrations/*php
+rm -rf app-modules/article-sentence/database/migrations/*php
+rm -rf app-modules/article-table/database/migrations/*php
+rm -rf app-modules/article-word/database/migrations/*php
+rm -rf app-modules/expression/database/migrations/*php
+rm -rf app-modules/sentence/database/migrations/*php
+rm -rf app-modules/word/database/migrations/*php
+
+
+rm -rf app-modules/article/resources/views/*php
+rm -rf app-modules/article-conversation/resources/views/*php
+rm -rf app-modules/article-double-sentence/resources/views/*php
+rm -rf app-modules/article-expression/resources/views/*php
+rm -rf app-modules/article-sentence/resources/views/*php
+rm -rf app-modules/article-table/resources/views/*php
+rm -rf app-modules/article-word/resources/views/*php
+rm -rf app-modules/expression/resources/views/*php
+rm -rf app-modules/sentence/resources/views/*php
+rm -rf app-modules/word/resources/views/*php
+
+
 ## Route
 ```php
 Route::resource('/orders', OrderController::class);

@@ -5,9 +5,8 @@ namespace Modules\Word\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class WordMeaning extends Model
+class WordTranslation extends Model
 {
     use HasFactory;
 
@@ -18,14 +17,15 @@ class WordMeaning extends Model
      */
     protected $fillable = [
         'word_id',
-        'meaning',
-        'slug',
+        'meaning_id',
+        'translation',
+        'transliteration',
+        'locale',
         'source',
-        'display_order',
     ];
 
     /**
-     * Get the word that owns the meaning.
+     * Get the word that owns the translation.
      */
     public function word(): BelongsTo
     {
@@ -33,10 +33,10 @@ class WordMeaning extends Model
     }
 
     /**
-     * Get the translations for this meaning.
+     * Get the meaning that owns the translation.
      */
-    public function translations(): HasMany
+    public function meaning(): BelongsTo
     {
-        return $this->hasMany(WordTranslation::class, 'meaning_id');
+        return $this->belongsTo(WordMeaning::class, 'meaning_id');
     }
 }
