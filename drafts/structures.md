@@ -38,9 +38,9 @@ expression_connections is a pivot table
 
 # articles
 courses(id, user_id, title, content, slug, title_translation, content_translation, status)   title_translation, content_translation will be spatie Translatable
-articles(id, user_id, course_id, section_id, type, title, slug, content, display_order, status, excerpt, is_premium, scratchpad, title_translation, content_translation, excerpt_translation)  # title_translation, content_translation, excerpt_translation spatie Translatable
+articles(id, user_id, course_id, type, title, slug, content, display_order, status, excerpt, is_premium, scratchpad, title_translation, content_translation, excerpt_translation)  # title_translation, content_translation, excerpt_translation spatie Translatable
 
-in article model make a helper function for getting title and link of associated article for same series with section. just an array having article id, title, slug
+in article model make a helper function for getting title and link of associated article for same series with section. just an array having article id, title, slug, title_translation
 like following
 
 
