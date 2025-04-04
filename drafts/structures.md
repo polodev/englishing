@@ -1,52 +1,44 @@
 # words
-words(id, word, word_250, slug)  
-word_meanings(id, word_id, meaning, slug)  
-word_pronunciations (id, word_id, bn_pronunciation, hi_pronunciation, es_pronunciation)
-word_meaning_translations(id, word_meaning_id, bn_meaning, hi_meaning, es_meaning)
-word_meaning_transliterations(id, word_meaning_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
+words(id, word, slug, pronunciation, phonetic, part_of_speech, source)   # pronunciation will be spatie Translatable
+word_meanings(id, word_id, meaning, slug, source, display_order)   # keep english meaning only
+word_translations(id, word_id, meaning_id (nullable), translation, transliteration, locale, source) # $table->unique(['word_id', 'locale', 'slug']);
 word_connections(word_id_1, word_id_2, type[synonyms, antonyms])  
+
+word_translations
 
 ```relation
 word can have multiple meanings
-word has only one pronunciation
+word can have multiple translations
 meaning can have only one translations
-translation can have only one transliteration
 word_connections is a pivot table
 ````
 
 # sentence
-sentences(id, sentence, slug, source)  # sentence itself a meaning
-sentence_pronunciations (id, word_id, bn_pronunciation, hi_pronunciation, es_pronunciation)
-sentence_translations(id, sentence_id, bn_sentence, hi_sentence, es_sentence)  
-sentence_transliterations(id, sentence_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
+sentences(id, sentence, slug, source, pronunciation) # pronunciation will be spatie Translatable
+sentence_translations(id, sentence_id, translation, transliteration,  slug, locale, source, )  # $table->unique(['sentence_id', 'locale', 'slug']); 
 
 ```relation
-sentence can have only one translations
-sentence can have only one pronunciation
-sentence_translations can have only one transliteration
+sentence can have only one translations for each locale
 ```
 
 # expression
 expressions(id, expression, type, slug)  
-expression_meanings(id, expression_id, meaning)  
-expression_pronunciations (id, word_id, bn_pronunciation, hi_pronunciation, es_pronunciation)
-expression_meaning_translations(id, expression_meaning_id, bn_meaning, hi_meaning, es_meaning)  
-expression_meaning_transliterations(id, expression_meaning_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
+expression_meanings(id, expression_id, meaning, pronunciation)   # pronunciation will be spatie Translatable
+expression_translations(id, expression_id, expression_meaning_id, translation, transliteration, slug, locale, source)  # $table->unique(['expression_id', 'locale', 'slug']);
 expression_connections(expression_id_1, expression_id_2, type[synonyms, antonyms])  
 
 ```relation
 expression can have multiple meanings
 expression has only one pronunciation
+expression can have multiple translations
 meaning can have only one translations
 translation can have only one transliteration
 expression_connections is a pivot table
 ````
 
 # articles
-courses(id, user_id, title, slug)  
-courses_translations(id, course_id, bn_title, hi_title, es_title)
-articles(id, user_id, course_id, section_id, type, title, slug, content, display_order, excerpt, is_premium, scratchpad)  
-article_translations(id, article_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content, bn_excerpt, hi_excerpt, es_excerpt)
+courses(id, user_id, title, content, slug, title_translation, content_translation, status)   title_translation, content_translation will be spatie Translatable
+articles(id, user_id, course_id, section_id, type, title, slug, content, display_order, status, excerpt, is_premium, scratchpad, title_translation, content_translation, excerpt_translation)  # title_translation, content_translation, excerpt_translation spatie Translatable
 
 in article model make a helper function for getting title and link of associated article for same series with section. just an array having article id, title, slug
 like following
@@ -63,70 +55,39 @@ article_table_cell_transliterations(id, article_table_cell_translation_id, bn_tr
 
 
 # article-word
-article_word_sets (id, article_id, display_order, title, content, column_order, static_content_1, static_content_2 ) # eg column_order ['word', 'meaning', 'meaning_translations', 'example_sentences', 'example_sentence_translations', 'expression', 'expression_meaning', 'expression_meaning_translation']
-article_word_set_translations (id, article_word_set_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
-article_word_set_lists(id, article_word_set_id, display_order, word, slug, phonetic, parts_of_speech, static_content_1, static_content_2 )  
-article_word_meanings(id, article_word_set_list_id, meaning)  
-article_word_meaning_translations(id, article_word_meaning_id, bn_meaning, hi_meaning, es_meaning)  
-article_word_meaning_transliterations(id, article_word_meaning_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
-
-article_word_example_sentences(id, article_word_set_list_id, display_order, sentence, slug)  
-article_word_example_sentence_translations(id, article_word_example_sentence_id, bn_sentence, hi_sentence, es_sentence)  
-article_word_example_sentence_transliterations(id, article_word_example_sentence_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
-
-article_word_example_expressions(id, article_word_set_list_id, expression, slug)  
-article_word_example_expression_meanings(id, article_word_example_expression_id, meaning)  
-article_word_example_expression_meaning_translations(id, article_word_example_expression_meaning_id, bn_meaning, hi_meaning, es_meaning)  
-article_word_example_expression_meaning_transliterations(id, article_word_example_expression_meaning_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
+article_word_sets (id, article_id, display_order, title, content, column_order, static_content_1, static_content_2, title_translation, content_translation ) # eg column_order ['word', 'meaning', 'meaning_translations', 'example_sentences', 'example_sentence_translations', 'expression', 'expression_meaning', 'expression_meaning_translation']
+article_word_set_lists(id, article_word_set_id, display_order, word, slug, phonetic, parts_of_speech, static_content_1, static_content_2, meaning, example_sentence, example_expression, example_expression_meaning )  
+article_word_translations(id, article_word_set_list_id, translation, transliteration, locale, source, slug) # unique(article_word_set_list_id locale slug)
+article_word_example_sentence_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
+article_word_example_expression_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
 
 ```relation
 article_word_set has many article_word_set_lists
-list has one meaning
-meaning has one translation
-translation has one transliteration
-list has one example sentence
-example sentence has one translation
-translation has one transliteration
-list has one example expression
-example expression has one meaning
-meaning has one translation
-translation has one transliteration
+list word has many word translations but each locale have only one
+list word has many example sentence translations but each locale have only one
+list word has many example expression translations but each locale have only one
 ````
 
-
-
-
-
 # article-sentence
-article_sentence_sets(id, article_id, display_order, title, content)  
-article_sentence_set_translations (id, article_sentence_set_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
+article_sentence_sets(id, article_id, display_order, title, content, title_translation, content_translation) # title_translation and content_translation will be spatie Translatable  
 article_sentence_set_lists(id, article_sentence_set_id, sentence, slug, display_order)  
-article_sentence_translations(id, article_sentence_set_list_id, bn_meaning, hi_meaning, es_meaning)  
-article_sentence_transliterations(id, article_sentence_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
+article_sentence_translations(id, article_sentence_set_list_id, translation, transliteration, locale, slug)  #unique(article_sentence_set_list_id, locale, slug)
 
 ```relation
 article_sentence_set has many article_sentence_set_lists
-set has one translation
-list has one meaning
-meaning has one translation
-translation has one transliteration
+list sentence has many translations but each locale have only one
 ````
 
 
 
 # article-double-sentence
-article_double_sentence_sets(id, article_id, display_order, title, content)  
-article_double_sentence_set_translations (id, article_sentence_set_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
+article_double_sentence_sets(id, article_id, display_order, title, content, title_translation, content_translation)  
 article_double_sentence_set_lists(id, article_double_sentence_set_id, sentence_1, sentence_1_slug, sentence_2, sentence_2_slug, display_order)  
-article_double_sentence_translations(id, article_double_sentence_set_list_id, sentence_1_bn_meaning, sentence_1_hi_meaning, sentence_1_es_meaning, sentence_2_bn_meaning, sentence_2_hi_meaning, sentence_2_es_meaning)  
-(ignore transliteration as its became bigger. for double)
+article_double_sentence_translations(id, article_double_sentence_set_list_id, sentence_1_translation, sentence_2_translation, sentence_1_transliteration, sentence_2_transliteration, locale, slug) # unique(article_double_sentence_set_list_id locale slug)
 
 ```relation
 article_double_sentence_set has many article_double_sentence_set_lists
-set has one translation
-list has one meaning
-meaning has one translation
-translation has one transliteration
+article_double_sentence_set_list has many article_double_sentence_translation but each locale have only one
 ````
 
 
@@ -134,40 +95,27 @@ translation has one transliteration
 
 
 # article-expression
-article_expression_sets(id, article_id, display_order, title)  
-article_expression_set_translations (id, article_sentence_set_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
-article_expression_set_lists(id, article_expression_set_id, expression, slug, display_order)  
-article_expression_meanings(id, article_expression_set_list_id, meaning)  
-article_expression_meaning_translations(id, article_expression_meaning_id, bn_meaning, hi_meaning, es_meaning)  
-article_expression_meaning_transliterations(id, article_expression_meaning_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
-
-article_expression_example_sentences(id, article_expression_set_list_id, sentence, slug)  
-article_expression_example_sentence_translations(id, article_expression_example_sentence_id, bn_sentence, hi_sentence, es_sentence)  
-article_expression_example_sentence_transliterations(id, article_expression_example_sentence_translation_id, bn_transliteration, hi_transliteration, es_transliteration)
+article_expression_sets(id, article_id, display_order, title, content, title_translation, content_translation)  
+article_expression_set_lists(id, article_expression_set_id, expression, slug, display_order, meaning, example_sentence)  
+article_expression_translations(id, article_expression_set_list_id, slug, translation, transliteration, slug) # unique(article_expression_set_list_id locale slug)
+article_expression_example_sentence_translations(id, article_expression_set_list_id, slug, translation, transliteration, slug) # unique(article_expression_set_list_id locale slug)
 
 ```relation
 article_expression_set has many article_expression_set_lists
-set has one translation
-list has one meaning
-meaning has one translation
-translation has one transliteration
-list has one example sentence
-example sentence has one translation
-translation has one transliteration
+list has many article_expression_translations however each locale have only one relation
+list has many article_expression_example_sentence_translations however each locale have only one translation
 ````
 
 
 
 # article-conversation
-article_conversations(id, article_id, title, slug, content, excerpt, display_order, is_premium, scratchpad)
-article_conversation_translations(id, article_conversation_id, bn_title, hi_title, es_title, bn_content, hi_content, es_content)
+article_conversations(id, article_id, title, slug, content, title_translation, content_translation)
 article_conversation_messages(id, article_conversation_id, speaker[string: speaker_1, speaker_2, speaker_3], message, slug, display_order )
-article_conversation_message_translations(id, article_conversation_message_id, bn_message, hi_message, es_message)
+article_conversation_message_translations(id, article_conversation_message_id, locale, slug)
 
 ```relation
-article_conversation has one translation
 conversation has many messages
-message has one translation
+message has many translation however each locale have only one translation
 ```
 
 
