@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\ArticleWord\Models;
+namespace Modules\ArticleSentence\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
 
-class ArticleWordSetList extends Model
+class ArticleSentenceSetList extends Model
 {
     use HasFactory, HasTranslations;
 
@@ -38,11 +38,11 @@ class ArticleWordSetList extends Model
     ];
 
     /**
-     * Get the word set that owns the list.
+     * Get the sentence set that owns the list.
      */
-    public function wordSet(): BelongsTo
+    public function sentenceSet(): BelongsTo
     {
-        return $this->belongsTo(ArticleWordSet::class, 'article_word_set_id');
+        return $this->belongsTo(ArticleSentenceSet::class, 'article_sentence_set_id');
     }
 
     /**
@@ -50,19 +50,17 @@ class ArticleWordSetList extends Model
      */
     public function translations(): HasMany
     {
-        return $this->hasMany(ArticleWordTranslation::class, 'article_word_set_list_id');
+        return $this->hasMany(ArticleSentenceTranslation::class, 'article_sentence_set_list_id');
     }
 
     /**
      * Get the translation for a specific locale.
      *
      * @param string $locale
-     * @return \Modules\ArticleWord\Models\ArticleWordTranslation|null
+     * @return \Modules\ArticleSentence\Models\ArticleSentenceTranslation|null
      */
     public function getTranslation(string $locale)
     {
         return $this->translations()->where('locale', $locale)->first();
     }
-
-
 }

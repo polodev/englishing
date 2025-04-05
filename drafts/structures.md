@@ -56,36 +56,20 @@ article_table_cell_transliterations(id, article_table_cell_translation_id, bn_tr
 
 # article-word
 article_word_sets (id, article_id, display_order, title, content, column_order, static_content_1, static_content_2, title_translation, content_translation ) # eg column_order ['word', 'meaning', 'meaning_translations', 'example_sentences', 'example_sentence_translations', 'expression', 'expression_meaning', 'expression_meaning_translation']
-article_word_set_lists(id, article_word_set_id, display_order, word, slug, phonetic, parts_of_speech, static_content_1, static_content_2, meaning, example_sentence, example_expression, example_expression_meaning )  
-article_word_translations(id, article_word_set_list_id, translation, transliteration, locale, source, slug) # unique(article_word_set_list_id locale slug) each locale can have only one
-article_word_example_sentence_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
-article_word_example_expression_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
-
-
-want to combine following 3 to 1
-article_word_translations(id, article_word_set_list_id, translation, transliteration, locale, source, slug) # unique(article_word_set_list_id locale slug) each locale can have only one
-article_word_example_sentence_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
-article_word_example_expression_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
-
-
-
+article_word_set_lists(id, article_word_set_id, display_order, word, slug, phonetic, pronunciation, parts_of_speech, static_content_1, static_content_2, meaning, example_sentence, example_expression, example_expression_meaning ) # pronunciation will be spatie Translatable  
 article_word_translations(id, article_word_set_list_id, word_translation, word_transliteration, example_sentence_translation, example_sentence_transliteration, example_expression_translation, example_expression_transliteration, locale, source, slug) # unique(article_word_set_list_id locale slug)  slug will be generated from word_translation
 
-
-after merge please remove old migrations and model
 
 
 
 ```relation
 article_word_set has many article_word_set_lists
 list word has many word translations but each locale have only one
-list word has many example sentence translations but each locale have only one
-list word has many example expression translations but each locale have only one
 ````
 
 # article-sentence
 article_sentence_sets(id, article_id, display_order, title, content, title_translation, content_translation) # title_translation and content_translation will be spatie Translatable  
-article_sentence_set_lists(id, article_sentence_set_id, sentence, slug, display_order)  
+article_sentence_set_lists(id, article_sentence_set_id, sentence, pronunciation, slug, display_order)  # pronunciation will be spatie Translatable 
 article_sentence_translations(id, article_sentence_set_list_id, translation, transliteration, locale, slug)  #unique(article_sentence_set_list_id, locale, slug)
 
 ```relation
@@ -112,13 +96,11 @@ article_double_sentence_set_list has many article_double_sentence_translation bu
 # article-expression
 article_expression_sets(id, article_id, display_order, title, content, title_translation, content_translation)  
 article_expression_set_lists(id, article_expression_set_id, expression, slug, display_order, meaning, example_sentence)  
-article_expression_translations(id, article_expression_set_list_id, slug, translation, transliteration, slug) # unique(article_expression_set_list_id locale slug)
-article_expression_example_sentence_translations(id, article_expression_set_list_id, slug, translation, transliteration, slug) # unique(article_expression_set_list_id locale slug)
+article_expression_translations(id, article_expression_set_list_id, slug, expression_translation, expression_transliteration, example_sentence_translation, example_sentence_transliteration, locale, source) # unique(article_expression_set_list_id locale slug)
 
 ```relation
 article_expression_set has many article_expression_set_lists
 list has many article_expression_translations however each locale have only one relation
-list has many article_expression_example_sentence_translations however each locale have only one translation
 ````
 
 

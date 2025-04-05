@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('word');
             $table->string('slug');
             $table->string('phonetic')->nullable();
+            $table->json('pronunciation')->nullable();
             $table->string('parts_of_speech')->nullable();
             $table->text('static_content_1')->nullable();
             $table->text('static_content_2')->nullable();

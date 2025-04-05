@@ -22,9 +22,8 @@ return new class extends Migration
             $table->text('example_expression_transliteration')->nullable();
             $table->string('locale', 10);
             $table->string('source')->nullable();
-            $table->string('slug');
             $table->timestamps();
-            
+
             $table->unique(['article_word_set_list_id', 'locale']);
         });
     }
