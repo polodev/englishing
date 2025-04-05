@@ -5,6 +5,7 @@ namespace Modules\ArticleWord\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str;
 
 class ArticleWordTranslation extends Model
 {
@@ -24,4 +25,5 @@ class ArticleWordTranslation extends Model
     {
         return $this->belongsTo(ArticleWordSetList::class, 'article_word_set_list_id');
     }
+
 }

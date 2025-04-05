@@ -27,59 +27,23 @@ class ArticleWordSetList extends Model
     }
 
     /**
-     * Get the word translations for the list.
+     * Get the translations for the list.
      */
-    public function wordTranslations(): HasMany
+    public function translations(): HasMany
     {
-        return $this->hasMany(ArticleWordTranslation::class);
+        return $this->hasMany(ArticleWordTranslation::class, 'article_word_set_list_id');
     }
 
     /**
-     * Get the example sentence translations for the list.
-     */
-    public function exampleSentenceTranslations(): HasMany
-    {
-        return $this->hasMany(ArticleWordExampleSentenceTranslation::class);
-    }
-
-    /**
-     * Get the example expression translations for the list.
-     */
-    public function exampleExpressionTranslations(): HasMany
-    {
-        return $this->hasMany(ArticleWordExampleExpressionTranslation::class);
-    }
-
-    /**
-     * Get the word translation for a specific locale.
+     * Get the translation for a specific locale.
      *
      * @param string $locale
      * @return \Modules\ArticleWord\Models\ArticleWordTranslation|null
      */
-    public function getWordTranslation(string $locale)
+    public function getTranslation(string $locale)
     {
-        return $this->wordTranslations()->where('locale', $locale)->first();
+        return $this->translations()->where('locale', $locale)->first();
     }
 
-    /**
-     * Get the example sentence translation for a specific locale.
-     *
-     * @param string $locale
-     * @return \Modules\ArticleWord\Models\ArticleWordExampleSentenceTranslation|null
-     */
-    public function getExampleSentenceTranslation(string $locale)
-    {
-        return $this->exampleSentenceTranslations()->where('locale', $locale)->first();
-    }
 
-    /**
-     * Get the example expression translation for a specific locale.
-     *
-     * @param string $locale
-     * @return \Modules\ArticleWord\Models\ArticleWordExampleExpressionTranslation|null
-     */
-    public function getExampleExpressionTranslation(string $locale)
-    {
-        return $this->exampleExpressionTranslations()->where('locale', $locale)->first();
-    }
 }

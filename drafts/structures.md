@@ -57,9 +57,24 @@ article_table_cell_transliterations(id, article_table_cell_translation_id, bn_tr
 # article-word
 article_word_sets (id, article_id, display_order, title, content, column_order, static_content_1, static_content_2, title_translation, content_translation ) # eg column_order ['word', 'meaning', 'meaning_translations', 'example_sentences', 'example_sentence_translations', 'expression', 'expression_meaning', 'expression_meaning_translation']
 article_word_set_lists(id, article_word_set_id, display_order, word, slug, phonetic, parts_of_speech, static_content_1, static_content_2, meaning, example_sentence, example_expression, example_expression_meaning )  
-article_word_translations(id, article_word_set_list_id, translation, transliteration, locale, source, slug) # unique(article_word_set_list_id locale slug)
+article_word_translations(id, article_word_set_list_id, translation, transliteration, locale, source, slug) # unique(article_word_set_list_id locale slug) each locale can have only one
 article_word_example_sentence_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
 article_word_example_expression_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
+
+
+want to combine following 3 to 1
+article_word_translations(id, article_word_set_list_id, translation, transliteration, locale, source, slug) # unique(article_word_set_list_id locale slug) each locale can have only one
+article_word_example_sentence_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
+article_word_example_expression_translations(id, article_word_set_list_id, translation, transliteration, slug, locale)  # unique(article_word_set_list_id, slug, locale)
+
+
+
+article_word_translations(id, article_word_set_list_id, word_translation, word_transliteration, example_sentence_translation, example_sentence_transliteration, example_expression_translation, example_expression_transliteration, locale, source, slug) # unique(article_word_set_list_id locale slug)  slug will be generated from word_translation
+
+
+after merge please remove old migrations and model
+
+
 
 ```relation
 article_word_set has many article_word_set_lists

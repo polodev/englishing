@@ -14,14 +14,18 @@ return new class extends Migration
         Schema::create('article_word_translations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('article_word_set_list_id');
-            $table->text('translation');
-            $table->text('transliteration')->nullable();
+            $table->text('word_translation');
+            $table->text('word_transliteration')->nullable();
+            $table->text('example_sentence_translation')->nullable();
+            $table->text('example_sentence_transliteration')->nullable();
+            $table->text('example_expression_translation')->nullable();
+            $table->text('example_expression_transliteration')->nullable();
             $table->string('locale', 10);
             $table->string('source')->nullable();
             $table->string('slug');
             $table->timestamps();
             
-            $table->unique(['article_word_set_list_id', 'locale', 'slug']);
+            $table->unique(['article_word_set_list_id', 'locale']);
         });
     }
 
