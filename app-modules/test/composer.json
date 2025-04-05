@@ -1,0 +1,24 @@
+{
+	"name": "modules/test",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\Test\\": "src/",
+			"Modules\\Test\\Tests\\": "tests/",
+			"Modules\\Test\\Database\\Factories\\": "database/factories/",
+			"Modules\\Test\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\Test\\Providers\\TestServiceProvider"
+			]
+		}
+	}
+}

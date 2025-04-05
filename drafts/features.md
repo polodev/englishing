@@ -7,3 +7,5 @@
 - Can save an article, word, sentence, expression
 - Can enroll to a course
 - Can track progress of each course
+- Can view streak of completion of articles
+- can time track for each user

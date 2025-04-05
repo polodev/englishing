@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "55205d9651f0770e1d6cfb1cd376deca",
+    "content-hash": "558ec6e53ca637ef6a39d9dc1e000dcd",
     "packages": [
         {
             "name": "brick/math",
@@ -4009,7 +4009,7 @@
             "version": "1.0",
             "dist": {
                 "type": "path",
-                "url": "app-modules/old-sentence",
+                "url": "app-modules/sentence",
                 "reference": "a2a1a44be26d3d3b0858f3e3055cfae0c6b54f64"
             },
             "type": "library",
@@ -4058,6 +4058,38 @@
                     "Modules\\Tag\\Tests\\": "tests/",
                     "Modules\\Tag\\Database\\Factories\\": "database/factories/",
                     "Modules\\Tag\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/test",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/test",
+                "reference": "fc916dd6a978a5fbf7453c50bea93a657b294aae"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\Test\\Providers\\TestServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\Test\\": "src/",
+                    "Modules\\Test\\Tests\\": "tests/",
+                    "Modules\\Test\\Database\\Factories\\": "database/factories/",
+                    "Modules\\Test\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [
@@ -4133,6 +4165,38 @@
             }
         },
         {
+            "name": "modules/user-usage-times",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/user-usage-times",
+                "reference": "a04da355c2be2a874e790452d663afe474b6a1d8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\UserUsageTimes\\Providers\\UserUsageTimesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\UserUsageTimes\\": "src/",
+                    "Modules\\UserUsageTimes\\Tests\\": "tests/",
+                    "Modules\\UserUsageTimes\\Database\\Factories\\": "database/factories/",
+                    "Modules\\UserUsageTimes\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "modules/utility",
             "version": "1.0",
             "dist": {
@@ -4169,7 +4233,7 @@
             "version": "1.0",
             "dist": {
                 "type": "path",
-                "url": "app-modules/old-word",
+                "url": "app-modules/word",
                 "reference": "7aa38610516e162ea1dffe3f00553cf9bd616c34"
             },
             "type": "library",
@@ -6347,6 +6411,65 @@
                 }
             ],
             "time": "2025-03-27T08:34:10+00:00"
+        },
+        {
+            "name": "spatie/laravel-sluggable",
+            "version": "3.7.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-sluggable.git",
+                "reference": "bd320144bc5d473ebc41da927bd1c0bae2cb169c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-sluggable/zipball/bd320144bc5d473ebc41da927bd1c0bae2cb169c",
+                "reference": "bd320144bc5d473ebc41da927bd1c0bae2cb169c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/database": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/support": "^8.0|^9.0|^10.0|^11.0|^12.0",
+                "php": "^8.0"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.23|^7.0|^8.0|^9.0|^10.0",
+                "pestphp/pest": "^1.20|^2.0|^3.7",
+                "spatie/laravel-translatable": "^5.0|^6.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\Sluggable\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Generate slugs when saving Eloquent models",
+            "homepage": "https://github.com/spatie/laravel-sluggable",
+            "keywords": [
+                "laravel-sluggable",
+                "spatie"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/laravel-sluggable/tree/3.7.4"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-02-28T13:41:46+00:00"
         },
         {
             "name": "spatie/laravel-translatable",
