@@ -5,8 +5,8 @@ namespace Modules\Tag\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Article\Models\Article;
+use Spatie\Translatable\HasTranslations;
 
 class Tag extends Model
 {
@@ -17,18 +17,20 @@ class Tag extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'title',
-        'slug',
-    ];
+    protected $guarded = [];
+
+
+    use HasTranslations;
 
     /**
-     * Get the translation for the tag.
+     * The attributes that require translation.
+     *
+     * @var array<int, string>
      */
-    public function translation(): HasOne
-    {
-        return $this->hasOne(TagTranslation::class);
-    }
+    public $translatable = [
+        'title',
+    ];
+
 
     /**
      * Get the articles that belong to the tag.
