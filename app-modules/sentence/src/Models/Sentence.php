@@ -24,7 +24,7 @@ class Sentence extends Model
      * @var array<int, string>
      */
     public $translatable = [
-        'pronunciation',
+        'pronunciation', # pronunciation should be for non english locale.
     ];
 
     /**
@@ -33,7 +33,7 @@ class Sentence extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'pronunciation' => 'array',
+        'pronunciation' => 'array', 
     ];
 
     /**

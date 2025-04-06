@@ -25,8 +25,8 @@ class ArticleDoubleSentenceSetList extends Model
      * @var array<int, string>
      */
     public $translatable = [
-        'pronunciation_1',
-        'pronunciation_2',
+        'pronunciation_1', # pronunciation should be for non english locale.
+        'pronunciation_2', # pronunciation should be for non english locale.
     ];
 
     /**

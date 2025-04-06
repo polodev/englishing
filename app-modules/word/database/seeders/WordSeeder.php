@@ -20,7 +20,7 @@ class WordSeeder extends Seeder
             [
                 'word' => 'Happy',
                 'slug' => 'happy',
-                'pronunciation' => ['en' => 'ˈhæpi', 'bn' => 'হ্যাপি', 'hi' => 'हैपी'],
+                'pronunciation' => ['bn' => 'হ্যাপি', 'hi' => 'हैपी'],
                 'phonetic' => 'ˈhæpi',
                 'part_of_speech' => 'adjective',
                 'source' => 'Oxford Dictionary',
@@ -66,7 +66,7 @@ class WordSeeder extends Seeder
             [
                 'word' => 'Sad',
                 'slug' => 'sad',
-                'pronunciation' => ['en' => 'sæd', 'bn' => 'স্যাড', 'hi' => 'सैड'],
+                'pronunciation' => ['bn' => 'স্যাড', 'hi' => 'सैड'],
                 'phonetic' => 'sæd',
                 'part_of_speech' => 'adjective',
                 'source' => 'Oxford Dictionary',
@@ -94,7 +94,7 @@ class WordSeeder extends Seeder
             [
                 'word' => 'Joyful',
                 'slug' => 'joyful',
-                'pronunciation' => ['en' => 'ˈdʒɔɪfʊl', 'bn' => 'জয়ফুল', 'hi' => 'जॉयफुल'],
+                'pronunciation' => ['bn' => 'জয়ফুল', 'hi' => 'जॉयफुल'],
                 'phonetic' => 'ˈdʒɔɪfʊl',
                 'part_of_speech' => 'adjective',
                 'source' => 'Oxford Dictionary',
@@ -122,7 +122,7 @@ class WordSeeder extends Seeder
             [
                 'word' => 'Miserable',
                 'slug' => 'miserable',
-                'pronunciation' => ['en' => 'ˈmɪz(ə)rəb(ə)l', 'bn' => 'মিজারেবল', 'hi' => 'मिज़रेबल'],
+                'pronunciation' => ['bn' => 'মিজারেবল', 'hi' => 'मिज़रेबल'],
                 'phonetic' => 'ˈmɪz(ə)rəb(ə)l',
                 'part_of_speech' => 'adjective',
                 'source' => 'Oxford Dictionary',

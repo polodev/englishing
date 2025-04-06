@@ -23,10 +23,19 @@
         display: inline-block;
         width: 40px;
     }
-    .transliteration-block {
-        margin-left: 10px;
+    .transliterations {
+        background-color: #e9ecef;
+        padding: 8px;
+        border-radius: 4px;
+        margin-top: 5px;
+    }
+    .transliteration-title {
         font-style: italic;
+        margin-bottom: 5px;
         color: #6c757d;
+    }
+    .transliteration-item {
+        margin-bottom: 3px;
     }
     .meaning-separator {
         margin: 10px 0;
@@ -71,11 +80,11 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Word</th>
-                                    <th>Meanings</th>
+                                    <th>Meanings & Translations</th>
+                                    <th>Standalone Translations</th>
                                     <th>Synonyms</th>
                                     <th>Antonyms</th>
                                     <th>Pronunciation</th>
-                                    <th>Translations</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                 </tr>
@@ -113,14 +122,14 @@
             },
             columns: [
                 { data: 'id', name: 'id' },
-                { data: 'word', name: 'word', searchable: true },
-                { data: 'meanings_list', name: 'meanings_list', searchable: false },
+                { data: 'word', name: 'word' },
+                { data: 'meanings_with_translations', name: 'meanings_with_translations', searchable: false },
+                { data: 'standalone_translations', name: 'standalone_translations', searchable: false },
                 { data: 'synonyms', name: 'synonyms', searchable: false },
                 { data: 'antonyms', name: 'antonyms', searchable: false },
                 { data: 'pronunciation_text', name: 'pronunciation_text', searchable: false },
-                { data: 'translations', name: 'translations', searchable: false },
-                { data: 'created_at_formatted', name: 'created_at', searchable: false },
-                { data: 'updated_at_formatted', name: 'updated_at', searchable: false },
+                { data: 'created_at_formatted', name: 'created_at' },
+                { data: 'updated_at_formatted', name: 'updated_at' }
             ],
             order: [[0, 'desc']]
         });

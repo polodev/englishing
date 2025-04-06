@@ -1,3 +1,7 @@
+
+pronunciation should be non english locale.
+phonetic should be for english locale
+
 # words
 words(id, word, slug, pronunciation, phonetic, part_of_speech, source)   # pronunciation will be spatie Translatable
 word_meanings(id, word_id, meaning, slug, source, display_order)   # keep english meaning only

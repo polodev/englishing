@@ -21,7 +21,6 @@ class SentenceSeeder extends Seeder
                 'slug' => 'quick-brown-fox',
                 'source' => 'Common English pangram',
                 'pronunciation' => [
-                    'en' => 'ðə kwɪk braʊn fɒks dʒʌmps ˈəʊvə ðə ˈleɪzi dɒɡ',
                     'bn' => 'দ্য কুইক ব্রাউন ফক্স জাম্পস ওভার দ্য লেজি ডগ',
                     'hi' => 'द क्विक ब्राउन फॉक्स जम्प्स ओवर द लेज़ी डॉग'
                 ],
@@ -47,7 +46,6 @@ class SentenceSeeder extends Seeder
                 'slug' => 'human-rights-declaration',
                 'source' => 'Universal Declaration of Human Rights',
                 'pronunciation' => [
-                    'en' => 'ɔːl ˈhjuːmən ˈbiːɪŋz ɑː bɔːn friː ænd ˈiːkwəl ɪn ˈdɪɡnɪti ænd raɪts',
                     'bn' => 'অল হিউম্যান বিয়িংস আর বর্ন ফ্রি এন্ড ইকুয়াল ইন ডিগনিটি এন্ড রাইটস',
                     'hi' => 'ऑल ह्यूमन बीइंग्स आर बॉर्न फ्री ऐंड ईक्वल इन डिग्निटी ऐंड राइट्स'
                 ],
@@ -73,7 +71,6 @@ class SentenceSeeder extends Seeder
                 'slug' => 'sun-rises-east',
                 'source' => 'Common knowledge',
                 'pronunciation' => [
-                    'en' => 'ðə sʌn ˈraɪzɪz ɪn ði iːst ænd sets ɪn ðə west',
                     'bn' => 'দ্য সান রাইজেস ইন দ্য ইস্ট এন্ড সেটস ইন দ্য ওয়েস্ট',
                     'hi' => 'द सन राइज़ेज़ इन द ईस्ट ऐंड सेट्स इन द वेस्ट'
                 ],
