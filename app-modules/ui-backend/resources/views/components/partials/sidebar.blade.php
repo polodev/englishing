@@ -29,7 +29,7 @@
                         <span class="ml-3" x-show="sidebarOpen">Users</span>
                     </a>
                 </li>
-                @endrole
+                @endhasrole
                 <li>
                     <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100" :class="{'justify-center': !sidebarOpen}">
                         <i class="fas fa-newspaper" :class="{'w-6': sidebarOpen}"></i>
@@ -43,7 +43,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100" :class="{'justify-center': !sidebarOpen}">
+                    <a href="{{ route('backend::words.index') }}" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100" :class="{'justify-center': !sidebarOpen}">
                         <i class="fas fa-book" :class="{'w-6': sidebarOpen}"></i>
                         <span class="ml-3" x-show="sidebarOpen">Words</span>
                     </a>

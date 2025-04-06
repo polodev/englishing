@@ -55,7 +55,7 @@ class WordController
                 // Get synonyms directly from the eager loaded relationships
                 $synonyms1 = $word->connections->where('pivot.type', 'synonyms');
                 $synonyms2 = $word->connectionsInverse->where('pivot.type', 'synonyms');
-                
+
                 // Merge the collections and extract word values
                 return $synonyms1->merge($synonyms2)->pluck('word')->implode(', ');
             })
@@ -63,7 +63,7 @@ class WordController
                 // Get antonyms directly from the eager loaded relationships
                 $antonyms1 = $word->connections->where('pivot.type', 'antonyms');
                 $antonyms2 = $word->connectionsInverse->where('pivot.type', 'antonyms');
-                
+
                 // Merge the collections and extract word values
                 return $antonyms1->merge($antonyms2)->pluck('word')->implode(', ');
             })
@@ -86,19 +86,19 @@ class WordController
 
                     if ($meaning->translations->count() > 0) {
                         $html .= '<div class="translations pl-3">';
-                        
+
                         foreach ($meaning->translations as $translation) {
                             $html .= '<div class="translation-item">';
                             $html .= '<span class="language-label">' . strtoupper($translation->locale) . ':</span> ';
                             $html .= e($translation->translation);
-                            
+
                             if ($translation->transliteration) {
                                 $html .= '<span class="transliteration-block">(' . e($translation->transliteration) . ')</span>';
                             }
-                            
+
                             $html .= '</div>';
                         }
-                        
+
                         $html .= '</div>'; // close translations
                     } else {
                         $html .= '<div class="translations pl-3">No translations available</div>';
@@ -157,7 +157,7 @@ class WordController
         $synonyms1 = $word->connections->where('pivot.type', 'synonyms');
         $synonyms2 = $word->connectionsInverse->where('pivot.type', 'synonyms');
         $synonyms = $synonyms1->merge($synonyms2);
-        
+
         // Get antonyms directly from the eager loaded relationships
         $antonyms1 = $word->connections->where('pivot.type', 'antonyms');
         $antonyms2 = $word->connectionsInverse->where('pivot.type', 'antonyms');
@@ -183,7 +183,7 @@ class WordController
         foreach ($word->translations as $translation) {
             $translation->delete();
         }
-        
+
         // Delete meanings and their translations
         foreach ($word->meanings as $meaning) {
             foreach ($meaning->translations as $translation) {

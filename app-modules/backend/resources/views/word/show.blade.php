@@ -45,13 +45,10 @@
         border-radius: 4px;
         border-left: 3px solid #007bff;
     }
-    .transliteration-container {
-        margin-left: 2rem;
-        margin-top: 0.5rem;
-        padding: 8px;
-        background-color: #e9ecef;
-        border-radius: 4px;
+    .transliteration-text {
+        margin-left: 0.5rem;
         font-style: italic;
+        color: #6c757d;
     }
     .language-label {
         font-weight: bold;
@@ -106,13 +103,13 @@
 
         <div class="word-body">
             <!-- Pronunciation Section -->
-            @if($word->pronunciation)
+            @if($word->getTranslations('pronunciation'))
             <div class="mb-4">
                 <h2 class="section-title">Pronunciation</h2>
                 <div class="pronunciation-container">
-                    <div><span class="language-label">BN:</span> {{ $word->pronunciation->bn_pronunciation ?? 'N/A' }}</div>
-                    <div><span class="language-label">HI:</span> {{ $word->pronunciation->hi_pronunciation ?? 'N/A' }}</div>
-                    <div><span class="language-label">ES:</span> {{ $word->pronunciation->es_pronunciation ?? 'N/A' }}</div>
+                    @foreach($word->getTranslations('pronunciation') as $locale => $pronunciation)
+                        <div><span class="language-label">{{ strtoupper($locale) }}:</span> {{ $pronunciation }}</div>
+                    @endforeach
                 </div>
             </div>
             @endif
@@ -124,21 +121,18 @@
                     <div class="meaning-item">
                         <div class="meaning-text">{{ $index + 1 }}. {{ $meaning->meaning }}</div>
                         
-                        @if($meaning->translation)
+                        @if($meaning->translations->count() > 0)
                             <div class="translation-container">
                                 <div class="mb-1">Translations:</div>
-                                <div><span class="language-label">BN:</span> {{ $meaning->translation->bn_meaning ?? 'N/A' }}</div>
-                                <div><span class="language-label">HI:</span> {{ $meaning->translation->hi_meaning ?? 'N/A' }}</div>
-                                <div><span class="language-label">ES:</span> {{ $meaning->translation->es_meaning ?? 'N/A' }}</div>
-                                
-                                @if($meaning->translation->transliteration)
-                                    <div class="transliteration-container">
-                                        <div class="mb-1">Transliterations:</div>
-                                        <div><span class="language-label">BN:</span> {{ $meaning->translation->transliteration->bn_transliteration ?? 'N/A' }}</div>
-                                        <div><span class="language-label">HI:</span> {{ $meaning->translation->transliteration->hi_transliteration ?? 'N/A' }}</div>
-                                        <div><span class="language-label">ES:</span> {{ $meaning->translation->transliteration->es_transliteration ?? 'N/A' }}</div>
+                                @foreach($meaning->translations as $translation)
+                                    <div>
+                                        <span class="language-label">{{ strtoupper($translation->locale) }}:</span> 
+                                        {{ $translation->translation }}
+                                        @if($translation->transliteration)
+                                            <span class="transliteration-text">({{ $translation->transliteration }})</span>
+                                        @endif
                                     </div>
-                                @endif
+                                @endforeach
                             </div>
                         @else
                             <div class="translation-container">
