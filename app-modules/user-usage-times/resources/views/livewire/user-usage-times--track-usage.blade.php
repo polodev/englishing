@@ -1,20 +1,17 @@
 <?php
 
-namespace Modules\UserUsageTimes\Livewire;
-
-
+use Livewire\Volt\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Livewire\Component;
 use Modules\UserUsageTimes\Models\DailyUserUsageTime;
 
-class TrackUsage extends Component
-{
+
+new class extends Component {
     public $seconds = 0;
 
     public function mount()
     {
-        $this->seconds = 0;
+        $this->seconds = 10;
     }
 
     public function incrementUsage()
@@ -30,9 +27,13 @@ class TrackUsage extends Component
             ['total_seconds' => DB::raw('total_seconds + 60')] // every 60 seconds
         );
     }
+    
+};
+?>
+{{-- <div wire:poll.60s="incrementUsage">
+</div> --}}
 
-    public function render()
-    {
-        return view('livewire.track-usage');
-    }
-}
+<div>
+    user-usage-times {{$seconds}}
+</div>
+
