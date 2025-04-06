@@ -10,7 +10,7 @@ use Spatie\Translatable\HasTranslations;
 
 class Tag extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +20,6 @@ class Tag extends Model
     protected $guarded = [];
 
 
-    use HasTranslations;
 
     /**
      * The attributes that require translation.
