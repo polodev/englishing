@@ -23,19 +23,10 @@
         display: inline-block;
         width: 40px;
     }
-    .transliterations {
-        background-color: #e9ecef;
-        padding: 8px;
-        border-radius: 4px;
-        margin-top: 5px;
-    }
-    .transliteration-title {
+    .transliteration-block {
+        margin-left: 10px;
         font-style: italic;
-        margin-bottom: 5px;
         color: #6c757d;
-    }
-    .transliteration-item {
-        margin-bottom: 3px;
     }
     .meaning-separator {
         margin: 10px 0;
@@ -122,14 +113,14 @@
             },
             columns: [
                 { data: 'id', name: 'id' },
-                { data: 'word', name: 'word' },
+                { data: 'word', name: 'word', searchable: true },
                 { data: 'meanings_list', name: 'meanings_list', searchable: false },
                 { data: 'synonyms', name: 'synonyms', searchable: false },
                 { data: 'antonyms', name: 'antonyms', searchable: false },
                 { data: 'pronunciation_text', name: 'pronunciation_text', searchable: false },
                 { data: 'translations', name: 'translations', searchable: false },
-                { data: 'created_at_formatted', name: 'created_at' },
-                { data: 'updated_at_formatted', name: 'updated_at' }
+                { data: 'created_at_formatted', name: 'created_at', searchable: false },
+                { data: 'updated_at_formatted', name: 'updated_at', searchable: false },
             ],
             order: [[0, 'desc']]
         });

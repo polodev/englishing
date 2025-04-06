@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Modules\Word\Models\Word;
 use Modules\Word\Models\WordMeaning;
-use Modules\Word\Models\WordPronunciation;
-use Modules\Word\Models\WordMeaningTranslation;
-use Modules\Word\Models\WordMeaningTransliteration;
+use Modules\Word\Models\WordTranslation;
 use Yajra\DataTables\Facades\DataTables;
 
 class WordController
@@ -33,9 +31,10 @@ class WordController
     {
         $model = Word::with([
             'meanings',
-            'meanings.translation',
-            'meanings.translation.transliteration',
-            'pronunciation',
+            'meanings.translations',
+            'translations',
+            'connections',
+            'connectionsInverse',
         ]);
 
         return DataTables::eloquent($model)
@@ -53,19 +52,28 @@ class WordController
                 return $word->meanings->pluck('meaning')->implode(', ');
             })
             ->addColumn('synonyms', function (Word $word) {
-                return $word->getSynonyms()->pluck('word')->implode(', ');
+                // Get synonyms directly from the eager loaded relationships
+                $synonyms1 = $word->connections->where('pivot.type', 'synonyms');
+                $synonyms2 = $word->connectionsInverse->where('pivot.type', 'synonyms');
+                
+                // Merge the collections and extract word values
+                return $synonyms1->merge($synonyms2)->pluck('word')->implode(', ');
             })
             ->addColumn('antonyms', function (Word $word) {
-                return $word->getAntonyms()->pluck('word')->implode(', ');
+                // Get antonyms directly from the eager loaded relationships
+                $antonyms1 = $word->connections->where('pivot.type', 'antonyms');
+                $antonyms2 = $word->connectionsInverse->where('pivot.type', 'antonyms');
+                
+                // Merge the collections and extract word values
+                return $antonyms1->merge($antonyms2)->pluck('word')->implode(', ');
             })
             ->addColumn('pronunciation_text', function (Word $word) {
                 if ($word->pronunciation) {
-                    return sprintf(
-                        'BN: %s, HI: %s, ES: %s',
-                        $word->pronunciation->bn_pronunciation ?? 'N/A',
-                        $word->pronunciation->hi_pronunciation ?? 'N/A',
-                        $word->pronunciation->es_pronunciation ?? 'N/A'
-                    );
+                    $pronunciations = [];
+                    foreach ($word->getTranslations('pronunciation') as $locale => $value) {
+                        $pronunciations[] = strtoupper($locale) . ': ' . $value;
+                    }
+                    return implode(', ', $pronunciations);
                 }
                 return 'No pronunciation available';
             })
@@ -76,21 +84,21 @@ class WordController
                     $html .= '<div class="meaning-block mb-3">';
                     $html .= '<div class="meaning-text font-weight-bold">Meaning ' . ($index + 1) . ': ' . e($meaning->meaning) . '</div>';
 
-                    if ($meaning->translation) {
+                    if ($meaning->translations->count() > 0) {
                         $html .= '<div class="translations pl-3">';
-                        $html .= '<div class="translation-item"><span class="language-label">BN:</span> ' . e($meaning->translation->bn_meaning ?? 'N/A') . '</div>';
-                        $html .= '<div class="translation-item"><span class="language-label">HI:</span> ' . e($meaning->translation->hi_meaning ?? 'N/A') . '</div>';
-                        $html .= '<div class="translation-item"><span class="language-label">ES:</span> ' . e($meaning->translation->es_meaning ?? 'N/A') . '</div>';
-
-                        // if ($meaning->translation->transliteration) {
-                        //     $html .= '<div class="transliterations pl-3 mt-1">';
-                        //     $html .= '<div class="transliteration-title font-italic">Transliterations:</div>';
-                        //     $html .= '<div class="transliteration-item"><span class="language-label">BN:</span> ' . e($meaning->translation->transliteration->bn_transliteration ?? 'N/A') . '</div>';
-                        //     $html .= '<div class="transliteration-item"><span class="language-label">HI:</span> ' . e($meaning->translation->transliteration->hi_transliteration ?? 'N/A') . '</div>';
-                        //     $html .= '<div class="transliteration-item"><span class="language-label">ES:</span> ' . e($meaning->translation->transliteration->es_transliteration ?? 'N/A') . '</div>';
-                        //     $html .= '</div>'; // close transliterations
-                        // }
-
+                        
+                        foreach ($meaning->translations as $translation) {
+                            $html .= '<div class="translation-item">';
+                            $html .= '<span class="language-label">' . strtoupper($translation->locale) . ':</span> ';
+                            $html .= e($translation->translation);
+                            
+                            if ($translation->transliteration) {
+                                $html .= '<span class="transliteration-block">(' . e($translation->transliteration) . ')</span>';
+                            }
+                            
+                            $html .= '</div>';
+                        }
+                        
                         $html .= '</div>'; // close translations
                     } else {
                         $html .= '<div class="translations pl-3">No translations available</div>';
@@ -139,13 +147,21 @@ class WordController
     {
         $word->load([
             'meanings',
-            'meanings.translation',
-            'meanings.translation.transliteration',
-            'pronunciation',
+            'meanings.translations',
+            'translations',
+            'connections',
+            'connectionsInverse',
         ]);
 
-        $synonyms = $word->getSynonyms();
-        $antonyms = $word->getAntonyms();
+        // Get synonyms directly from the eager loaded relationships
+        $synonyms1 = $word->connections->where('pivot.type', 'synonyms');
+        $synonyms2 = $word->connectionsInverse->where('pivot.type', 'synonyms');
+        $synonyms = $synonyms1->merge($synonyms2);
+        
+        // Get antonyms directly from the eager loaded relationships
+        $antonyms1 = $word->connections->where('pivot.type', 'antonyms');
+        $antonyms2 = $word->connectionsInverse->where('pivot.type', 'antonyms');
+        $antonyms = $antonyms1->merge($antonyms2);
 
         return view('backend::word.show', compact('word', 'synonyms', 'antonyms'));
     }
@@ -163,20 +179,17 @@ class WordController
         $word->connections()->detach();
         $word->connectionsInverse()->detach();
 
-        // Delete meanings and related models
+        // Delete translations
+        foreach ($word->translations as $translation) {
+            $translation->delete();
+        }
+        
+        // Delete meanings and their translations
         foreach ($word->meanings as $meaning) {
-            if ($meaning->translation) {
-                if ($meaning->translation->transliteration) {
-                    $meaning->translation->transliteration->delete();
-                }
-                $meaning->translation->delete();
+            foreach ($meaning->translations as $translation) {
+                $translation->delete();
             }
             $meaning->delete();
-        }
-
-        // Delete pronunciation
-        if ($word->pronunciation) {
-            $word->pronunciation->delete();
         }
 
         // Delete the word
