@@ -2,77 +2,53 @@
 
 namespace App\Console\Commands;
 
-use Str;
-use Illuminate\Console\Command;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\ModelInspector;
 use Illuminate\Database\Console\ShowModelCommand;
 
 class ModelShowForModule extends ShowModelCommand
 {
-
-    /**
-     * The name and signature of the console command.
-     * php artisan model:show-name hello --name=Modules/English/Models/WordSetListTc
-     * php artisan model:show-name WordSet --module=english
-     * @var string
-     */
     protected $signature = 'model:show-for-module {model : The model to show}
                 {--database= : The database connection to use}
-                {--name= : The name}
-                {--module= : The module}
+                {--name= : The full model class path}
+                {--module= : The module name}
                 {--json : Output the model as JSON}';
-                
+
+    protected $description = 'Show model details, supporting module-based models (InterNACHI Modular)';
+
     public function getAliases(): array
     {
         return ['model:showname', 'model:show-name', 'model:sn', 'ms'];
     }
-        
-    protected function qualifyModel(string $model)
+
+    public function handle(ModelInspector $modelInspector)
     {
-        if (str_contains($model, '\\') && class_exists($model)) {
-            return $model;
-        }
+        // Manually override the 'model' argument with the correct class path
+        $this->input->setArgument('model', $this->resolveModelClass());
 
-        $model = ltrim($model, '\\/');
-
-        $model = str_replace('/', '\\', $model);
-
-        $rootNamespace = $this->laravel->getNamespace();
-
-        if ($name = $this->option('name')) {
-            $this->info($name);
-            return str_replace('/', '\\', $name);
-        }
-        if ($module = $this->option('module')) {
-            $this->info($module);
-            $moduleStudlyCase =  Str::studly($module);
-            $module_full_namespace = "Modules/$moduleStudlyCase/Models/$model";
-            $this->info($module_full_namespace);
-            return str_replace('/', '\\', $module_full_namespace);
-        }
-
-        if (Str::startsWith($model, $rootNamespace)) {
-            return $model;
-        }
-
-        return is_dir(app_path('Models'))
-            ? $rootNamespace.'Models\\'.$model
-            : $rootNamespace.$model;
+        return parent::handle($modelInspector);
     }
 
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Command description';
-
-    /**
-     * Execute the console command.
-     */
-    public function handle()
+    protected function resolveModelClass(): string
     {
-        //
-        parent::handle();
+        $model = $this->argument('model');
+
+        // --name takes full namespace
+        if ($name = $this->option('name')) {
+            return str_replace('/', '\\', $name);
+        }
+
+        // If module is specified, use Modules\StudlyModule\Models\StudlyModel
+        if ($module = $this->option('module')) {
+            $moduleStudly = Str::studly($module);
+            $modelStudly = Str::studly($model);
+            return "Modules\\$moduleStudly\\Models\\$modelStudly";
+        }
+
+        // Fallback to App\Models\Model
+        $rootNamespace = $this->laravel->getNamespace();
+        return is_dir(app_path('Models'))
+            ? $rootNamespace . 'Models\\' . Str::studly($model)
+            : $rootNamespace . Str::studly($model);
     }
 }

@@ -39,10 +39,10 @@ class Sentence extends Model
     /**
      * Get the translations for the sentence.
      */
-    public function translations(): HasMany
-    {
-        return $this->hasMany(SentenceTranslation::class);
-    }
+    // public function translations(): HasMany
+    // {
+    //     return $this->hasMany(SentenceTranslation::class);
+    // }
 
     /**
      * Get translation for a specific locale.

@@ -20,8 +20,8 @@ return new class extends Migration
             $table->integer('display_order')->default(0);
             $table->json('pronunciation')->nullable();
             $table->timestamps();
-            
-            $table->unique(['article_conversation_id', 'slug']);
+
+            $table->unique(['article_conversation_id', 'slug'], 'article_conversation_messages_unique');
         });
     }
 

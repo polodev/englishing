@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignId('expression_id_2');
             $table->string('type'); // 'synonyms', 'antonyms'
             $table->timestamps();
-            
-            $table->unique(['expression_id_1', 'expression_id_2', 'type']);
+
+            $table->unique(['expression_id_1', 'expression_id_2', 'type'], 'expression_connections_unique');
         });
     }
 

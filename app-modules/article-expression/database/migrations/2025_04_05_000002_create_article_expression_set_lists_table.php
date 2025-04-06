@@ -21,8 +21,8 @@ return new class extends Migration
             $table->text('example_sentence')->nullable();
             $table->json('pronunciation')->nullable();
             $table->timestamps();
-            
-            $table->unique(['article_expression_set_id', 'slug']);
+
+            $table->unique(['article_expression_set_id', 'slug'], 'article_expression_set_list_unique');
         });
     }
 

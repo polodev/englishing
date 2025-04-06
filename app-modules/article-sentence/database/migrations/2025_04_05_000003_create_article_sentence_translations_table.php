@@ -18,7 +18,8 @@ return new class extends Migration
             $table->text('transliteration')->nullable();
             $table->string('locale', 10);
             $table->timestamps();
-            $table->unique(['article_sentence_set_list_id', 'locale']);
+
+            $table->unique(['article_sentence_set_list_id', 'locale'], 'article_sentence_translations_unique');
         });
     }
 

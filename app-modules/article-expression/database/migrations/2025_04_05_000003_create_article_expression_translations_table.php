@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('locale', 10);
             $table->string('source')->nullable();
             $table->timestamps();
-            
-            $table->unique(['article_expression_set_list_id', 'locale']);
+
+            $table->unique(['article_expression_set_list_id', 'locale'], 'article_expression_translations_unique');
         });
     }
 
