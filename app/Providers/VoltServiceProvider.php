@@ -24,6 +24,7 @@ class VoltServiceProvider extends ServiceProvider
             config('livewire.view_path', resource_path('views/livewire')),
             resource_path('views/pages'),
              base_path('app-modules/user-usage-times/resources/views/livewire'),
+             base_path('app-modules/word/resources/views/livewire'),
         ]);
     }
 }

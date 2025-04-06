@@ -31,5 +31,21 @@
         - can add translation
         - json for adding multiple meaning, translation, connection
 
+# articles module
+    - list view
+    - add new article page
+    - single article
+        - add word set 
+            - related things
+        - add sentence set
+         - related
+        - add expression set
+         - related
+        - add double sentence set
+         - related
+        - add conversation set
+         - related
+
+
 
 

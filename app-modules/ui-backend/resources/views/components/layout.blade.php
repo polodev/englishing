@@ -31,7 +31,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <!-- Styles -->
-    @livewireStyles
     @stack('styles')
 
     <style>
@@ -148,7 +147,6 @@
 
     <!-- Scripts -->
     <x-ui-backend::partials.scripts />
-    @livewireScripts
     @stack('scripts')
 
     <!-- Flowbite JS -->

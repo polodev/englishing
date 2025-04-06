@@ -146,4 +146,25 @@ class Word extends Model
         $wordId = $word instanceof Word ? $word->id : $word;
         $this->connections()->attach($wordId, ['type' => 'antonyms']);
     }
+
+    /**
+     * Get the list of available parts of speech.
+     *
+     * @return array
+     */
+    public static function getPartsOfSpeech(): array
+    {
+        return [
+            'noun' => 'Noun',
+            'verb' => 'Verb',
+            'adjective' => 'Adjective',
+            'adverb' => 'Adverb',
+            'pronoun' => 'Pronoun',
+            'preposition' => 'Preposition',
+            'conjunction' => 'Conjunction',
+            'interjection' => 'Interjection',
+            'article' => 'Article',
+            'determiner' => 'Determiner'
+        ];
+    }
 }
