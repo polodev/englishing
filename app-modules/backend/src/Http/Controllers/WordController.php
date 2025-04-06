@@ -103,6 +103,9 @@ class WordController
                 // Merge the collections and extract word values
                 return $antonyms1->merge($antonyms2)->pluck('word')->implode(', ');
             })
+            ->addColumn('phonetic', function (Word $word) {
+                return $word->phonetic ?? 'No phonetic available';
+            })
             ->addColumn('pronunciation_text', function (Word $word) {
                 if ($word->getTranslations('pronunciation')) {
                     $pronunciations = [];

@@ -1,92 +1,63 @@
 <x-ui-backend::layout>
 <style>
     .meanings-container {
-        max-width: 400px;
+        @apply max-w-md;
     }
     .meaning-text {
-        font-weight: bold;
-        color: #333;
-        margin-bottom: 5px;
+        @apply font-bold text-gray-800 mb-1;
     }
     .translations {
-        background-color: #f8f9fa;
-        padding: 8px;
-        border-radius: 4px;
-        margin-bottom: 5px;
+        @apply bg-gray-50 p-2 rounded mb-1;
     }
     .translation-item {
-        margin-bottom: 3px;
+        @apply mb-0.5;
     }
     .language-label {
-        font-weight: bold;
-        color: #007bff;
-        display: inline-block;
-        width: 40px;
+        @apply font-bold text-blue-600 inline-block w-10;
     }
     .transliterations {
-        background-color: #e9ecef;
-        padding: 8px;
-        border-radius: 4px;
-        margin-top: 5px;
+        @apply bg-gray-100 p-2 rounded mt-1;
     }
     .transliteration-title {
-        font-style: italic;
-        margin-bottom: 5px;
-        color: #6c757d;
+        @apply italic mb-1 text-gray-500;
     }
     .transliteration-item {
-        margin-bottom: 3px;
+        @apply mb-0.5;
+    }
+    .transliteration-block {
+        @apply ml-2.5 italic text-gray-500;
     }
     .meaning-separator {
-        margin: 10px 0;
-        border-top: 1px dashed #dee2e6;
+        @apply my-2.5 border-t border-dashed border-gray-200;
+    }
+    .no-data {
+        @apply text-gray-500 italic text-sm;
     }
 </style>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Words</h3>
+<div class="container mx-auto px-4 py-6">
+    <div class="flex flex-wrap -mx-3">
+        <div class="w-full px-3">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-gray-50 px-6 py-4 border-b border-gray-200">
+                    <h3 class="text-xl font-semibold text-gray-800">Words</h3>
                 </div>
-                <div class="card-body">
-                    <!-- Filter Section -->
-                    <div class="row mb-4">
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="created-from">Created From</label>
-                                <input type="text" class="form-control flatpickr-date" id="created-from" placeholder="From date">
-                            </div>
-                        </div>
-                        <div class="col-md-5">
-                            <div class="form-group">
-                                <label for="created-to">Created To</label>
-                                <input type="text" class="form-control flatpickr-date" id="created-to" placeholder="To date">
-                            </div>
-                        </div>
-                        <div class="col-md-2 d-flex align-items-end">
-                            <div class="form-group">
-                                <button id="filter-button" class="btn btn-primary mr-2">Apply</button>
-                                <button id="reset-button" class="btn btn-secondary">Reset</button>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="p-6">
 
                     <!-- Datatable -->
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped" id="words-table">
-                            <thead>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200" id="words-table">
+                            <thead class="bg-gray-50">
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Word</th>
-                                    <th>Meanings & Translations</th>
-                                    <th>Standalone Translations</th>
-                                    <th>Synonyms</th>
-                                    <th>Antonyms</th>
-                                    <th>Pronunciation</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Word</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phonetic</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Meanings & Translations</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Standalone Translations</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Synonyms</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Antonyms</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pronunciation</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Updated At</th>
                                 </tr>
                             </thead>
                         </table>
@@ -101,13 +72,8 @@
 @push('scripts')
 <script>
     $(document).ready(function() {
-        // Initialize Flatpickr for date inputs
-        $('.flatpickr-date').flatpickr({
-            dateFormat: 'Y-m-d',
-            allowInput: true
-        });
 
-        // Initialize DataTable
+        // Initialize DataTable with Tailwind styling
         let wordsTable = $('#words-table').DataTable({
             processing: true,
             serverSide: true,
@@ -115,14 +81,21 @@
                 url: '{{ route("backend::words.index_json") }}',
                 type: 'POST',
                 data: function(d) {
-                    d.created_from = $('#created-from').val();
-                    d.created_to = $('#created-to').val();
                     d._token = '{{ csrf_token() }}';
+                }
+            },
+            // Custom classes for DataTables elements
+            dom: '<"flex flex-col md:flex-row justify-between items-center mb-4"<"flex-1"f><"flex-shrink-0"l>>rt<"flex flex-col md:flex-row justify-between items-center"<"flex-1"i><"flex-shrink-0"p>>',
+            language: {
+                paginate: {
+                    previous: '<span class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Previous</span>',
+                    next: '<span class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100">Next</span>'
                 }
             },
             columns: [
                 { data: 'id', name: 'id' },
                 { data: 'word', name: 'word' },
+                { data: 'phonetic', name: 'phonetic', searchable: false },
                 { data: 'meanings_with_translations', name: 'meanings_with_translations', searchable: false },
                 { data: 'standalone_translations', name: 'standalone_translations', searchable: false },
                 { data: 'synonyms', name: 'synonyms', searchable: false },
@@ -134,17 +107,6 @@
             order: [[0, 'desc']]
         });
 
-        // Apply filters
-        $('#filter-button').on('click', function() {
-            wordsTable.draw();
-        });
-
-        // Reset filters
-        $('#reset-button').on('click', function() {
-            $('#created-from').val('');
-            $('#created-to').val('');
-            wordsTable.draw();
-        });
     });
 </script>
 @endpush

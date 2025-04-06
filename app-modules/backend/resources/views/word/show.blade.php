@@ -1,179 +1,128 @@
 <x-ui-backend::layout>
-<style>
-    .word-container {
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    .word-header {
-        background-color: #f8f9fa;
-        border-bottom: 1px solid #dee2e6;
-        padding: 20px;
-        border-radius: 8px 8px 0 0;
-    }
-    .word-title {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-        color: #333;
-    }
-    .word-body {
-        padding: 20px;
-    }
-    .section-title {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-        color: #495057;
-        border-bottom: 2px solid #e9ecef;
-        padding-bottom: 0.5rem;
-    }
-    .meaning-item {
-        margin-bottom: 1.5rem;
-        padding: 15px;
-        background-color: #f8f9fa;
-        border-radius: 6px;
-    }
-    .meaning-text {
-        font-weight: 600;
-        font-size: 1.1rem;
-        margin-bottom: 0.75rem;
-    }
-    .translation-container {
-        margin-left: 1rem;
-        padding: 10px;
-        background-color: #fff;
-        border-radius: 4px;
-        border-left: 3px solid #007bff;
-    }
-    .transliteration-text {
-        margin-left: 0.5rem;
-        font-style: italic;
-        color: #6c757d;
-    }
-    .language-label {
-        font-weight: bold;
-        color: #007bff;
-        display: inline-block;
-        width: 40px;
-    }
-    .pronunciation-container {
-        margin-bottom: 1.5rem;
-        padding: 15px;
-        background-color: #e9ecef;
-        border-radius: 6px;
-    }
-    .related-words-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    .related-word-badge {
-        display: inline-block;
-        padding: 5px 10px;
-        background-color: #e9ecef;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        color: #495057;
-        text-decoration: none;
-        transition: all 0.2s;
-    }
-    .related-word-badge:hover {
-        background-color: #007bff;
-        color: #fff;
-    }
-    .back-button {
-        margin-bottom: 20px;
-    }
-</style>
 
-<div class="container py-4">
-    <div class="back-button">
-        <a href="{{ route('backend::words.index') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Words List
+<div class="container mx-auto px-4 py-6">
+    <div class="mb-5">
+        <a href="{{ route('backend::words.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Back to Words List
         </a>
     </div>
 
-    <div class="word-container">
-        <div class="word-header">
-            <h1 class="word-title">{{ $word->word }}</h1>
-            <div class="text-muted">
-                <small>Created: {{ $word->created_at->format('Y-m-d H:i:s') }} | Updated: {{ $word->updated_at->format('Y-m-d H:i:s') }}</small>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <div class="bg-gray-50 border-b border-gray-200 px-6 py-4 rounded-t-lg">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">{{ $word->word }}</h1>
+            <div class="text-gray-500 text-sm">
+                <span>Created: {{ $word->created_at->format('Y-m-d H:i:s') }} | Updated: {{ $word->updated_at->format('Y-m-d H:i:s') }}</span>
             </div>
         </div>
 
-        <div class="word-body">
-            <!-- Pronunciation Section -->
+        <div class="px-6 py-5">
+            <!-- Phonetic Section -->
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 border-b-2 border-gray-200 pb-2 mb-3">Phonetic</h2>
+                <div class="bg-gray-50 p-4 rounded-md">
+                    @if($word->phonetic)
+                        <div class="text-lg">{{ $word->phonetic }}</div>
+                    @else
+                        <div class="text-gray-500">No phonetic available</div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Pronunciation Section (non-English locales) -->
             @if($word->getTranslations('pronunciation'))
-            <div class="mb-4">
-                <h2 class="section-title">Pronunciation</h2>
-                <div class="pronunciation-container">
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 border-b-2 border-gray-200 pb-2 mb-3">Pronunciation</h2>
+                <div class="bg-gray-50 p-4 rounded-md">
                     @foreach($word->getTranslations('pronunciation') as $locale => $pronunciation)
-                        <div><span class="language-label">{{ strtoupper($locale) }}:</span> {{ $pronunciation }}</div>
+                        <div class="mb-1"><span class="font-bold text-blue-600 inline-block w-10">{{ strtoupper($locale) }}:</span> {{ $pronunciation }}</div>
                     @endforeach
                 </div>
             </div>
             @endif
 
-            <!-- Meanings Section -->
-            <div class="mb-4">
-                <h2 class="section-title">Meanings</h2>
+            <!-- Meanings with Translations Section -->
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 border-b-2 border-gray-200 pb-2 mb-3">Meanings with Translations</h2>
                 @forelse($word->meanings as $index => $meaning)
-                    <div class="meaning-item">
-                        <div class="meaning-text">{{ $index + 1 }}. {{ $meaning->meaning }}</div>
+                    <div class="bg-gray-50 p-4 rounded-md mb-4">
+                        <div class="text-lg font-semibold mb-3">{{ $index + 1 }}. {{ $meaning->meaning }}</div>
                         
                         @if($meaning->translations->count() > 0)
-                            <div class="translation-container">
-                                <div class="mb-1">Translations:</div>
+                            <div class="ml-4 p-3 bg-white rounded border-l-4 border-blue-500">
+                                <div class="font-medium mb-2">Translations:</div>
                                 @foreach($meaning->translations as $translation)
-                                    <div>
-                                        <span class="language-label">{{ strtoupper($translation->locale) }}:</span> 
+                                    <div class="mb-1">
+                                        <span class="font-bold text-blue-600 inline-block w-10">{{ strtoupper($translation->locale) }}:</span> 
                                         {{ $translation->translation }}
                                         @if($translation->transliteration)
-                                            <span class="transliteration-text">({{ $translation->transliteration }})</span>
+                                            <span class="ml-2 italic text-gray-600">({{ $translation->transliteration }})</span>
                                         @endif
                                     </div>
                                 @endforeach
                             </div>
                         @else
-                            <div class="translation-container">
-                                <div>No translations available</div>
+                            <div class="ml-4 p-3 bg-white rounded border-l-4 border-blue-500">
+                                <div class="text-gray-500">No translations available</div>
                             </div>
                         @endif
                     </div>
                 @empty
-                    <div class="alert alert-info">No meanings available for this word.</div>
+                    <div class="bg-blue-50 text-blue-700 p-4 rounded-md">No meanings available for this word.</div>
                 @endforelse
+            </div>
+            
+            <!-- Standalone Translations Section -->
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 border-b-2 border-gray-200 pb-2 mb-3">Standalone Translations</h2>
+                @if($word->translations->count() > 0)
+                    <div class="bg-gray-50 p-4 rounded-md">
+                        @foreach($word->translations as $translation)
+                            <div class="mb-2">
+                                <span class="font-bold text-blue-600 inline-block w-10">{{ strtoupper($translation->locale) }}:</span> 
+                                {{ $translation->translation }}
+                                @if($translation->transliteration)
+                                    <span class="ml-2 italic text-gray-600">({{ $translation->transliteration }})</span>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="bg-blue-50 text-blue-700 p-4 rounded-md">No standalone translations available for this word.</div>
+                @endif
             </div>
 
             <!-- Synonyms Section -->
-            <div class="mb-4">
-                <h2 class="section-title">Synonyms</h2>
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 border-b-2 border-gray-200 pb-2 mb-3">Synonyms</h2>
                 @if($synonyms->count() > 0)
-                    <div class="related-words-container">
+                    <div class="flex flex-wrap gap-2">
                         @foreach($synonyms as $synonym)
-                            <a href="{{ route('backend::words.show', $synonym->id) }}" class="related-word-badge">
+                            <a href="{{ route('backend::words.show', $synonym->id) }}" class="inline-block px-3 py-1 bg-gray-100 hover:bg-blue-500 hover:text-white text-gray-700 rounded-full text-sm transition-colors">
                                 {{ $synonym->word }}
                             </a>
                         @endforeach
                     </div>
                 @else
-                    <div class="alert alert-info">No synonyms available for this word.</div>
+                    <div class="bg-blue-50 text-blue-700 p-4 rounded-md">No synonyms available for this word.</div>
                 @endif
             </div>
 
             <!-- Antonyms Section -->
-            <div class="mb-4">
-                <h2 class="section-title">Antonyms</h2>
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 border-b-2 border-gray-200 pb-2 mb-3">Antonyms</h2>
                 @if($antonyms->count() > 0)
-                    <div class="related-words-container">
+                    <div class="flex flex-wrap gap-2">
                         @foreach($antonyms as $antonym)
-                            <a href="{{ route('backend::words.show', $antonym->id) }}" class="related-word-badge">
+                            <a href="{{ route('backend::words.show', $antonym->id) }}" class="inline-block px-3 py-1 bg-gray-100 hover:bg-blue-500 hover:text-white text-gray-700 rounded-full text-sm transition-colors">
                                 {{ $antonym->word }}
                             </a>
                         @endforeach
                     </div>
                 @else
-                    <div class="alert alert-info">No antonyms available for this word.</div>
+                    <div class="bg-blue-50 text-blue-700 p-4 rounded-md">No antonyms available for this word.</div>
                 @endif
             </div>
         </div>
