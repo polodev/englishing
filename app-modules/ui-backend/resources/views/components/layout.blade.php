@@ -26,6 +26,8 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
 
+    <!-- Livewire Styles -->
+    @livewireStyles
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -141,8 +143,8 @@
     <x-ui-backend::partials.sidebar />
 
     <!-- Main Content Area -->
-    <main class="pt-16 transition-all duration-300" :class="{'lg:pl-64': sidebarOpen, 'lg:pl-16': !sidebarOpen}">
-        <div class="p-4">
+    <main x-cloak class="pt-16 transition-all duration-300 dark:bg-gray-900" :class="{'lg:pl-64': sidebarOpen, 'lg:pl-16': !sidebarOpen}">
+        <div class="p-4 dark:text-gray-200">
             @if(isset($header))
                 <div class="mb-6">
                     {{ $header }}
@@ -156,6 +158,9 @@
     <!-- Scripts -->
     <x-ui-backend::partials.scripts />
     @stack('scripts')
+
+    <!-- Livewire Scripts -->
+    @livewireScripts
 
     <!-- Flowbite JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>

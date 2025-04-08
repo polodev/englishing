@@ -153,7 +153,7 @@ new class extends Component {
 
 <div>
     @if(session()->has('message'))
-        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-2 mb-2" role="alert">
+        <div class="bg-green-100 dark:bg-green-800 border-l-4 border-green-500 text-green-700 dark:text-green-200 p-2 mb-2" role="alert">
             {{ session('message') }}
         </div>
     @endif
@@ -172,14 +172,14 @@ new class extends Component {
     @if($showModal)
     <div class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50">
         <div class="fixed inset-0 transform transition-all" wire:click="closeModal">
-            <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
+            <div class="absolute inset-0 bg-gray-500 dark:bg-gray-800 opacity-75"></div>
         </div>
 
-        <div class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:max-w-lg mx-auto">
+        <div class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:max-w-lg mx-auto">
             <!-- Success Message -->
             @if ($showSuccessMessage)
                 <div class="p-6">
-                    <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-4">
+                    <div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 p-4 mb-4">
                         <div class="flex items-center">
                             <div class="flex-shrink-0">
                                 <svg class="h-5 w-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
@@ -187,7 +187,7 @@ new class extends Component {
                                 </svg>
                             </div>
                             <div class="ml-3">
-                                <p class="text-sm leading-5 text-green-700">
+                                <p class="text-sm leading-5 text-green-700 dark:text-green-200">
                                     Word "{{ $createdWordName }}" has been created successfully!
                                 </p>
                             </div>
@@ -200,7 +200,7 @@ new class extends Component {
                         </a>
 
                         <div>
-                            <button wire:click="addAnotherWord" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-800 uppercase tracking-widest hover:bg-gray-300 active:bg-gray-400 focus:outline-none focus:border-gray-400 focus:ring focus:ring-gray-200 disabled:opacity-25 transition">
+                            <button wire:click="addAnotherWord" class="inline-flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-gray-800 dark:text-gray-200 uppercase tracking-widest hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-500 focus:outline-none focus:border-gray-400 dark:focus:border-gray-500 focus:ring focus:ring-gray-200 dark:focus:ring-gray-600 disabled:opacity-25 transition">
                                 Add Another Word
                             </button>
 
@@ -212,26 +212,26 @@ new class extends Component {
                 </div>
             @else
                 <!-- Modal Header -->
-                <div class="px-6 py-4 bg-gray-100 border-b border-gray-200">
-                    <h3 class="text-lg font-medium text-gray-900">Add New Word</h3>
+                <div class="px-6 py-4 bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Add New Word</h3>
                 </div>
 
                 <!-- Modal Body -->
-                <form wire:submit.prevent="createWord" class="p-6">
+                <form wire:submit.prevent="createWord" class="p-6 dark:bg-gray-800">
                     <!-- Word Input -->
                     <div class="mb-4">
-                        <label for="word" class="block text-sm font-medium text-gray-700 mb-1">Word</label>
-                        <input type="text" id="word" wire:model.live="word" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter word">
+                        <label for="word" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Word</label>
+                        <input type="text" id="word" wire:model.live="word" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter word">
                         @error('word') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Slug Input (Read-only) -->
                     <div class="mb-4">
-                        <label for="slug" class="block text-sm font-medium text-gray-700 mb-1">Slug</label>
+                        <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug</label>
                         <div class="flex items-center">
-                            <input type="text" id="slug" wire:model="slug" readonly class="mt-1 block w-full bg-gray-100 border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" value="{{ $slug }}">
+                            <input type="text" id="slug" wire:model="slug" readonly class="mt-1 block w-full bg-gray-100 dark:bg-gray-600 border-gray-300 dark:border-gray-700 dark:text-gray-200 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" value="{{ $slug }}">
                             @if($slugExists)
-                                <a href="{{ route('backend::words.show', $existingWordId) }}" target="_blank" class="ml-2 text-blue-600 hover:text-blue-800">
+                                <a href="{{ route('backend::words.show', $existingWordId) }}" target="_blank" class="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
@@ -239,7 +239,7 @@ new class extends Component {
                             @endif
                         </div>
                         @if($slugExists)
-                            <div class="mt-1 text-amber-600 text-sm">
+                            <div class="mt-1 text-amber-600 dark:text-amber-400 text-sm">
                                 This slug is already used by "{{ $existingWordName }}". Please modify the word to generate a unique slug.
                             </div>
                         @endif
@@ -248,15 +248,15 @@ new class extends Component {
 
                     <!-- Phonetic Input -->
                     <div class="mb-4">
-                        <label for="phonetic" class="block text-sm font-medium text-gray-700 mb-1">Phonetic</label>
-                        <input type="text" id="phonetic" wire:model="phonetic" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter phonetic pronunciation">
+                        <label for="phonetic" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phonetic</label>
+                        <input type="text" id="phonetic" wire:model="phonetic" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter phonetic pronunciation">
                         @error('phonetic') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Part of Speech Dropdown -->
                     <div class="mb-4">
-                        <label for="part_of_speech" class="block text-sm font-medium text-gray-700 mb-1">Part of Speech</label>
-                        <select id="part_of_speech" wire:model="part_of_speech" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                        <label for="part_of_speech" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Part of Speech</label>
+                        <select id="part_of_speech" wire:model="part_of_speech" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
                             <option value="">Select Part of Speech</option>
                             @foreach($this->getPartsOfSpeech() as $value => $label)
                                 <option value="{{ $value }}">{{ $label }}</option>
@@ -267,20 +267,20 @@ new class extends Component {
 
                     <!-- Pronunciation Fields -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Pronunciation</label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pronunciation</label>
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <!-- Bengali Pronunciation -->
                             <div>
-                                <label for="pronunciation_bn" class="block text-sm font-medium text-gray-600 mb-1">Bengali</label>
-                                <input type="text" id="pronunciation_bn" wire:model="pronunciation.bn" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Bengali pronunciation">
+                                <label for="pronunciation_bn" class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Bengali</label>
+                                <input type="text" id="pronunciation_bn" wire:model="pronunciation.bn" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Bengali pronunciation">
                                 @error('pronunciation.bn') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                             </div>
                             
                             <!-- Hindi Pronunciation -->
                             <div>
-                                <label for="pronunciation_hi" class="block text-sm font-medium text-gray-600 mb-1">Hindi</label>
-                                <input type="text" id="pronunciation_hi" wire:model="pronunciation.hi" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Hindi pronunciation">
+                                <label for="pronunciation_hi" class="block text-sm font-medium text-gray-600 dark:text-gray-400 mb-1">Hindi</label>
+                                <input type="text" id="pronunciation_hi" wire:model="pronunciation.hi" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Hindi pronunciation">
                                 @error('pronunciation.hi') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -288,7 +288,7 @@ new class extends Component {
 
                     <!-- Form Buttons -->
                     <div class="mt-6 flex justify-end">
-                        <button type="button" wire:click="closeModal" class="inline-flex items-center px-4 py-2 bg-gray-200 border border-transparent rounded-md font-semibold text-xs text-gray-800 uppercase tracking-widest hover:bg-gray-300 active:bg-gray-400 focus:outline-none focus:border-gray-400 focus:ring focus:ring-gray-200 disabled:opacity-25 transition mr-2">
+                        <button type="button" wire:click="closeModal" class="inline-flex items-center px-4 py-2 bg-gray-200 dark:bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-gray-800 dark:text-gray-200 uppercase tracking-widest hover:bg-gray-300 dark:hover:bg-gray-600 active:bg-gray-400 dark:active:bg-gray-500 focus:outline-none focus:border-gray-400 dark:focus:border-gray-500 focus:ring focus:ring-gray-200 dark:focus:ring-gray-600 disabled:opacity-25 transition mr-2">
                             Cancel
                         </button>
 
