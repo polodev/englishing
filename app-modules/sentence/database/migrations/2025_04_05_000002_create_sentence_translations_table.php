@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('locale', 10);
             $table->string('source')->nullable();
             $table->timestamps();
-            
+
             $table->unique(['sentence_id', 'locale', 'slug']);
         });
     }

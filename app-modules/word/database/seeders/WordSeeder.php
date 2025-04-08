@@ -35,11 +35,13 @@ class WordSeeder extends Seeder
                                 'locale' => 'bn',
                                 'translation' => 'সুখী',
                                 'transliteration' => 'shukhi',
+                                'slug' => 'shukhi',
                             ],
                             [
                                 'locale' => 'hi',
                                 'translation' => 'खुश',
                                 'transliteration' => 'khush',
+                                'slug' => 'khush',
                             ],
                         ]
                     ],
@@ -53,11 +55,13 @@ class WordSeeder extends Seeder
                                 'locale' => 'bn',
                                 'translation' => 'সৌভাগ্যবান',
                                 'transliteration' => 'soubhaggaban',
+                                'slug' => 'soubhaggaban',
                             ],
                             [
                                 'locale' => 'hi',
                                 'translation' => 'भाग्यशाली',
                                 'transliteration' => 'bhagyashali',
+                                'slug' => 'bhagyashali',
                             ],
                         ]
                     ],
@@ -81,11 +85,13 @@ class WordSeeder extends Seeder
                                 'locale' => 'bn',
                                 'translation' => 'দুঃখিত',
                                 'transliteration' => 'dukhito',
+                                'slug' => 'dukhito',
                             ],
                             [
                                 'locale' => 'hi',
                                 'translation' => 'दुखी',
                                 'transliteration' => 'dukhi',
+                                'slug' => 'dukhi',
                             ],
                         ]
                     ],
@@ -109,11 +115,13 @@ class WordSeeder extends Seeder
                                 'locale' => 'bn',
                                 'translation' => 'আনন্দময়',
                                 'transliteration' => 'anandomoy',
+                                'slug' => 'anandomoy',
                             ],
                             [
                                 'locale' => 'hi',
                                 'translation' => 'आनंदित',
                                 'transliteration' => 'anandit',
+                                'slug' => 'anandit',
                             ],
                         ]
                     ],
@@ -137,11 +145,13 @@ class WordSeeder extends Seeder
                                 'locale' => 'bn',
                                 'translation' => 'হতভাগ্য',
                                 'transliteration' => 'hotobhaggo',
+                                'slug' => 'hotobhaggo',
                             ],
                             [
                                 'locale' => 'hi',
                                 'translation' => 'दयनीय',
                                 'transliteration' => 'dayaniy',
+                                'slug' => 'dayaniy',
                             ],
                         ]
                     ],

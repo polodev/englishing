@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('word_id');
             $table->foreignId('meaning_id')->nullable();
             $table->text('translation');
+            $table->string('slug');
             $table->text('transliteration')->nullable();
             $table->string('locale', 10);
             $table->string('source')->nullable();

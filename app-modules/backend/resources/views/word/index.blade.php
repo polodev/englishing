@@ -43,6 +43,7 @@
                     <div class="flex justify-between items-center">
                         <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Words</h3>
                         <livewire:word--word-create/>
+                        <livewire:word--word-create-from-json/>
                     </div>
                 </div>
                 <div class="p-6 dark:bg-gray-800">
@@ -113,7 +114,7 @@
             initComplete: function() {
                 // Apply dark mode classes to DataTable elements
                 $('#words-table_wrapper').addClass('dark:text-gray-200');
-                
+
                 // Add MutationObserver to handle dynamically added rows
                 const observer = new MutationObserver(function(mutations) {
                     mutations.forEach(function(mutation) {
@@ -123,7 +124,7 @@
                             $('#words-table tbody tr').addClass('dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700');
                             $('#words-table tbody tr:hover').addClass('dark:bg-gray-700');
                             $('#words-table tbody td').addClass('dark:border-gray-700');
-                            
+
                             // Add dark mode classes to pagination and info elements
                             $('.dataTables_info').addClass('dark:text-gray-300');
                             $('.dataTables_length, .dataTables_filter').addClass('dark:text-gray-300');
@@ -132,13 +133,13 @@
                         }
                     });
                 });
-                
+
                 // Start observing the table for changes
-                observer.observe(document.querySelector('#words-table'), { 
-                    childList: true, 
-                    subtree: true 
+                observer.observe(document.querySelector('#words-table'), {
+                    childList: true,
+                    subtree: true
                 });
-                
+
                 // Initial application of classes
                 $('#words-table tbody').addClass('dark:bg-gray-800 dark:text-gray-200');
                 $('#words-table tbody tr').addClass('dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700');
