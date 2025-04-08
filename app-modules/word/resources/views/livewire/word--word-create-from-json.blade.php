@@ -25,85 +25,30 @@ new class extends Component {
         $this->showSampleLink = true;
     }
 
+    // Listen for the openJsonImportModal event
+    #[On('openJsonImportModal')]
+    public function handleOpenModal()
+    {
+        $this->openModal();
+    }
+
     // Close the modal
     public function closeModal()
     {
         $this->showModal = false;
     }
 
-    // View sample JSON
-    public function viewSample()
-    {
-        $this->errors = [];
-        
-        try {
-            // Hardcoded sample JSON
-            $this->jsonData = '{
-    "words": [
-        {
-            "word": "happiness",
-            "slug": "happiness",
-            "phonetic": "ˈhæpinəs",
-            "part_of_speech": "noun",
-            "source": "oxford",
-            "pronunciation": {
-                "bn_pronunciation": "হ্যাপিনেস",
-                "hi_pronunciation": "हैप्पीनेस",
-                "es_pronunciation": "jápines"
-            },
-            "meanings": [
-                {
-                    "meaning": "the state of being happy",
-                    "slug": "state-of-being-happy",
-                    "display_order": 1,
-                    "source": "oxford",
-                    "translations": [
-                        {
-                            "locale": "bn",
-                            "translation": "সুখ",
-                            "transliteration": "shukh"
-                        },
-                        {
-                            "locale": "hi",
-                            "translation": "ख़ुशी",
-                            "transliteration": "khushi"
-                        },
-                        {
-                            "locale": "es",
-                            "translation": "felicidad",
-                            "transliteration": null
-                        }
-                    ]
-                }
-            ],
-            "standalone_translations": [
-                {
-                    "locale": "bn",
-                    "translation": "আনন্দ",
-                    "transliteration": "anondo"
-                }
-            ],
-            "synonyms": ["joy", "delight", "pleasure", "contentment"],
-            "antonyms": ["sadness", "sorrow", "misery"]
-        }
-    ]
-}';
-            
-        } catch (\Exception $e) {
-            $this->errors[] = "Error loading sample: " . $e->getMessage();
-        }
-    }
-
     // Process JSON data and create words
     public function processJson()
     {
+        dd($this);
         $this->reset(['createdWords', 'errors']);
         $this->processing = true;
 
         try {
             // Decode JSON data
             $data = json_decode($this->jsonData, true);
-            
+
             if (json_last_error() !== JSON_ERROR_NONE) {
                 $this->errors[] = "Invalid JSON: " . json_last_error_msg();
                 $this->processing = false;
@@ -158,22 +103,22 @@ new class extends Component {
             // For existing words, update fields if provided
             if ($word->wasRecentlyCreated === false) {
                 $needsUpdate = false;
-                
+
                 if (isset($wordData['phonetic']) && $word->phonetic !== $wordData['phonetic']) {
                     $word->phonetic = $wordData['phonetic'];
                     $needsUpdate = true;
                 }
-                
+
                 if (isset($wordData['part_of_speech']) && $word->part_of_speech !== $wordData['part_of_speech']) {
                     $word->part_of_speech = $wordData['part_of_speech'];
                     $needsUpdate = true;
                 }
-                
+
                 if (isset($wordData['source']) && $word->source !== $wordData['source']) {
                     $word->source = $wordData['source'];
                     $needsUpdate = true;
                 }
-                
+
                 if ($needsUpdate) {
                     $word->save();
                 }
@@ -239,7 +184,7 @@ new class extends Component {
         foreach ($connections as $connection) {
             $connection = trim($connection);
             if (empty($connection)) continue;
-            
+
             // Create or find the related word
             $relatedWord = Word::firstOrCreate(
                 ['slug' => Str::slug($connection)],
@@ -247,7 +192,7 @@ new class extends Component {
                     'word' => $connection,
                 ]
             );
-            
+
             $this->createWordConnection($word, $relatedWord, $type);
         }
     }
@@ -282,22 +227,22 @@ new class extends Component {
         // For existing meanings, update fields if provided
         if ($meaning->wasRecentlyCreated === false) {
             $needsUpdate = false;
-            
+
             if (isset($meaningData['meaning']) && $meaning->meaning !== $meaningData['meaning']) {
                 $meaning->meaning = $meaningData['meaning'];
                 $needsUpdate = true;
             }
-            
+
             if (isset($meaningData['source']) && $meaning->source !== $meaningData['source']) {
                 $meaning->source = $meaningData['source'];
                 $needsUpdate = true;
             }
-            
+
             if (isset($meaningData['display_order']) && $meaning->display_order !== $meaningData['display_order']) {
                 $meaning->display_order = $meaningData['display_order'];
                 $needsUpdate = true;
             }
-            
+
             if ($needsUpdate) {
                 $meaning->save();
             }
@@ -424,7 +369,7 @@ new class extends Component {
         if ($word->id === $relatedWord->id) {
             return;
         }
-        
+
         // Check if connection already exists (in either direction)
         $existingConnection1 = DB::table('word_connections')
             ->where('word_id_1', $word->id)
@@ -454,10 +399,13 @@ new class extends Component {
 
 <div>
     <!-- Button to open modal -->
-    <button wire:click="openModal" class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-gray-600 active:bg-gray-900 dark:active:bg-gray-800 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition">
+    <button 
+        wire:click="openModal"
+        class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-gray-600 active:bg-gray-900 dark:active:bg-gray-800 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
+    >
         Import Words from JSON
     </button>
-
+    
     <!-- Modal -->
     @if($showModal)
     <div class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50">
@@ -481,13 +429,13 @@ new class extends Component {
                 <!-- Sample Link -->
                 @if($showSampleLink)
                 <div class="mb-4">
-                    <button 
-                        type="button" 
-                        wire:click.prevent="viewSample" 
+                    <a
+                        href="/sample-data/words/words-sample.json"
+                        target="_blank"
                         class="inline-flex items-center px-3 py-1 bg-blue-600 dark:bg-blue-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 disabled:opacity-25 transition"
                     >
                         View Sample JSON Format
-                    </button>
+                    </a>
                 </div>
                 @endif
 
@@ -521,16 +469,15 @@ new class extends Component {
 
                 <!-- JSON Input -->
                 <div class="mb-4">
-                    <label for="jsonData" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                        JSON Data
-                    </label>
-                    <textarea
-                        id="jsonData"
-                        wire:model="jsonData"
-                        rows="15"
-                        class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-                        placeholder='{"words": [...]}'
-                    ></textarea>
+                    <div wire:ignore>
+                        <x-json-editor
+                            label="JSON Data"
+                            wire:model.live="jsonData"
+                            :content="$jsonData"
+                            placeholder='{"words": [...]}'
+                            model-name="jsonData"
+                        />
+                    </div>
                 </div>
 
                 <!-- Submit Button -->

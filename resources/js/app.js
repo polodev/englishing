@@ -12,5 +12,28 @@ window.Alpine = Alpine;
 // Import navigation functionality
 import './navigation.js';
 
-// Log initialization for debugging
-console.log('Alpine initialized from Livewire');
+// Import Ace Editor
+import ace from 'ace-builds/src-noconflict/ace';
+import 'ace-builds/src-noconflict/mode-json';
+import 'ace-builds/src-noconflict/theme-dracula';
+import 'ace-builds/src-noconflict/keybinding-vim';
+import 'ace-builds/src-noconflict/ext-language_tools';
+
+// Make Ace globally available
+window.ace = ace;
+Livewire.start();
+
+// Configure Ace
+ace.require('ace/ext/language_tools');
+
+// Listen for the json-editor-update custom event
+document.addEventListener('livewire:initialized', () => {
+    window.addEventListener('json-editor-update', (event) => {
+        if (event.detail && event.detail.id && event.detail.model) {
+            const component = Livewire.find(event.detail.id);
+            if (component) {
+                component.set(event.detail.model, event.detail.value);
+            }
+        }
+    });
+});
