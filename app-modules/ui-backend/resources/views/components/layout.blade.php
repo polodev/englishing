@@ -68,7 +68,10 @@
         }
       }"
       x-init="init()">
-
+    
+    <!-- Toast Component -->
+    <x-toast />
+    
     <!-- Mobile Navigation -->
     <div x-cloak x-show="mobileMenuOpen" class="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 lg:hidden"
          x-transition:enter="transition-opacity ease-linear duration-300"

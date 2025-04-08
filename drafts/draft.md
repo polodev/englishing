@@ -1,3 +1,19 @@
+first iterate each word
+    - check word present (by slug) or not if not present create word or get word
+    - check word meaning present (by slug and word_id) or not if not present create meaning or get meaning
+    - check meaning translation present (by meaning_id, locale and slug) or not if not present create translation or get translation
+    - check word translation present (by word_id, locale and slug) or not if not present create translation or get translation
+    
+    - split synonyms and antonyms by `,` and iterate it
+        - check each word present (by slug: Str::slug($word)) or not if not present create word or get word
+        - sync connect word with word by word_connection
+    - incase of empty just ignore. 
+
+    - in finally want to see toast message. please make a toast components in components folder 
+
+
+
+
 article
 article-conversation
 article-double-sentence

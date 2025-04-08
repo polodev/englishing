@@ -49,7 +49,7 @@
           "hi_pronunciation": "हैप्पीनेस",
           "es_pronunciation": "jápines"
         },
-        "standalone_translations": [
+        "translations": [
           {
             "locale": "bn",
             "translation": "খুশি",
@@ -113,7 +113,7 @@
           "hi_pronunciation": "करेज",
           "es_pronunciation": "córach"
         },
-        "standalone_translations": [
+        "translations": [
           {
             "locale": "bn",
             "translation": "দুঃসাহস",
@@ -175,7 +175,7 @@
           "hi_pronunciation": "नॉलेज",
           "es_pronunciation": "nólech"
         },
-        "standalone_translations": [
+        "translations": [
           {
             "locale": "bn",
             "translation": "শিক্ষা",
@@ -239,7 +239,7 @@
           "hi_pronunciation": "फ्रीडम",
           "es_pronunciation": "frídom"
         },
-        "standalone_translations": [
+        "translations": [
           {
             "locale": "bn",
             "translation": "আজাদী",
@@ -303,7 +303,7 @@
           "hi_pronunciation": "पेशन्स",
           "es_pronunciation": "péishens"
         },
-        "standalone_translations": [
+        "translations": [
           {
             "locale": "bn",
             "translation": "সবুর",

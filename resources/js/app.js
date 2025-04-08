@@ -29,11 +29,18 @@ ace.require('ace/ext/language_tools');
 // Listen for the json-editor-update custom event
 document.addEventListener('livewire:initialized', () => {
     window.addEventListener('json-editor-update', (event) => {
-        if (event.detail && event.detail.id && event.detail.model) {
-            const component = Livewire.find(event.detail.id);
-            if (component) {
-                component.set(event.detail.model, event.detail.value);
-            }
+        const { editorId, content } = event.detail;
+        const editor = ace.edit(editorId);
+        if (editor) {
+            editor.setValue(content);
+            editor.clearSelection();
         }
+    });
+    
+    // Listen for toast events from Livewire
+    Livewire.on('toast', (data) => {
+        window.dispatchEvent(new CustomEvent('new-toast', { 
+            detail: data
+        }));
     });
 });

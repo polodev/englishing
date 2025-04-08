@@ -15,14 +15,7 @@ class WordTranslation extends Model
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'word_id',
-        'meaning_id',
-        'translation',
-        'transliteration',
-        'locale',
-        'source',
-    ];
+    protected $guarded = [];
 
     /**
      * Get the word that owns the translation.

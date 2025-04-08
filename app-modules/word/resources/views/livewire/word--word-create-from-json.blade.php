@@ -41,37 +41,90 @@ new class extends Component {
     // Process JSON data and create words
     public function processJson()
     {
-        dd($this);
         $this->reset(['createdWords', 'errors']);
         $this->processing = true;
 
         try {
             // Decode JSON data
             $data = json_decode($this->jsonData, true);
-
             if (json_last_error() !== JSON_ERROR_NONE) {
                 $this->errors[] = "Invalid JSON: " . json_last_error_msg();
+                $this->dispatch('toast', [
+                    'type' => 'error',
+                    'message' => "Invalid JSON: " . json_last_error_msg()
+                ]);
                 $this->processing = false;
                 return;
             }
 
-            // Check if the JSON has the expected structure
+            // Validate structure
             if (!isset($data['words']) || !is_array($data['words'])) {
-                $this->errors[] = "JSON must contain a 'words' array.";
+                $this->errors[] = "Invalid JSON structure. Expected a 'words' array.";
+                $this->dispatch('toast', [
+                    'type' => 'error',
+                    'message' => "Invalid JSON structure. Expected a 'words' array."
+                ]);
                 $this->processing = false;
                 return;
             }
 
             // Process each word
-            foreach ($data['words'] as $wordData) {
-                $this->createWordFromData($wordData);
+            $totalProcessed = 0;
+            $totalCreated = 0;
+            $totalUpdated = 0;
+            $totalErrors = 0;
+
+            DB::beginTransaction();
+            try {
+                foreach ($data['words'] as $wordData) {
+                    $result = $this->createWordFromData($wordData);
+                    if ($result) {
+                        $this->createdWords[] = $result;
+                        $totalProcessed++;
+                        if ($result['status'] === 'created') {
+                            $totalCreated++;
+                        } else {
+                            $totalUpdated++;
+                        }
+                    } else {
+                        $totalErrors++;
+                    }
+                }
+                
+                // Only commit if there were no errors
+                if (count($this->errors) === 0) {
+                    DB::commit();
+                    $this->dispatch('toast', [
+                        'type' => 'success',
+                        'message' => "Processed $totalProcessed words: $totalCreated created, $totalUpdated updated"
+                    ]);
+                } else {
+                    // If there were errors, rollback and show error toast
+                    DB::rollBack();
+                    $this->dispatch('toast', [
+                        'type' => 'error',
+                        'message' => "Encountered " . count($this->errors) . " errors while processing words."
+                    ]);
+                }
+            } catch (\Exception $e) {
+                DB::rollBack();
+                $this->errors[] = "Error processing words: " . $e->getMessage();
+                $this->dispatch('toast', [
+                    'type' => 'error',
+                    'message' => "Error processing words: " . $e->getMessage()
+                ]);
             }
 
+            $this->processing = false;
+            $this->showSampleLink = false;
         } catch (\Exception $e) {
-            $this->errors[] = "Error processing JSON: " . $e->getMessage();
+            $this->errors[] = "Error: " . $e->getMessage();
+            $this->dispatch('toast', [
+                'type' => 'error',
+                'message' => "Error: " . $e->getMessage()
+            ]);
+            $this->processing = false;
         }
-
-        $this->processing = false;
     }
 
     // Create a word from the provided data
@@ -81,7 +134,7 @@ new class extends Component {
             // Validate required fields
             if (!isset($wordData['word']) || empty($wordData['word'])) {
                 $this->errors[] = "Word is required.";
-                return;
+                return null;
             }
 
             // Generate slug if not provided
@@ -96,12 +149,14 @@ new class extends Component {
                     'word' => $wordData['word'],
                     'phonetic' => $wordData['phonetic'] ?? null,
                     'part_of_speech' => $wordData['part_of_speech'] ?? null,
-                    'source' => $wordData['source'] ?? null,
+                    'source' => 'json',
                 ]
             );
 
+            $result = $word->wasRecentlyCreated ? 'created' : 'updated';
+
             // For existing words, update fields if provided
-            if ($word->wasRecentlyCreated === false) {
+            if (!$word->wasRecentlyCreated) {
                 $needsUpdate = false;
 
                 if (isset($wordData['phonetic']) && $word->phonetic !== $wordData['phonetic']) {
@@ -114,8 +169,8 @@ new class extends Component {
                     $needsUpdate = true;
                 }
 
-                if (isset($wordData['source']) && $word->source !== $wordData['source']) {
-                    $word->source = $wordData['source'];
+                if ($word->source !== 'json') {
+                    $word->source = 'json';
                     $needsUpdate = true;
                 }
 
@@ -145,36 +200,42 @@ new class extends Component {
                 }
             }
 
-            // Process standalone translations
-            if (isset($wordData['standalone_translations']) && is_array($wordData['standalone_translations'])) {
-                foreach ($wordData['standalone_translations'] as $translationData) {
+            // Process standalone translations (translations at the word level, not nested under meanings)
+            if (isset($wordData['translations']) && is_array($wordData['translations'])) {
+                foreach ($wordData['translations'] as $translationData) {
                     $this->createStandaloneTranslation($word, $translationData);
                 }
             }
 
             // Process synonyms
-            if (isset($wordData['synonyms']) && is_array($wordData['synonyms'])) {
-                $this->processWordConnections($word, $wordData['synonyms'], 'synonyms');
-            } else if (isset($wordData['synonyms']) && is_string($wordData['synonyms'])) {
-                $this->processWordConnections($word, explode(',', $wordData['synonyms']), 'synonyms');
+            if (isset($wordData['synonyms'])) {
+                $synonyms = is_array($wordData['synonyms'])
+                    ? $wordData['synonyms']
+                    : array_map('trim', explode(',', $wordData['synonyms']));
+
+                $this->processWordConnections($word, $synonyms, 'synonyms');
             }
 
             // Process antonyms
-            if (isset($wordData['antonyms']) && is_array($wordData['antonyms'])) {
-                $this->processWordConnections($word, $wordData['antonyms'], 'antonyms');
-            } else if (isset($wordData['antonyms']) && is_string($wordData['antonyms'])) {
-                $this->processWordConnections($word, explode(',', $wordData['antonyms']), 'antonyms');
+            if (isset($wordData['antonyms'])) {
+                $antonyms = is_array($wordData['antonyms'])
+                    ? $wordData['antonyms']
+                    : array_map('trim', explode(',', $wordData['antonyms']));
+
+                $this->processWordConnections($word, $antonyms, 'antonyms');
             }
 
             // Add to created words list
-            $this->createdWords[] = [
+            return [
                 'id' => $word->id,
                 'word' => $word->word,
-                'slug' => $word->slug
+                'slug' => $word->slug,
+                'status' => $result
             ];
 
         } catch (\Exception $e) {
             $this->errors[] = "Error creating word '{$wordData['word']}': " . $e->getMessage();
+            return null;
         }
     }
 
@@ -198,167 +259,159 @@ new class extends Component {
     }
 
     // Create a meaning from the provided data
-    private function createMeaningFromData($word, $meaningData, $displayOrder)
+    private function createMeaningFromData($word, $meaningData, $displayOrder = 1)
     {
-        // Validate required fields
-        if (!isset($meaningData['meaning']) || empty($meaningData['meaning'])) {
-            $this->errors[] = "Meaning is required for word '{$word->word}'.";
-            return;
-        }
-
-        // Generate slug if not provided
-        if (!isset($meaningData['slug']) || empty($meaningData['slug'])) {
-            $meaningData['slug'] = Str::slug($meaningData['meaning']);
-        }
-
-        // Create or find the meaning
-        $meaning = WordMeaning::firstOrCreate(
-            [
-                'word_id' => $word->id,
-                'slug' => $meaningData['slug']
-            ],
-            [
-                'meaning' => $meaningData['meaning'],
-                'source' => $meaningData['source'] ?? null,
-                'display_order' => $meaningData['display_order'] ?? $displayOrder,
-            ]
-        );
-
-        // For existing meanings, update fields if provided
-        if ($meaning->wasRecentlyCreated === false) {
-            $needsUpdate = false;
-
-            if (isset($meaningData['meaning']) && $meaning->meaning !== $meaningData['meaning']) {
-                $meaning->meaning = $meaningData['meaning'];
-                $needsUpdate = true;
+        try {
+            // Validate required fields
+            if (!isset($meaningData['meaning']) || empty($meaningData['meaning'])) {
+                $this->errors[] = "Meaning is required for word '{$word->word}'.";
+                return null;
             }
 
-            if (isset($meaningData['source']) && $meaning->source !== $meaningData['source']) {
-                $meaning->source = $meaningData['source'];
-                $needsUpdate = true;
+            // Generate slug if not provided
+            if (!isset($meaningData['slug']) || empty($meaningData['slug'])) {
+                $meaningData['slug'] = Str::slug(substr($meaningData['meaning'], 0, 250));
             }
 
-            if (isset($meaningData['display_order']) && $meaning->display_order !== $meaningData['display_order']) {
-                $meaning->display_order = $meaningData['display_order'];
-                $needsUpdate = true;
+            // Create or find the meaning
+            $meaning = WordMeaning::firstOrCreate(
+                [
+                    'word_id' => $word->id,
+                    'slug' => $meaningData['slug']
+                ],
+                [
+                    'meaning' => $meaningData['meaning'],
+                    'display_order' => $meaningData['display_order'] ?? $displayOrder,
+                    'source' => $meaningData['source'] ?? 'json',
+                ]
+            );
+
+            // Process translations
+            if (isset($meaningData['translations']) && is_array($meaningData['translations'])) {
+                foreach ($meaningData['translations'] as $translationData) {
+                    $this->createTranslationFromData($word, $meaning, $translationData);
+                }
             }
 
-            if ($needsUpdate) {
-                $meaning->save();
-            }
-        }
-
-        // Process translations
-        if (isset($meaningData['translations']) && is_array($meaningData['translations'])) {
-            foreach ($meaningData['translations'] as $translationData) {
-                $this->createTranslationFromData($word, $meaning, $translationData);
-            }
+            return $meaning;
+        } catch (\Exception $e) {
+            $this->errors[] = "Error creating meaning for word '{$word->word}': " . $e->getMessage();
+            return null;
         }
     }
 
     // Create a translation from the provided data
     private function createTranslationFromData($word, $meaning, $translationData)
     {
-        // Validate required fields
-        if (!isset($translationData['locale']) || empty($translationData['locale'])) {
-            $this->errors[] = "Locale is required for translation.";
-            return;
-        }
-
-        if (!isset($translationData['translation']) || empty($translationData['translation'])) {
-            $this->errors[] = "Translation text is required for locale '{$translationData['locale']}'.";
-            return;
-        }
-
-        // Generate slug if not provided
-        if (!isset($translationData['slug']) || empty($translationData['slug'])) {
-            $translationData['slug'] = Str::slug($translationData['translation']);
-            // If the language doesn't use Latin script, use transliteration for slug
-            if (empty($translationData['slug']) && isset($translationData['transliteration'])) {
-                $translationData['slug'] = Str::slug($translationData['transliteration']);
+        try {
+            // Validate required fields
+            if (!isset($translationData['locale']) || empty($translationData['locale'])) {
+                $this->errors[] = "Locale is required for translation.";
+                return;
             }
-            // If still empty, use a hash of the translation
-            if (empty($translationData['slug'])) {
-                $translationData['slug'] = Str::slug(substr(md5($translationData['translation']), 0, 10));
+
+            // Skip if translation is missing instead of showing an error
+            if (!isset($translationData['translation']) || empty($translationData['translation'])) {
+                return; // Skip this translation silently
             }
-        }
 
-        // Check if translation already exists for this word, meaning, and locale
-        $existingTranslation = WordTranslation::where('word_id', $word->id)
-            ->where('meaning_id', $meaning->id)
-            ->where('locale', $translationData['locale'])
-            ->first();
+            // Generate slug if not provided
+            if (!isset($translationData['slug']) || empty($translationData['slug'])) {
+                $translationText = $translationData['translation'] ?? '';
+                $slug = Str::slug(substr($translationText, 0, 250));
+                
+                // If we can't generate a valid slug, skip this translation
+                if (empty($slug)) {
+                    return; // Skip this translation silently
+                }
+                
+                $translationData['slug'] = $slug;
+            }
 
-        if ($existingTranslation) {
-            // Update existing translation
-            $existingTranslation->translation = $translationData['translation'];
-            $existingTranslation->transliteration = $translationData['transliteration'] ?? null;
-            $existingTranslation->source = $translationData['source'] ?? null;
-            $existingTranslation->save();
-        } else {
-            // Create new translation
-            WordTranslation::create([
-                'word_id' => $word->id,
-                'meaning_id' => $meaning->id,
-                'locale' => $translationData['locale'],
-                'translation' => $translationData['translation'],
-                'transliteration' => $translationData['transliteration'] ?? null,
-                'source' => $translationData['source'] ?? null,
-                'slug' => $translationData['slug'],
-            ]);
+            // Check if translation already exists for this word, meaning, and locale
+            $existingTranslation = WordTranslation::where('meaning_id', $meaning->id)
+                ->where('locale', $translationData['locale'])
+                ->where('slug', $translationData['slug'])
+                ->first();
+
+            if ($existingTranslation) {
+                // Update existing translation
+                $existingTranslation->translation = $translationData['translation'];
+                $existingTranslation->transliteration = $translationData['transliteration'] ?? null;
+                $existingTranslation->source = $translationData['source'] ?? 'json';
+                $existingTranslation->save();
+            } else {
+                // Create new translation with explicit slug
+                WordTranslation::create([
+                    'word_id' => $word->id,
+                    'meaning_id' => $meaning->id,
+                    'locale' => $translationData['locale'],
+                    'translation' => $translationData['translation'],
+                    'transliteration' => $translationData['transliteration'] ?? null,
+                    'source' => $translationData['source'] ?? 'json',
+                    'slug' => $translationData['slug'],
+                ]);
+            }
+        } catch (\Exception $e) {
+            $this->errors[] = "Error creating translation for word '{$word->word}', meaning '{$meaning->meaning}': " . $e->getMessage();
         }
     }
 
     // Create a standalone translation (not tied to a specific meaning)
     private function createStandaloneTranslation($word, $translationData)
     {
-        // Validate required fields
-        if (!isset($translationData['locale']) || empty($translationData['locale'])) {
-            $this->errors[] = "Locale is required for standalone translation.";
-            return;
-        }
-
-        if (!isset($translationData['translation']) || empty($translationData['translation'])) {
-            $this->errors[] = "Translation text is required for locale '{$translationData['locale']}'.";
-            return;
-        }
-
-        // Generate slug if not provided
-        if (!isset($translationData['slug']) || empty($translationData['slug'])) {
-            $translationData['slug'] = Str::slug($translationData['translation']);
-            // If the language doesn't use Latin script, use transliteration for slug
-            if (empty($translationData['slug']) && isset($translationData['transliteration'])) {
-                $translationData['slug'] = Str::slug($translationData['transliteration']);
+        try {
+            // Validate required fields
+            if (!isset($translationData['locale']) || empty($translationData['locale'])) {
+                $this->errors[] = "Locale is required for standalone translation.";
+                return;
             }
-            // If still empty, use a hash of the translation
-            if (empty($translationData['slug'])) {
-                $translationData['slug'] = Str::slug(substr(md5($translationData['translation']), 0, 10));
+
+            // Skip if translation is missing instead of showing an error
+            if (!isset($translationData['translation']) || empty($translationData['translation'])) {
+                return; // Skip this translation silently
             }
-        }
 
-        // Check if standalone translation already exists for this word and locale
-        $existingTranslation = WordTranslation::where('word_id', $word->id)
-            ->whereNull('meaning_id')
-            ->where('locale', $translationData['locale'])
-            ->first();
+            // Generate slug if not provided
+            if (!isset($translationData['slug']) || empty($translationData['slug'])) {
+                $translationText = $translationData['translation'] ?? '';
+                $slug = Str::slug(substr($translationText, 0, 250));
+                
+                // If we can't generate a valid slug, skip this translation
+                if (empty($slug)) {
+                    return; // Skip this translation silently
+                }
+                
+                $translationData['slug'] = $slug;
+            }
 
-        if ($existingTranslation) {
-            // Update existing translation
-            $existingTranslation->translation = $translationData['translation'];
-            $existingTranslation->transliteration = $translationData['transliteration'] ?? null;
-            $existingTranslation->source = $translationData['source'] ?? null;
-            $existingTranslation->save();
-        } else {
-            // Create new translation
-            WordTranslation::create([
-                'word_id' => $word->id,
-                'meaning_id' => null,
-                'locale' => $translationData['locale'],
-                'translation' => $translationData['translation'],
-                'transliteration' => $translationData['transliteration'] ?? null,
-                'source' => $translationData['source'] ?? null,
-                'slug' => $translationData['slug'],
-            ]);
+            // Check if standalone translation already exists for this word and locale
+            $existingTranslation = WordTranslation::where('word_id', $word->id)
+                ->whereNull('meaning_id')
+                ->where('locale', $translationData['locale'])
+                ->where('slug', $translationData['slug'])
+                ->first();
+
+            if ($existingTranslation) {
+                // Update existing translation
+                $existingTranslation->translation = $translationData['translation'];
+                $existingTranslation->transliteration = $translationData['transliteration'] ?? null;
+                $existingTranslation->source = $translationData['source'] ?? 'json';
+                $existingTranslation->save();
+            } else {
+                // Create new standalone translation with explicit slug
+                WordTranslation::create([
+                    'word_id' => $word->id,
+                    'meaning_id' => null,
+                    'locale' => $translationData['locale'],
+                    'translation' => $translationData['translation'],
+                    'transliteration' => $translationData['transliteration'] ?? null,
+                    'source' => $translationData['source'] ?? 'json',
+                    'slug' => $translationData['slug'],
+                ]);
+            }
+        } catch (\Exception $e) {
+            $this->errors[] = "Error creating standalone translation for word '{$word->word}': " . $e->getMessage();
         }
     }
 
@@ -395,17 +448,18 @@ new class extends Component {
         }
     }
 };
+
 ?>
 
 <div>
     <!-- Button to open modal -->
-    <button 
+    <button
         wire:click="openModal"
         class="inline-flex items-center px-4 py-2 bg-gray-800 dark:bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 dark:hover:bg-gray-600 active:bg-gray-900 dark:active:bg-gray-800 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition"
     >
         Import Words from JSON
     </button>
-    
+
     <!-- Modal -->
     @if($showModal)
     <div class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50">
@@ -458,7 +512,7 @@ new class extends Component {
                     <ul class="list-disc pl-5">
                         @foreach($createdWords as $word)
                         <li>
-                            <a href="{{ route('word.show', $word['slug']) }}" class="text-blue-500 dark:text-blue-400 hover:underline" target="_blank">
+                            <a href="{{ route('backend::words.show', $word['id']) }}" class="text-blue-500 dark:text-blue-400 hover:underline" target="_blank">
                                 {{ $word['word'] }}
                             </a>
                         </li>
