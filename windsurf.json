@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "rules": [
+    {
+      "name": "Load Project Context",
+      "description": "Load Englishing project context for every new chat session",
+      "condition": {
+        "type": "always"
+      },
+      "action": {
+        "type": "prepend_text",
+        "text": "# Englishing Project Context\n\n## Project Architecture\n\nThe Englishing project has a modular structure with several key components:\n\n1. Core Modules:\n   - User Module (users, user_profiles)\n   - Article Module (courses, articles)\n\n2. Article Extensions:\n   - Article Word Module (sets, lists, translations)\n   - Article Sentence Module (sets, lists, translations)\n   - Article Double Sentence Module (sets, lists, translations)\n   - Article Expression Module (sets, lists, translations)\n   - Article Conversation Module (conversations, messages, translations)\n\n3. Standalone Modules:\n   - Word Module (words, meanings, pronunciations, translations, transliterations, connections)\n   - Sentence Module (sentences, pronunciations, translations, transliterations)\n   - Expression Module (expressions, meanings, pronunciations, translations, transliterations, connections)\n\n## Word Module Structure\n\nThe Word module is implemented using internachi/modular with the following structure:\n\n1. Models:\n   - Word - has many meanings, has one pronunciation\n   - WordMeaning - belongs to word, has one translation\n   - WordPronunciation - belongs to word\n   - WordMeaningTranslation - belongs to word meaning, has one transliteration\n   - WordMeaningTransliteration - belongs to word meaning translation\n   - WordConnection - pivot table connecting words (synonyms, antonyms)\n\n2. Key relationships:\n   - A word can have multiple meanings\n   - A word has only one pronunciation\n   - A meaning can have only one translation\n   - A translation can have only one transliteration\n   - Word connections use a pivot table with word_id_1, word_id_2, and type (string)\n\n3. Database tables:\n   - words(id, word, slug)\n   - word_meanings(id, word_id, meaning, slug)\n   - word_pronunciations(id, word_id, bn_pronunciation, hi_pronunciation, es_pronunciation)\n   - word_meaning_translations(id, word_meaning_id, bn_meaning, hi_meaning, es_meaning)\n   - word_meaning_transliterations(id, word_meaning_translation_id, bn_transliteration, hi_transliteration, es_transliteration)\n   - word_connections(id, word_id_1, word_id_2, type)\n\n## Design Patterns\n\n- Spatie Translatable used for JSON fields that need translation\n- One-to-many relationships between parent and child entities\n- Unique constraints to ensure only one translation per locale\n- Consistent naming conventions across modules\n- Strings used instead of enums in the database\n\n## UI Implementation\n\n- Frontend built with Tailwind CSS\n- Dark mode implemented across the application\n- Livewire used for reactive components\n- Alpine.js used for frontend interactivity\n- DataTables used for data display with server-side processing\n\n## Recent Changes\n\n- Added dark mode support to the entire application\n- Implemented theme toggle in the navigation bar\n- Updated Word Show and Index pages with dark mode styling\n- Fixed DataTable styling in dark mode using custom initialization\n- Added Livewire styles and scripts to the layout file\n\nPlease use this context to assist me with the Englishing project."
+      }
+    },
+    {
+      "name": "Load Project Files",
+      "description": "Automatically load key project files",
+      "condition": {
+        "type": "always"
+      },
+      "action": {
+        "type": "execute_commands",
+        "commands": [
+          "find /Users/polodev/sites/englishing/app-modules -name \"*.php\" | grep -E \"Word|Model\" | head -n 5"
+        ]
+      }
+    },
+    {
+      "name": "Dark Mode Development",
+      "description": "Provide context about dark mode implementation when discussing UI changes",
+      "condition": {
+        "type": "message_contains",
+        "value": ["dark mode", "theme", "styling", "UI", "tailwind"]
+      },
+      "action": {
+        "type": "prepend_text",
+        "text": "Note about dark mode implementation in Englishing:\n\nDark mode is implemented using Tailwind CSS dark variant classes and Alpine.js for state management. The dark mode state is stored in localStorage as 'color-theme' and toggled via a button in the topnav component. All components should use dark: variants for consistent styling across the application."
+      }
+    }
+  ]
+}
