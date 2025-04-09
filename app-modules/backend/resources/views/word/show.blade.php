@@ -80,13 +80,15 @@
                 @if($word->translations->count() > 0)
                     <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
                         @foreach($word->translations as $translation)
-                            <div class="mb-2">
-                                <span class="font-bold text-blue-600 dark:text-blue-400 inline-block w-10">{{ strtoupper($translation->locale) }}:</span>
-                                <span class="dark:text-gray-200">{{ $translation->translation }}</span>
-                                @if($translation->transliteration)
-                                    <span class="ml-2 italic text-gray-600 dark:text-gray-400">({{ $translation->transliteration }})</span>
-                                @endif
-                            </div>
+                            @if(!$translation->meaning_id)
+                                <div class="mb-2">
+                                    <span class="font-bold text-blue-600 dark:text-blue-400 inline-block w-10">{{ strtoupper($translation->locale) }}:</span>
+                                    <span class="dark:text-gray-200">{{ $translation->translation }}</span>
+                                    @if($translation->transliteration)
+                                        <span class="ml-2 italic text-gray-600 dark:text-gray-400">({{ $translation->transliteration }})</span>
+                                    @endif
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 @else

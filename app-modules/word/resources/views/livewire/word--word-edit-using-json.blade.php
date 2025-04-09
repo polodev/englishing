@@ -34,13 +34,51 @@ new class extends Component {
             'source' => $word->source,
             'meanings' => [],
             'synonyms' => [],
-            'antonyms' => []
+            'antonyms' => [],
+            'pronunciations' => [
+                'bn' => '',
+                'hi' => ''
+            ],
+            'translations' => [
+                [
+                    'locale' => 'bn',
+                    'translation' => '',
+                    'transliteration' => ''
+                ],
+                [
+                    'locale' => 'hi',
+                    'translation' => '',
+                    'transliteration' => ''
+                ]
+            ]
         ];
 
         // Add pronunciations for non-English locales
         $pronunciations = $word->getTranslations('pronunciation');
         if (!empty($pronunciations)) {
             $data['pronunciations'] = $pronunciations;
+        }
+
+        // Add at least one empty meaning if none exist
+        if (count($word->meanings) === 0) {
+            $data['meanings'][] = [
+                'meaning' => '',
+                'slug' => '',
+                'display_order' => 1,
+                'source' => '',
+                'translations' => [
+                    [
+                        'locale' => 'bn',
+                        'translation' => '',
+                        'transliteration' => ''
+                    ],
+                    [
+                        'locale' => 'hi',
+                        'translation' => '',
+                        'transliteration' => ''
+                    ]
+                ]
+            ];
         }
 
         // Add meanings with translations
@@ -60,8 +98,23 @@ new class extends Component {
                     'id' => $translation->id,
                     'locale' => $translation->locale,
                     'translation' => $translation->translation,
-                    'transliteration' => $translation->transliteration,
-                    'slug' => $translation->slug
+                    'transliteration' => $translation->transliteration
+                ];
+            }
+
+            // If no translations exist for this meaning, add empty ones
+            if (empty($meaningData['translations'])) {
+                $meaningData['translations'] = [
+                    [
+                        'locale' => 'bn',
+                        'translation' => '',
+                        'transliteration' => ''
+                    ],
+                    [
+                        'locale' => 'hi',
+                        'translation' => '',
+                        'transliteration' => ''
+                    ]
                 ];
             }
 
@@ -81,6 +134,20 @@ new class extends Component {
                     'slug' => $translation->slug
                 ];
             }
+        } else {
+            // If no standalone translations exist, add empty ones
+            $data['translations'] = [
+                [
+                    'locale' => 'bn',
+                    'translation' => '',
+                    'transliteration' => ''
+                ],
+                [
+                    'locale' => 'hi',
+                    'translation' => '',
+                    'transliteration' => ''
+                ]
+            ];
         }
 
         // Add synonyms
