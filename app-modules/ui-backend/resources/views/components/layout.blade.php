@@ -14,6 +14,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Miriam+Libre:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@100..900&display=swap" rel="stylesheet">
+
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -53,7 +55,7 @@
           if (saved !== null) {
             this.sidebarOpen = JSON.parse(saved);
           }
-          
+
           // Apply dark mode class if needed
           if (this.darkMode) {
             document.documentElement.classList.add('dark');
@@ -68,10 +70,10 @@
         }
       }"
       x-init="init()">
-    
+
     <!-- Toast Component -->
     <x-toast />
-    
+
     <!-- Mobile Navigation -->
     <div x-cloak x-show="mobileMenuOpen" class="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 lg:hidden"
          x-transition:enter="transition-opacity ease-linear duration-300"
