@@ -56,7 +56,11 @@ new class extends Component {
         // Add pronunciations for non-English locales
         $pronunciations = $word->getTranslations('pronunciation');
         if (!empty($pronunciations)) {
-            $data['pronunciations'] = $pronunciations;
+            // Merge with default empty structure to ensure all keys exist
+            $data['pronunciations'] = array_merge([
+                'bn' => '',
+                'hi' => ''
+            ], $pronunciations);
         }
 
         // Add at least one empty meaning if none exist
