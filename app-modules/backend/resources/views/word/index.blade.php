@@ -42,8 +42,10 @@
                 <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 border-b border-gray-200 dark:border-gray-600">
                     <div class="flex justify-between items-center">
                         <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Words</h3>
-                        <livewire:word--word-create/>
-                        <livewire:word--word-create-from-json/>
+                        <div class="flex space-x-2">
+                            <livewire:word--word-create/>
+                            <livewire:word--word-create-from-json/>
+                        </div>
                     </div>
                 </div>
                 <div class="p-6 dark:bg-gray-800">

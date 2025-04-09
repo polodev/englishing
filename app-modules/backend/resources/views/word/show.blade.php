@@ -49,13 +49,13 @@
                 @forelse($word->meanings as $index => $meaning)
                     <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md mb-4">
                         <div class="text-lg font-semibold mb-3 dark:text-gray-200">{{ $index + 1 }}. {{ $meaning->meaning }}</div>
-                        
+
                         @if($meaning->translations->count() > 0)
                             <div class="ml-4 p-3 bg-white dark:bg-gray-600 rounded border-l-4 border-blue-500">
                                 <div class="font-medium mb-2 dark:text-gray-200">Translations:</div>
                                 @foreach($meaning->translations as $translation)
                                     <div class="mb-1">
-                                        <span class="font-bold text-blue-600 dark:text-blue-400 inline-block w-10">{{ strtoupper($translation->locale) }}:</span> 
+                                        <span class="font-bold text-blue-600 dark:text-blue-400 inline-block w-10">{{ strtoupper($translation->locale) }}:</span>
                                         <span class="dark:text-gray-200">{{ $translation->translation }}</span>
                                         @if($translation->transliteration)
                                             <span class="ml-2 italic text-gray-600 dark:text-gray-400">({{ $translation->transliteration }})</span>
@@ -73,7 +73,7 @@
                     <div class="bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 p-4 rounded-md">No meanings available for this word.</div>
                 @endforelse
             </div>
-            
+
             <!-- Standalone Translations Section -->
             <div class="mb-6">
                 <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 border-b-2 border-gray-200 dark:border-gray-600 pb-2 mb-3">Standalone Translations</h2>
@@ -81,7 +81,7 @@
                     <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
                         @foreach($word->translations as $translation)
                             <div class="mb-2">
-                                <span class="font-bold text-blue-600 dark:text-blue-400 inline-block w-10">{{ strtoupper($translation->locale) }}:</span> 
+                                <span class="font-bold text-blue-600 dark:text-blue-400 inline-block w-10">{{ strtoupper($translation->locale) }}:</span>
                                 <span class="dark:text-gray-200">{{ $translation->translation }}</span>
                                 @if($translation->transliteration)
                                     <span class="ml-2 italic text-gray-600 dark:text-gray-400">({{ $translation->transliteration }})</span>
@@ -125,6 +125,9 @@
                     <div class="bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-200 p-4 rounded-md">No antonyms available for this word.</div>
                 @endif
             </div>
+        </div>
+        <div>
+            <livewire:word--word-edit-using-json :word="$word" />
         </div>
     </div>
 </div>
