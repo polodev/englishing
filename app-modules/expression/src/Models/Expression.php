@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Translatable\HasTranslations;
 
 class Expression extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
     /**
      * The attributes that aren't mass assignable.
@@ -17,6 +18,24 @@ class Expression extends Model
      * @var array<int, string>
      */
     protected $guarded = [];
+
+    /**
+     * The attributes that are translatable.
+     *
+     * @var array<int, string>
+     */
+    public $translatable = [
+        'pronunciation',
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'pronunciation' => 'array',
+    ];
 
     /**
      * Get the meanings for the expression.

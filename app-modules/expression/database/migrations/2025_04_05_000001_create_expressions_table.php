@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->string('slug')->unique();
             $table->string('source')->nullable();
+            $table->json('pronunciation')->nullable();
             $table->timestamps();
         });
     }
