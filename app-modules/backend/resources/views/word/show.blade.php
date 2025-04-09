@@ -126,7 +126,7 @@
                 @endif
             </div>
         </div>
-        <div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg ps-4 pb-4">
             <livewire:word--word-edit-using-json :word="$word" />
         </div>
     </div>
