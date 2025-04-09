@@ -4,7 +4,6 @@ use Livewire\Volt\Component;
 use Modules\Word\Models\Word;
 use Modules\Word\Models\WordMeaning;
 use Modules\Word\Models\WordTranslation;
-use Modules\Word\Models\WordPronunciation;
 use Modules\Word\Models\WordConnection;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -38,14 +37,10 @@ new class extends Component {
             'antonyms' => []
         ];
 
-        // Add pronunciation
-        $pronunciation = $word->pronunciation;
-        if ($pronunciation) {
-            $data['pronunciation'] = [
-                'bn_pronunciation' => $pronunciation->bn_pronunciation,
-                'hi_pronunciation' => $pronunciation->hi_pronunciation,
-                'es_pronunciation' => $pronunciation->es_pronunciation,
-            ];
+        // Add pronunciations for non-English locales
+        $pronunciations = $word->getTranslations('pronunciation');
+        if (!empty($pronunciations)) {
+            $data['pronunciations'] = $pronunciations;
         }
 
         // Add meanings with translations
@@ -161,8 +156,13 @@ new class extends Component {
                 $this->word->source = $data['source'] ?? $this->word->source;
                 $this->word->save();
 
-                // Update pronunciation
-                $this->updatePronunciation($data);
+                // Update pronunciations if provided
+                if (isset($data['pronunciations']) && is_array($data['pronunciations'])) {
+                    foreach ($data['pronunciations'] as $locale => $pronunciation) {
+                        $this->word->setTranslation('pronunciation', $locale, $pronunciation);
+                    }
+                    $this->word->save();
+                }
 
                 // Update meanings and their translations
                 $this->updateMeanings($data);
@@ -197,31 +197,6 @@ new class extends Component {
         }
 
         $this->processing = false;
-    }
-
-    // Update pronunciation
-    private function updatePronunciation($data)
-    {
-        if (isset($data['pronunciation'])) {
-            $pronunciationData = $data['pronunciation'];
-            $pronunciation = $this->word->pronunciation;
-
-            if (!$pronunciation) {
-                // Create new pronunciation if it doesn't exist
-                WordPronunciation::create([
-                    'word_id' => $this->word->id,
-                    'bn_pronunciation' => $pronunciationData['bn_pronunciation'] ?? null,
-                    'hi_pronunciation' => $pronunciationData['hi_pronunciation'] ?? null,
-                    'es_pronunciation' => $pronunciationData['es_pronunciation'] ?? null,
-                ]);
-            } else {
-                // Update existing pronunciation
-                $pronunciation->bn_pronunciation = $pronunciationData['bn_pronunciation'] ?? $pronunciation->bn_pronunciation;
-                $pronunciation->hi_pronunciation = $pronunciationData['hi_pronunciation'] ?? $pronunciation->hi_pronunciation;
-                $pronunciation->es_pronunciation = $pronunciationData['es_pronunciation'] ?? $pronunciation->es_pronunciation;
-                $pronunciation->save();
-            }
-        }
     }
 
     // Update meanings and their translations
