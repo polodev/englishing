@@ -47,12 +47,12 @@ class SentenceController
                 $html = '<div class="translations-container">';
                 
                 if ($sentence->translations->isEmpty()) {
-                    $html .= '<div class="no-translations">No translations available</div>';
+                    $html .= '<div class="no-translations text-gray-500 dark:text-gray-400 italic">No translations available</div>';
                 } else {
                     foreach ($sentence->translations as $translation) {
                         $html .= '<div class="translation-item">';
                         $html .= '<span class="language-label">' . strtoupper($translation->locale) . ':</span> ';
-                        $html .= e($translation->translation);
+                        $html .= '<span class="text-gray-800 dark:text-gray-200">' . e($translation->translation) . '</span>';
                         
                         if (!empty($translation->transliteration)) {
                             $html .= '<span class="transliteration-block">(' . e($translation->transliteration) . ')</span>';
@@ -76,7 +76,7 @@ class SentenceController
                 foreach ($pronunciations as $locale => $pronunciation) {
                     $html .= '<div class="pronunciation-item">';
                     $html .= '<span class="language-label">' . strtoupper($locale) . ':</span> ';
-                    $html .= e($pronunciation);
+                    $html .= '<span class="text-gray-800 dark:text-gray-200">' . e($pronunciation) . '</span>';
                     $html .= '</div>';
                 }
                 $html .= '</div>';

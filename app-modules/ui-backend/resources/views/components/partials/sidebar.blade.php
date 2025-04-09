@@ -39,13 +39,17 @@
 
                 <li>
                     <a href="{{ route('backend::words.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" :class="{'justify-center': !sidebarOpen}">
-                        <img src="{{ asset('images/svg/word.svg') }}" class="w-5 h-5" :class="{'w-6': sidebarOpen}">
+                        <div class="w-5 h-5 text-gray-700 dark:text-gray-200" :class="{'w-6': sidebarOpen}">
+                            @include('backend::svg.word')
+                        </div>
                         <span class="ml-3" x-show="sidebarOpen">Words</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('backend::sentences.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" :class="{'justify-center': !sidebarOpen}">
-                        <img src="{{ asset('images/svg/sentence.svg') }}" class="w-5 h-5" :class="{'w-6': sidebarOpen}">
+                        <div class="w-5 h-5 text-gray-700 dark:text-gray-200" :class="{'w-6': sidebarOpen}">
+                            @include('backend::svg.sentence')
+                        </div>
                         <span class="ml-3" x-show="sidebarOpen">Sentences</span>
                     </a>
                 </li>
