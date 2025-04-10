@@ -32,42 +32,42 @@
                 <!-- Expression Info -->
                 <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
                     <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Expression Information</h4>
-                    
+
                     <div class="mb-4">
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">ID</div>
                         <div class="text-base text-gray-800 dark:text-gray-200">{{ $expression->id }}</div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Expression</div>
                         <div class="text-base text-gray-800 dark:text-gray-200">{{ $expression->expression }}</div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Type</div>
                         <div class="text-base text-gray-800 dark:text-gray-200">{{ $expression->type ?? 'N/A' }}</div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Slug</div>
                         <div class="text-base text-gray-800 dark:text-gray-200">{{ $expression->slug ?? 'N/A' }}</div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Created At</div>
                         <div class="text-base text-gray-800 dark:text-gray-200">{{ $expression->created_at->format('Y-m-d H:i:s') }}</div>
                     </div>
-                    
+
                     <div class="mb-4">
                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Updated At</div>
                         <div class="text-base text-gray-800 dark:text-gray-200">{{ $expression->updated_at->format('Y-m-d H:i:s') }}</div>
                     </div>
                 </div>
-                
+
                 <!-- Pronunciation -->
                 <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
                     <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Pronunciation</h4>
-                    
+
                     @php
                         $pronunciations = [];
                         try {
@@ -76,7 +76,7 @@
                             // Handle the case when pronunciation is not set
                         }
                     @endphp
-                    
+
                     @if(!empty($pronunciations))
                         @foreach($pronunciations as $locale => $pronunciation)
                             <div class="mb-3">
@@ -89,11 +89,11 @@
                     @endif
                 </div>
             </div>
-            
+
             <!-- Meanings with their translations -->
             <div class="mt-8 bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
                 <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Meanings with Translations</h4>
-                
+
                 @if($expression->meanings->isEmpty())
                     <div class="text-gray-500 dark:text-gray-400 italic">No meanings available</div>
                 @else
@@ -104,14 +104,14 @@
                                     <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Meaning</div>
                                     <div class="text-base text-gray-800 dark:text-gray-200">{{ $meaning->meaning }}</div>
                                 </div>
-                                
+
                                 @if($meaning->slug)
                                 <div class="mb-2">
                                     <div class="text-sm font-medium text-gray-500 dark:text-gray-400">Slug</div>
                                     <div class="text-base text-gray-800 dark:text-gray-200">{{ $meaning->slug }}</div>
                                 </div>
                                 @endif
-                                
+
                                 @if($meaning->translations->isNotEmpty())
                                     <div class="mt-3">
                                         <div class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">Meaning-specific Translations</div>
@@ -120,11 +120,11 @@
                                                 <div>
                                                     <span class="font-bold text-blue-600 dark:text-blue-400">{{ strtoupper($translation->locale) }}:</span>
                                                     <span class="text-gray-800 dark:text-gray-200 ml-2">{{ $translation->translation }}</span>
-                                                    
+
                                                     @if(!empty($translation->transliteration))
                                                         <span class="ml-2 italic text-gray-500 dark:text-gray-400">({{ $translation->transliteration }})</span>
                                                     @endif
-                                                    
+
                                                     @if($translation->slug)
                                                     <div class="ml-8 mt-1">
                                                         <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Slug:</span>
@@ -141,14 +141,14 @@
                     </div>
                 @endif
             </div>
-            
+
             <!-- Standalone Translations (not tied to specific meanings) -->
             <div class="mt-8 bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
                 <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Direct Expression Translations</h4>
                 <div class="text-sm text-gray-600 dark:text-gray-400 mb-4">
                     These translations apply to the expression as a whole, not to specific meanings.
                 </div>
-                
+
                 @if($expression->translations->isEmpty())
                     <div class="text-gray-500 dark:text-gray-400 italic">No direct translations available</div>
                 @else
@@ -157,11 +157,11 @@
                             <div>
                                 <span class="font-bold text-blue-600 dark:text-blue-400">{{ strtoupper($translation->locale) }}:</span>
                                 <span class="text-gray-800 dark:text-gray-200 ml-2">{{ $translation->translation }}</span>
-                                
+
                                 @if(!empty($translation->transliteration))
                                     <span class="ml-2 italic text-gray-500 dark:text-gray-400">({{ $translation->transliteration }})</span>
                                 @endif
-                                
+
                                 @if($translation->slug)
                                 <div class="ml-8 mt-1">
                                     <span class="text-sm font-medium text-gray-500 dark:text-gray-400">Slug:</span>
@@ -173,11 +173,11 @@
                     </div>
                 @endif
             </div>
-            
+
             <!-- Connections -->
             <div class="mt-8 bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
                 <h4 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Connections</h4>
-                
+
                 @if($expression->connections->isEmpty() && $expression->connectionsInverse->isEmpty())
                     <div class="text-gray-500 dark:text-gray-400 italic">No connections available</div>
                 @else
@@ -190,7 +190,7 @@
                                     $synonyms = $expression->connections->where('pivot.type', 'synonym')
                                         ->merge($expression->connectionsInverse->where('pivot.type', 'synonym'));
                                 @endphp
-                                
+
                                 @if($synonyms->isEmpty())
                                     <div class="text-gray-500 dark:text-gray-400 italic">No synonyms available</div>
                                 @else
@@ -202,7 +202,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <!-- Antonyms -->
                         <div>
                             <h5 class="text-md font-medium text-gray-700 dark:text-gray-300 mb-2">Antonyms</h5>
@@ -211,7 +211,7 @@
                                     $antonyms = $expression->connections->where('pivot.type', 'antonym')
                                         ->merge($expression->connectionsInverse->where('pivot.type', 'antonym'));
                                 @endphp
-                                
+
                                 @if($antonyms->isEmpty())
                                     <div class="text-gray-500 dark:text-gray-400 italic">No antonyms available</div>
                                 @else
@@ -223,7 +223,7 @@
                                 @endif
                             </div>
                         </div>
-                        
+
                         <!-- Other connections -->
                         <div>
                             <h5 class="text-md font-medium text-gray-700 dark:text-gray-300 mb-2">Other Connections</h5>
@@ -232,7 +232,7 @@
                                     $others = $expression->connections->whereNotIn('pivot.type', ['synonym', 'antonym'])
                                         ->merge($expression->connectionsInverse->whereNotIn('pivot.type', ['synonym', 'antonym']));
                                 @endphp
-                                
+
                                 @if($others->isEmpty())
                                     <div class="text-gray-500 dark:text-gray-400 italic">No other connections available</div>
                                 @else
@@ -260,7 +260,7 @@
         $('#delete-expression').on('click', function() {
             if (confirm('Are you sure you want to delete this expression?')) {
                 const expressionId = $(this).data('id');
-                
+
                 $.ajax({
                     url: '{{ route("backend::expressions.destroy", $expression->id) }}',
                     type: 'DELETE',

@@ -31,7 +31,8 @@
                     <div class="flex justify-between items-center">
                         <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Expressions</h3>
                         <div class="flex space-x-2">
-                            <!-- Add expression creation buttons here when available -->
+                            <livewire:expression--expression-create/>
+                            <livewire:expression--expression-create-from-json/>
                         </div>
                     </div>
                 </div>
@@ -67,7 +68,7 @@
     $(document).ready(function() {
         // Add dark mode class to the table
         $('#expressions-table').addClass('dark:bg-gray-800 dark:text-gray-200');
-        
+
         // Initialize DataTable with Tailwind styling
         let expressionsTable = $('#expressions-table').DataTable({
             processing: true,
@@ -105,31 +106,31 @@
                 $('#expressions-table_wrapper').addClass('dark:text-gray-200');
                 $('.dataTables_filter input').addClass('dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600');
                 $('.dataTables_length select').addClass('dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600');
-                
+
                 // Apply dark mode to table headers
                 $('#expressions-table thead th').addClass('dark:bg-gray-700 dark:text-gray-300');
-                
+
                 // Function to apply dark mode classes to table rows
                 function applyDarkModeToRows() {
                     $('#expressions-table tbody tr').addClass('dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700');
                     $('#expressions-table tbody tr:hover').addClass('dark:bg-gray-700');
                     $('#expressions-table tbody td').addClass('dark:border-gray-700 dark:text-gray-200');
                 }
-                
+
                 // Apply dark mode classes initially
                 applyDarkModeToRows();
-                
+
                 // Apply dark mode classes after each draw
                 expressionsTable.on('draw', function() {
                     applyDarkModeToRows();
                 });
-                
+
                 // Add dark mode classes to pagination and info elements
                 $('.dataTables_info').addClass('dark:text-gray-300');
                 $('.dataTables_paginate').addClass('dark:text-gray-200');
             }
         });
-        
+
         // Re-apply dark mode classes when page changes
         expressionsTable.on('page.dt', function() {
             setTimeout(function() {
