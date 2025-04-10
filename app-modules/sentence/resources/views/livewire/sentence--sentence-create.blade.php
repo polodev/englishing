@@ -45,6 +45,7 @@ new class extends Component {
     public function updatedSentence($value)
     {
         $this->slug = Str::slug(Str::limit($value, 100));
+        $this->checkSlugExists();
     }
     
     // Check if the slug already exists in the database
@@ -211,21 +212,21 @@ new class extends Component {
                     <div class="mb-4">
                         <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug</label>
                         <div class="flex items-center">
-                            <input type="text" id="slug" wire:model.live="slug" wire:blur="checkSlugExists" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter slug">
+                            <input type="text" id="slug" wire:model="slug" readonly class="mt-1 block w-full bg-gray-100 dark:bg-gray-600 border-gray-300 dark:border-gray-700 dark:text-gray-200 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" value="{{ $slug }}">
                             
                             @if($slugExists)
-                                <div class="ml-2 text-red-500">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+                                <a href="{{ route('backend::sentences.show', $existingSentenceId) }}" target="_blank" class="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                                     </svg>
-                                </div>
+                                </a>
                             @endif
                         </div>
                         @error('slug') <span class="text-red-500 text-xs mt-1">{{ $message }}</span> @enderror
                         
                         @if($slugExists)
-                            <div class="mt-2 text-sm text-red-600 dark:text-red-400">
-                                This slug is already in use by sentence "<a href="{{ route('backend::sentences.show', $existingSentenceId) }}" class="underline" target="_blank">{{ Str::limit($existingSentenceText, 50) }}</a>".
+                            <div class="mt-2 text-amber-600 dark:text-amber-400 text-sm">
+                                This slug is already used by "<a href="{{ route('backend::sentences.show', $existingSentenceId) }}" class="underline" target="_blank">{{ Str::limit($existingSentenceText, 50) }}</a>". Please modify the sentence to generate a unique slug.
                             </div>
                         @endif
                     </div>
