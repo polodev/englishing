@@ -19,6 +19,25 @@
         </div>
 
         <div class="px-6 py-5 dark:bg-gray-800">
+            <!-- Sentence Information Section -->
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 border-b-2 border-gray-200 dark:border-gray-600 pb-2 mb-3">Sentence Information</h2>
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <div class="mb-2">
+                                <span class="font-bold text-gray-600 dark:text-gray-400">ID:</span>
+                                <span class="dark:text-gray-200">{{ $sentence->id }}</span>
+                            </div>
+                            <div class="mb-2">
+                                <span class="font-bold text-gray-600 dark:text-gray-400">Slug:</span>
+                                <span class="dark:text-gray-200">{{ $sentence->slug }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Source Section -->
             @if($sentence->source)
             <div class="mb-6">
@@ -54,6 +73,13 @@
                                         {{ $translation->translation }}
                                     </div>
                                 </div>
+                                
+                                @if($translation->slug)
+                                <div class="ml-10 mb-2">
+                                    <span class="font-bold text-gray-600 dark:text-gray-400">Slug:</span>
+                                    <span class="dark:text-gray-200">{{ $translation->slug }}</span>
+                                </div>
+                                @endif
                                 
                                 @if(!empty($translation->transliteration))
                                 <div class="ml-10 bg-gray-100 dark:bg-gray-600 p-3 rounded-md">

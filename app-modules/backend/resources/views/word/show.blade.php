@@ -31,6 +31,37 @@
                 </div>
             </div>
 
+            <!-- Word Info Section -->
+            <div class="mb-6">
+                <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 border-b-2 border-gray-200 dark:border-gray-600 pb-2 mb-3">Word Information</h2>
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <div class="mb-2">
+                                <span class="font-bold text-gray-600 dark:text-gray-400">Word:</span>
+                                <span class="dark:text-gray-200">{{ $word->word }}</span>
+                            </div>
+                            <div class="mb-2">
+                                <span class="font-bold text-gray-600 dark:text-gray-400">Slug:</span>
+                                <span class="dark:text-gray-200">{{ $word->slug }}</span>
+                            </div>
+                            @if($word->phonetic)
+                                <div class="mb-2">
+                                    <span class="font-bold text-gray-600 dark:text-gray-400">Phonetic:</span>
+                                    <span class="dark:text-gray-200">{{ $word->phonetic }}</span>
+                                </div>
+                            @endif
+                            @if($word->part_of_speech)
+                                <div class="mb-2">
+                                    <span class="font-bold text-gray-600 dark:text-gray-400">Part of Speech:</span>
+                                    <span class="dark:text-gray-200">{{ $word->part_of_speech }}</span>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Pronunciation Section (non-English locales) -->
             @if($word->getTranslations('pronunciation'))
             <div class="mb-6">
@@ -48,7 +79,22 @@
                 <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 border-b-2 border-gray-200 dark:border-gray-600 pb-2 mb-3">Meanings with Translations</h2>
                 @forelse($word->meanings as $index => $meaning)
                     <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md mb-4">
-                        <div class="text-lg font-semibold mb-3 dark:text-gray-200">{{ $index + 1 }}. {{ $meaning->meaning }}</div>
+                        <div class="mb-2">
+                            <span class="font-bold text-gray-600 dark:text-gray-400">Meaning:</span>
+                            <span class="dark:text-gray-200">{{ $meaning->meaning }}</span>
+                        </div>
+                        @if($meaning->slug)
+                        <div class="mb-2">
+                            <span class="font-bold text-gray-600 dark:text-gray-400">Slug:</span>
+                            <span class="dark:text-gray-200">{{ $meaning->slug }}</span>
+                        </div>
+                        @endif
+                        @if($meaning->example)
+                            <div class="mb-2">
+                                <span class="font-bold text-gray-600 dark:text-gray-400">Example:</span>
+                                <span class="dark:text-gray-200">{{ $meaning->example }}</span>
+                            </div>
+                        @endif
 
                         @if($meaning->translations->count() > 0)
                             <div class="ml-4 p-3 bg-white dark:bg-gray-600 rounded border-l-4 border-blue-500">
@@ -61,6 +107,12 @@
                                             <span class="ml-2 italic text-gray-600 dark:text-gray-400">({{ $translation->transliteration }})</span>
                                         @endif
                                     </div>
+                                    @if($translation->slug)
+                                    <div class="mb-2 ml-10">
+                                        <span class="font-bold text-gray-600 dark:text-gray-400">Slug:</span>
+                                        <span class="dark:text-gray-200">{{ $translation->slug }}</span>
+                                    </div>
+                                    @endif
                                 @endforeach
                             </div>
                         @else
@@ -88,6 +140,12 @@
                                         <span class="ml-2 italic text-gray-600 dark:text-gray-400">({{ $translation->transliteration }})</span>
                                     @endif
                                 </div>
+                                @if($translation->slug)
+                                <div class="mb-2 ml-10">
+                                    <span class="font-bold text-gray-600 dark:text-gray-400">Slug:</span>
+                                    <span class="dark:text-gray-200">{{ $translation->slug }}</span>
+                                </div>
+                                @endif
                             @endif
                         @endforeach
                     </div>

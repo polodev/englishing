@@ -32,6 +32,8 @@
                         <h3 class="text-xl font-semibold text-gray-800 dark:text-white">Sentences</h3>
                         <div class="flex space-x-2">
                             <!-- Add sentence creation buttons here when available -->
+                            <livewire:sentence--sentence-create/>
+                            <livewire:sentence--sentence-create-from-json/>
                         </div>
                     </div>
                 </div>
@@ -63,7 +65,7 @@
     $(document).ready(function() {
         // Add dark mode class to the table
         $('#sentences-table').addClass('dark:bg-gray-800 dark:text-gray-200');
-        
+
         // Initialize DataTable with Tailwind styling
         let sentencesTable = $('#sentences-table').DataTable({
             processing: true,
@@ -100,31 +102,31 @@
                 $('#sentences-table_wrapper').addClass('dark:text-gray-200');
                 $('.dataTables_filter input').addClass('dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600');
                 $('.dataTables_length select').addClass('dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600');
-                
+
                 // Apply dark mode to table headers
                 $('#sentences-table thead th').addClass('dark:bg-gray-700 dark:text-gray-300');
-                
+
                 // Function to apply dark mode classes to table rows
                 function applyDarkModeToRows() {
                     $('#sentences-table tbody tr').addClass('dark:bg-gray-800 dark:text-gray-200 dark:border-gray-700');
                     $('#sentences-table tbody tr:hover').addClass('dark:bg-gray-700');
                     $('#sentences-table tbody td').addClass('dark:border-gray-700 dark:text-gray-200');
                 }
-                
+
                 // Apply dark mode classes initially
                 applyDarkModeToRows();
-                
+
                 // Apply dark mode classes after each draw
                 sentencesTable.on('draw', function() {
                     applyDarkModeToRows();
                 });
-                
+
                 // Add dark mode classes to pagination and info elements
                 $('.dataTables_info').addClass('dark:text-gray-300');
                 $('.dataTables_paginate').addClass('dark:text-gray-200');
             }
         });
-        
+
         // Re-apply dark mode classes when page changes
         sentencesTable.on('page.dt', function() {
             setTimeout(function() {

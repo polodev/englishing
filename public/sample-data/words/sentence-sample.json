@@ -1,0 +1,164 @@
+{
+  "sentences": [
+    {
+      "sentence": "The Amazon rainforest is home to millions of species.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "আমাজন বৃষ্টি বন লক্ষ লক্ষ প্রজাতির আবাসস্থল।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "A balanced ecosystem is crucial for environmental sustainability.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "একটি ভারসাম্যপূর্ণ বাস্তুসংস্থান পরিবেশগত টেকসইতার জন্য গুরুত্বপূর্ণ।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Trees play a vital role in carbon sequestration by absorbing CO2.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "গাছপালা কার্বন ডাই অক্সাইড শোষণ করে কার্বন সংরক্ষণে গুরুত্বপূর্ণ ভূমিকা রাখে।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Protecting biodiversity helps maintain ecological balance.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "জীববৈচিত্র্য সংরক্ষণ বাস্তুসংস্থানের ভারসাম্য বজায় রাখতে সহায়তা করে।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "The Bengal tiger is endemic to the Indian subcontinent.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "বাংলার বাঘ ভারতীয় উপমহাদেশের জন্য স্থানীয়।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "The Galápagos Islands have unique flora and fauna.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "গ্যালাপাগোস দ্বীপের অনন্য উদ্ভিদ ও প্রাণীজগৎ রয়েছে।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Deforestation leads to habitat loss and climate change.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "বন নিধন বাস্তুসংস্থান ধ্বংস ও জলবায়ু পরিবর্তনের কারণ হয়।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Deforestation causes environmental degradation.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "বন উজাড় পরিবেশগত অবনতি সৃষ্টি করে।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Fragmentation of forests disrupts wildlife habitats.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "বনভূমির বিভাজন বন্যপ্রাণীর বাসস্থানকে ব্যাহত করে।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Wolves are a keystone species that regulate prey populations.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "নেকড়েরা একটি মূল প্রজাতি যা শিকার প্রাণীর সংখ্যা নিয়ন্ত্রণ করে।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "The hydrological cycle ensures continuous water movement in nature.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "জলচক্র প্রকৃতিতে ক্রমাগত পানির প্রবাহ নিশ্চিত করে।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Transpiration plays a key role in maintaining atmospheric moisture.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "উদ্ভিদের জলীয় বাষ্প নির্গমন বায়ুমণ্ডলীয় আর্দ্রতা বজায় রাখতে গুরুত্বপূর্ণ ভূমিকা রাখে।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "The microclimate in valleys is often cooler than in surrounding areas.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "উপত্যকার ক্ষুদ্র জলবায়ু আশপাশের অঞ্চলের চেয়ে প্রায়ই ঠান্ডা হয়।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Sustainability is key to preserving natural ecosystems.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "টেকসইতা প্রাকৃতিক বাস্তুসংস্থানের সংরক্ষণের মূল চাবিকাঠি।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Reforestation helps restore biodiversity and combat climate change.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "পুনঃবনায়ন জীববৈচিত্র্য পুনরুদ্ধার ও জলবায়ু পরিবর্তনের বিরুদ্ধে লড়াইয়ে সহায়ক।",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "sentence": "Soil resilience helps maintain crop productivity during droughts.",
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "শুষ্ক আবহাওয়ায় ফসল উৎপাদনশীলতা বজায় রাখতে মাটির সহনশীলতা সহায়ক।",
+          "transliteration": ""
+        }
+      ]
+    }
+  ]
+}
