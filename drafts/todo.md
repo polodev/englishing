@@ -10,7 +10,6 @@
     - single json for adding multiple word with meaning, translation, connection
     - example json must be included
 
-
 # sentence module backend 
     - list view 
     - add sentence
@@ -18,19 +17,11 @@
     - inside sentence view page 
         - can add translation
         - json to add meaning, translation, synonyms and antonyms
-
-
-
-
 # expression module backend 
-    - list view 
     - add expression
     - single json for adding multiple expression
-    - inside sentence view page 
         - can add meaning
-        - can add translation
         - json for adding multiple meaning, translation, connection
-
 # articles module
     - list view
     - add new article page
@@ -40,12 +31,5 @@
         - add sentence set
          - related
         - add expression set
-         - related
         - add double sentence set
-         - related
         - add conversation set
-         - related
-
-
-
-

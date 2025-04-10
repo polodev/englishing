@@ -1,0 +1,312 @@
+{
+  "expressions": [
+    {
+      "expression": "Hit the books",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "Study hard",
+          "slug": "study-hard",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "ভালো ভাবে পড়াশোনা করা",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "A piece of cake",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "Very easy",
+          "slug": "very-easy",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "খুবই সহজ বিষয়",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "Read between the lines",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "Understand hidden meaning",
+          "slug": "understand-hidden-meaning",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "নিহিত অর্থ বুঝার চেষ্টা করা",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "Give someone a hand",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "Help someone",
+          "slug": "help-someone",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "কাউকে সাহায্য করা",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "A blessing in disguise",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "A good surprise",
+          "slug": "a-good-surprise",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "অবাক করা ভালো কোনো উপহার",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "The ball is in your court",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "Your turn",
+          "slug": "your-turn",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "তোমার পালা",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "Bite the bullet",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "Face it",
+          "slug": "face-it",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "কোনো কিছু মোকাবিলা করা",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "Break the ice",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "Start a conversation comfortably",
+          "slug": "start-a-conversation-comfortably",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "সুন্দরভাবে কোনো আলোচনা শুরু করা",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "Keep your chin up",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "Stay positive in difficult times",
+          "slug": "stay-positive-in-difficult-times",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "বিপদের সময় ধৈর্য ধরো",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "Once in a blue moon",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "Very rarely",
+          "slug": "very-rarely",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "দুর্লভ, যা সহজে পাওয়া যায় না",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    },
+    {
+      "expression": "Through thick and thin",
+      "type": "idiom",
+      "pronunciation": {
+        "bn": "",
+        "hi": ""
+      },
+      "meanings": [
+        {
+          "meaning": "In good and bad times",
+          "slug": "in-good-and-bad-times",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "ভালো এবং খারাপ সময়ের মধ্য দিয়ে",
+              "transliteration": ""
+            }
+          ]
+        }
+      ],
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "",
+          "transliteration": ""
+        }
+      ]
+    }
+  ]
+}
