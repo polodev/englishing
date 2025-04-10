@@ -15,7 +15,7 @@ new class extends Component {
     public array $parsedData = [];
     public string $expression = '';
     public string $slug = '';
-    public ?string $part_of_speech = null;
+    public ?string $type = null;
     public array $pronunciation = [
         'bn' => '',
         'hi' => '',
@@ -54,7 +54,7 @@ new class extends Component {
         $this->expressionName = $expression->expression;
         $this->slug = $expression->slug;
         $this->originalSlug = $expression->slug;
-        $this->part_of_speech = $expression->part_of_speech;
+        $this->type = $expression->type;
         
         // Load pronunciations
         $this->pronunciation = [
@@ -67,7 +67,7 @@ new class extends Component {
         $jsonData = [
             'expression' => $expression->expression,
             'slug' => $expression->slug,
-            'part_of_speech' => $expression->part_of_speech,
+            'type' => $expression->type,
             'pronunciation' => $this->pronunciation,
             'meanings' => []
         ];
@@ -106,7 +106,7 @@ new class extends Component {
     {
         $rules = [
             'expression' => 'required|string|max:255',
-            'part_of_speech' => 'nullable|string|max:255',
+            'type' => 'nullable|string|max:255',
             'pronunciation.bn' => 'nullable|string|max:255',
             'pronunciation.hi' => 'nullable|string|max:255',
             'pronunciation.es' => 'nullable|string|max:255',
@@ -122,21 +122,10 @@ new class extends Component {
         return $rules;
     }
 
-    // Get parts of speech from the Expression model
-    public function getPartsOfSpeech()
+    // Get expression types from the Expression model
+    public function getExpressionTypes()
     {
-        return [
-            'noun',
-            'verb',
-            'adjective',
-            'adverb',
-            'preposition',
-            'conjunction',
-            'interjection',
-            'idiom',
-            'phrase',
-            'proverb'
-        ];
+        return Expression::getExpressionTypes();
     }
 
     // Parse JSON input
@@ -152,9 +141,8 @@ new class extends Component {
             
             // Extract data from JSON
             $this->expression = $this->parsedData['expression'] ?? '';
+            $this->type = $this->parsedData['type'] ?? null;
             $this->slug = $this->parsedData['slug'] ?? '';
-            $this->part_of_speech = $this->parsedData['part_of_speech'] ?? null;
-            
             // Handle pronunciations
             if (isset($this->parsedData['pronunciation'])) {
                 $this->pronunciation = [
@@ -180,8 +168,7 @@ new class extends Component {
     // Auto-generate slug when expression changes
     public function updatedExpression($value)
     {
-        $this->slug = Str::slug(Str::limit($value, 100));
-        $this->checkSlugExists();
+        $this->slug = Str::slug($value);
     }
     
     // Check if the slug already exists in the database
@@ -235,10 +222,24 @@ new class extends Component {
     // Update the expression
     public function updateExpression()
     {
-        // Check if slug exists before validation (only if it changed)
-        if ($this->slug !== $this->originalSlug && !$this->checkSlugExists()) {
-            // If slug exists, don't proceed with validation
-            return;
+        // Parse JSON if not already parsed
+        if (empty($this->parsedData)) {
+            if (!$this->parseJson()) {
+                return;
+            }
+        }
+        
+        // Generate slug if not already set
+        if (empty($this->slug) && !empty($this->expression)) {
+            $this->slug = Str::slug($this->expression);
+        }
+        
+        // Check if slug exists before validation
+        if ($this->slug !== $this->originalSlug) {
+            if (!$this->checkSlugExists()) {
+                // If slug exists and it's not the original slug, don't proceed with validation
+                return;
+            }
         }
         
         $this->validate();
@@ -253,7 +254,7 @@ new class extends Component {
         // Update basic expression data
         $expression->expression = $this->expression;
         $expression->slug = $this->slug;
-        $expression->part_of_speech = $this->part_of_speech;
+        $expression->type = $this->type;
         
         // Filter out empty pronunciation values
         $pronunciationData = array_filter($this->pronunciation, fn($value) => !empty($value));
@@ -440,35 +441,37 @@ new class extends Component {
                             @error('expression') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
-                        <!-- Slug Input -->
+                        <!-- Slug Input (Read-only) -->
                         <div class="mb-4">
                             <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug</label>
-                            <div class="mt-1 flex rounded-md shadow-sm">
-                                <input type="text" id="slug" wire:model.live="slug" wire:blur="checkSlugExists" class="block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter slug">
-                            </div>
-                            @error('slug') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                            
-                            @if($slugExists)
-                            <div class="mt-2 p-2 bg-yellow-50 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs rounded">
-                                <p>This slug is already in use by another expression: 
-                                    <a href="{{ route('backend.expression.show', $existingExpressionId) }}" class="underline font-semibold" target="_blank">
-                                        {{ $existingExpressionName }}
+                            <div class="flex items-center">
+                                <input type="text" id="slug" wire:model="slug" readonly class="mt-1 block w-full bg-gray-100 dark:bg-gray-600 border-gray-300 dark:border-gray-700 dark:text-gray-200 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" value="{{ $slug }}">
+                                @if($slugExists)
+                                    <a href="{{ route('backend::expressions.show', $existingExpressionId) }}" target="_blank" class="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                        </svg>
                                     </a>
-                                </p>
+                                @endif
                             </div>
+                            @if($slugExists)
+                                <div class="mt-1 text-amber-600 dark:text-amber-400 text-sm">
+                                    This slug is already used by "{{ $existingExpressionName }}". Please modify the expression to generate a unique slug.
+                                </div>
                             @endif
+                            @error('slug') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                         </div>
 
-                        <!-- Part of Speech -->
+                        <!-- Type -->
                         <div class="mb-4">
-                            <label for="part_of_speech" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Part of Speech</label>
-                            <select id="part_of_speech" wire:model="part_of_speech" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                                <option value="">Select part of speech</option>
-                                @foreach($this->getPartsOfSpeech() as $pos)
-                                    <option value="{{ $pos }}">{{ ucfirst($pos) }}</option>
+                            <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type</label>
+                            <select id="type" wire:model="type" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                                <option value="">Select type</option>
+                                @foreach($this->getExpressionTypes() as $type)
+                                    <option value="{{ $type }}">{{ ucfirst($type) }}</option>
                                 @endforeach
                             </select>
-                            @error('part_of_speech') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                            @error('type') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 
                         <!-- Pronunciation -->

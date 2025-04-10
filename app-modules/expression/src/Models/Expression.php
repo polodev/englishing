@@ -146,4 +146,21 @@ class Expression extends Model
         $expressionId = $expression instanceof Expression ? $expression->id : $expression;
         $this->connections()->attach($expressionId, ['type' => 'antonyms']);
     }
+    
+    /**
+     * Get the list of available expression types.
+     *
+     * @return array
+     */
+    public static function getExpressionTypes()
+    {
+        return [
+            'idiom',
+            'phrase',
+            'proverb',
+            'saying',
+            'collocation',
+            'slang'
+        ];
+    }
 }

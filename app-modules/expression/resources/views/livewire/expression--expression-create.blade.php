@@ -13,13 +13,13 @@ new class extends Component {
     // Form fields
     public string $expression = '';
     public string $slug = '';
-    public ?string $part_of_speech = null;
+    public ?string $type = null;
     public array $pronunciation = [
         'bn' => '',
         'hi' => '',
         'es' => ''
     ];
-    
+
     // For slug validation
     public bool $slugExists = false;
     public ?int $existingExpressionId = null;
@@ -37,37 +37,25 @@ new class extends Component {
         return [
             'expression' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:expressions,slug',
-            'part_of_speech' => 'nullable|string|max:255',
+            'type' => 'nullable|string|max:255',
             'pronunciation.bn' => 'nullable|string|max:255',
             'pronunciation.hi' => 'nullable|string|max:255',
             'pronunciation.es' => 'nullable|string|max:255',
         ];
     }
 
-    // Get parts of speech from the Expression model
-    public function getPartsOfSpeech()
+    // Get expression types from the Expression model
+    public function getExpressionTypes()
     {
-        return [
-            'noun',
-            'verb',
-            'adjective',
-            'adverb',
-            'preposition',
-            'conjunction',
-            'interjection',
-            'idiom',
-            'phrase',
-            'proverb'
-        ];
+        return Expression::getExpressionTypes();
     }
 
     // Auto-generate slug when expression changes
     public function updatedExpression($value)
     {
-        $this->slug = Str::slug(Str::limit($value, 100));
-        $this->checkSlugExists();
+        $this->slug = Str::slug($value);
     }
-    
+
     // Check if the slug already exists in the database
     public function checkSlugExists()
     {
@@ -77,9 +65,9 @@ new class extends Component {
             $this->existingExpressionName = null;
             return;
         }
-        
+
         $existingExpression = Expression::where('slug', $this->slug)->first();
-        
+
         if ($existingExpression) {
             $this->slugExists = true;
             $this->existingExpressionId = $existingExpression->id;
@@ -102,10 +90,10 @@ new class extends Component {
             'showModal' => $this->showModal,
             'expression' => $this->expression,
         ]));
-        
-        $this->reset(['expression', 'slug', 'part_of_speech', 'pronunciation', 'showSuccessMessage', 'createdExpressionId', 'createdExpressionName', 'slugExists', 'existingExpressionId', 'existingExpressionName']);
+
+        $this->reset(['expression', 'slug', 'type', 'pronunciation', 'showSuccessMessage', 'createdExpressionId', 'createdExpressionName', 'slugExists', 'existingExpressionId', 'existingExpressionName']);
         $this->showModal = true;
-        
+
         // For debugging
         session()->flash('message', 'Modal opened');
     }
@@ -121,15 +109,15 @@ new class extends Component {
     {
         // Generate slug from expression if not already set
         if (empty($this->slug) && !empty($this->expression)) {
-            $this->slug = Str::slug(Str::limit($this->expression, 100));
+            $this->slug = Str::slug($this->expression);
         }
-        
+
         // Check if slug exists before validation
         if (!$this->checkSlugExists()) {
             // If slug exists, don't proceed with validation
             return;
         }
-        
+
         $this->validate();
 
         // Filter out empty pronunciation values
@@ -139,7 +127,7 @@ new class extends Component {
         $expression = Expression::create([
             'expression' => $this->expression,
             'slug' => $this->slug,
-            'part_of_speech' => $this->part_of_speech,
+            'type' => $this->type,
             'source' => 'manual',
         ]);
 
@@ -158,7 +146,7 @@ new class extends Component {
     // Reset form for adding another expression
     public function addAnotherExpression()
     {
-        $this->reset(['expression', 'slug', 'part_of_speech', 'pronunciation', 'showSuccessMessage', 'slugExists', 'existingExpressionId', 'existingExpressionName']);
+        $this->reset(['expression', 'slug', 'type', 'pronunciation', 'showSuccessMessage', 'slugExists', 'existingExpressionId', 'existingExpressionName']);
     }
 };
 ?>
@@ -207,7 +195,7 @@ new class extends Component {
                     </div>
 
                     <div class="flex justify-between">
-                        <a href="{{ route('backend.expression.show', $createdExpressionId) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 disabled:opacity-25 transition">
+                        <a href="{{ route('backend::expressions.show', $createdExpressionId) }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 disabled:opacity-25 transition">
                             View Expression
                         </a>
 
@@ -231,41 +219,43 @@ new class extends Component {
                         @error('expression') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
-                    <!-- Slug Input -->
+                    <!-- Slug Input (Read-only) -->
                     <div class="mb-4">
                         <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug</label>
-                        <div class="mt-1 flex rounded-md shadow-sm">
-                            <input type="text" id="slug" wire:model.live="slug" wire:blur="checkSlugExists" class="block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter slug">
-                        </div>
-                        @error('slug') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                        
-                        @if($slugExists)
-                        <div class="mt-2 p-2 bg-yellow-50 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 text-xs rounded">
-                            <p>This slug is already in use by another expression: 
-                                <a href="{{ route('backend.expression.show', $existingExpressionId) }}" class="underline font-semibold" target="_blank">
-                                    {{ $existingExpressionName }}
+                        <div class="flex items-center">
+                            <input type="text" id="slug" wire:model="slug" readonly class="mt-1 block w-full bg-gray-100 dark:bg-gray-600 border-gray-300 dark:border-gray-700 dark:text-gray-200 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" value="{{ $slug }}">
+                            @if($slugExists)
+                                <a href="{{ route('backend::expressions.show', $existingExpressionId) }}" target="_blank" class="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
                                 </a>
-                            </p>
+                            @endif
                         </div>
+                        @if($slugExists)
+                            <div class="mt-1 text-amber-600 dark:text-amber-400 text-sm">
+                                This slug is already used by "{{ $existingExpressionName }}". Please modify the expression to generate a unique slug.
+                            </div>
                         @endif
+                        @error('slug') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
                     </div>
 
-                    <!-- Part of Speech -->
+                    <!-- Type -->
                     <div class="mb-4">
-                        <label for="part_of_speech" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Part of Speech</label>
-                        <select id="part_of_speech" wire:model="part_of_speech" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
-                            <option value="">Select part of speech</option>
-                            @foreach($this->getPartsOfSpeech() as $pos)
-                                <option value="{{ $pos }}">{{ ucfirst($pos) }}</option>
+                        <label for="type" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type</label>
+                        <select id="type" wire:model="type" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">
+                            <option value="">Select type</option>
+                            @foreach($this->getExpressionTypes() as $type)
+                                <option value="{{ $type }}">{{ ucfirst($type) }}</option>
                             @endforeach
                         </select>
-                        @error('part_of_speech') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        @error('type') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Pronunciation -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Pronunciation</label>
-                        
+
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <!-- Bengali Pronunciation -->
                             <div>
@@ -273,14 +263,14 @@ new class extends Component {
                                 <input type="text" id="pronunciation_bn" wire:model="pronunciation.bn" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Bengali pronunciation">
                                 @error('pronunciation.bn') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                             </div>
-                            
+
                             <!-- Hindi Pronunciation -->
                             <div>
                                 <label for="pronunciation_hi" class="block text-xs text-gray-500 dark:text-gray-400">Hindi</label>
                                 <input type="text" id="pronunciation_hi" wire:model="pronunciation.hi" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Hindi pronunciation">
                                 @error('pronunciation.hi') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                             </div>
-                            
+
                             <!-- Spanish Pronunciation -->
                             <div>
                                 <label for="pronunciation_es" class="block text-xs text-gray-500 dark:text-gray-400">Spanish</label>
@@ -295,7 +285,7 @@ new class extends Component {
                         <button type="button" wire:click="closeModal" class="inline-flex items-center px-4 py-2 bg-gray-300 dark:bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-gray-800 dark:text-white uppercase tracking-widest hover:bg-gray-400 dark:hover:bg-gray-500 active:bg-gray-500 dark:active:bg-gray-400 focus:outline-none focus:border-gray-500 focus:ring focus:ring-gray-300 disabled:opacity-25 transition mr-2">
                             Cancel
                         </button>
-                        
+
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 disabled:opacity-25 transition">
                             Create Expression
                         </button>
