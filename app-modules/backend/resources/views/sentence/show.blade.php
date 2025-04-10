@@ -73,14 +73,14 @@
                                         {{ $translation->translation }}
                                     </div>
                                 </div>
-                                
+
                                 @if($translation->slug)
                                 <div class="ml-10 mb-2">
                                     <span class="font-bold text-gray-600 dark:text-gray-400">Slug:</span>
                                     <span class="dark:text-gray-200">{{ $translation->slug }}</span>
                                 </div>
                                 @endif
-                                
+
                                 @if(!empty($translation->transliteration))
                                 <div class="ml-10 bg-gray-100 dark:bg-gray-600 p-3 rounded-md">
                                     <div class="italic text-gray-600 dark:text-gray-400 mb-1">Transliteration:</div>
@@ -99,6 +99,7 @@
         </div>
         <div class="bg-white dark:bg-gray-800 rounded-lg ps-4 pb-4">
             <!-- Add edit functionality here when available -->
+            @hasanyrole('developer')
             <div class="flex justify-between items-center px-2 py-3">
                 <div>
                     <button id="delete-sentence" data-id="{{ $sentence->id }}" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors">
@@ -109,6 +110,11 @@
                     <!-- Add edit button here when available -->
                 </div>
             </div>
+            @endhasanyrole
+
+        </div>
+        <div class="bg-white dark:bg-gray-800 rounded-lg ps-4 pb-4">
+            <livewire:sentence--sentence-edit-using-json :sentence="$sentence" />
         </div>
     </div>
 </div>
