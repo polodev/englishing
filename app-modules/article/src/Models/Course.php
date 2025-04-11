@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Support\Str;
 
 class Course extends Model
 {
@@ -38,6 +39,28 @@ class Course extends Model
         'title_translation' => 'array',
         'content_translation' => 'array',
     ];
+
+    /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($course) {
+            // Generate slug from title if not already set
+            if (empty($course->slug) && !empty($course->title)) {
+                $course->slug = Str::slug($course->title);
+            }
+        });
+
+        static::updating(function ($course) {
+            // Update slug when title changes
+            if ($course->isDirty('title')) {
+                $course->slug = Str::slug($course->title);
+            }
+        });
+    }
 
     /**
      * Get the user that owns the course.

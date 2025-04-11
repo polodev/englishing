@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Modules\Backend\Http\Controllers\ExpressionController;
 use Modules\Backend\Http\Controllers\SentenceController;
 use Modules\Backend\Http\Controllers\WordController;
+use Modules\Backend\Http\Controllers\CourseController;
 
 Route::middleware(['web', 'auth'])->group(function () {
     $route_arguments = [
@@ -28,6 +29,10 @@ Route::middleware(['web', 'auth'])->group(function () {
         Route::delete('/expressions/destroy/{expression}', [ExpressionController::class, 'destroy'])->name('expressions.destroy');
         Route::match(['get', 'post'],'/json/expressions-index-json', [ExpressionController::class, 'index_json'])->name('expressions.index_json');
 
-
+        # course
+        Route::get('/courses/index', [CourseController::class, 'index'])->name('courses.index');
+        Route::get('/courses/show/{course}', [CourseController::class, 'show'])->name('courses.show');
+        Route::delete('/courses/destroy/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
+        Route::match(['get', 'post'],'/json/courses-index-json', [CourseController::class, 'index_json'])->name('courses.index_json');
     });
 });
