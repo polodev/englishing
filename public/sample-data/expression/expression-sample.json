@@ -1,0 +1,115 @@
+{
+  "expressions": [
+    {
+      "expression": "Hit the books",
+      "slug": "hit-the-books",
+      "type": "idiom",
+      "pronunciation": {
+        "bn_pronunciation": "হিট দ্য বুকস",
+        "hi_pronunciation": "हिट द बुक्स",
+        "es_pronunciation": "golpear los libros"
+      },
+      "meanings": [
+        {
+          "meaning": "To study hard, especially for an exam or test",
+          "slug": "study-hard",
+          "display_order": 1,
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "ভালো ভাবে পড়াশোনা করা",
+              "transliteration": "bhalo bhabe porasona kora",
+              "slug": "bhalo-bhabe-porasona-kora"
+            },
+            {
+              "locale": "hi",
+              "translation": "कड़ी पढ़ाई करना",
+              "transliteration": "kadi padhai karna",
+              "slug": "kadi-padhai-karna"
+            }
+          ]
+        }
+      ],
+      "synonyms": ["study hard", "burn the midnight oil", "cram"],
+      "antonyms": ["slack off", "goof off"]
+    },
+    {
+      "expression": "A piece of cake",
+      "slug": "a-piece-of-cake",
+      "type": "idiom",
+      "pronunciation": {
+        "bn_pronunciation": "এ পিস অফ কেক",
+        "hi_pronunciation": "ए पीस ऑफ केक",
+        "es_pronunciation": "un pedazo de pastel"
+      },
+      "meanings": [
+        {
+          "meaning": "Something that is very easy to do",
+          "slug": "very-easy",
+          "display_order": 1,
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "খুবই সহজ বিষয়",
+              "transliteration": "khubi sohoj bishoy",
+              "slug": "khubi-sohoj-bishoy"
+            },
+            {
+              "locale": "hi",
+              "translation": "बहुत आसान काम",
+              "transliteration": "bahut aasan kaam",
+              "slug": "bahut-aasan-kaam"
+            },
+            {
+              "locale": "es",
+              "translation": "muy fácil",
+              "transliteration": null,
+              "slug": "muy-facil"
+            }
+          ]
+        }
+      ],
+      "synonyms": ["easy as pie", "child's play", "walk in the park"],
+      "antonyms": ["uphill battle", "tough row to hoe"]
+    },
+    {
+      "expression": "Break a leg",
+      "slug": "break-a-leg",
+      "type": "idiom",
+      "pronunciation": {
+        "bn_pronunciation": "ব্রেক এ লেগ",
+        "hi_pronunciation": "ब्रेक अ लेग",
+        "es_pronunciation": "romper una pierna"
+      },
+      "meanings": [
+        {
+          "meaning": "Good luck (especially before a performance or presentation)",
+          "slug": "good-luck",
+          "display_order": 1,
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "শুভকামনা",
+              "transliteration": "shubhokamona",
+              "slug": "shubhokamona"
+            },
+            {
+              "locale": "hi",
+              "translation": "शुभकामनाएं",
+              "transliteration": "shubhkamnayen",
+              "slug": "shubhkamnayen"
+            },
+            {
+              "locale": "es",
+              "translation": "buena suerte",
+              "transliteration": null,
+              "slug": "buena-suerte"
+            }
+          ]
+        }
+      ],
+      "synonyms": ["good luck", "best wishes", "godspeed"],
+      "antonyms": []
+    }
+  ]
+}

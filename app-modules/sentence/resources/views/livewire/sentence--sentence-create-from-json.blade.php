@@ -240,7 +240,7 @@ new class extends Component {
     // Load sample JSON data
     public function loadSampleData()
     {
-        $samplePath = public_path('sample-data/words/sentence-sample.json');
+        $samplePath = public_path('sample-data/sentence/sentence-sample.json');
         if (file_exists($samplePath)) {
             $this->jsonData = file_get_contents($samplePath);
         } else {

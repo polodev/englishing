@@ -484,7 +484,7 @@ new class extends Component {
                 @if($showSampleLink)
                 <div class="mb-4">
                     <a
-                        href="/sample-data/words/words-sample.json"
+                        href="/sample-data/word/word-sample.json"
                         target="_blank"
                         class="inline-flex items-center px-3 py-1 bg-blue-600 dark:bg-blue-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 dark:hover:bg-blue-600 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-300 disabled:opacity-25 transition"
                     >

@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('expression_id');
             $table->text('meaning');
+            $table->string('source')->nullable();
+            $table->string('slug');
             $table->json('pronunciation')->nullable();
             $table->timestamps();
         });

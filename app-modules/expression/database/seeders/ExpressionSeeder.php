@@ -138,6 +138,7 @@ class ExpressionSeeder extends Seeder
             foreach ($meanings as $meaningData) {
                 $translations = $meaningData['translations'] ?? [];
                 unset($meaningData['translations']);
+                $meaningData['slug'] = Str::slug($meaningData['meaning']);
 
                 $meaning = $expression->meanings()->create($meaningData);
 

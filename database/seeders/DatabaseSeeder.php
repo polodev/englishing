@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
             UserTableSeeder::class,
             WordSeeder::class,
             SentenceSeeder::class,
-            ExpressionSeeder::class,
+            // ExpressionSeeder::class,
             CourseSeeder::class,
             ArticleSeeder::class,
         ]);
