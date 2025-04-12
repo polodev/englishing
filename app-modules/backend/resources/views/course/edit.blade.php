@@ -60,7 +60,12 @@
                         <!-- Content Input -->
                         <div class="mb-4">
                             <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
-                            <textarea id="content" name="content" rows="6" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">{{ old('content', $course->content) }}</textarea>
+                            <x-markdown-editor 
+                                id="content"
+                                name="content"
+                                :value="old('content', $course->content)"
+                                placeholder="Write your course content here..."
+                            />
                             @error('content')
                                 <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                             @enderror
@@ -102,7 +107,12 @@
                             <!-- Bengali Content Translation -->
                             <div>
                                 <label for="content_translation_bn" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Bengali</label>
-                                <textarea id="content_translation_bn" name="content_translation[bn]" rows="6" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">{{ old('content_translation.bn', $course->getTranslation('content_translation', 'bn', false)) }}</textarea>
+                                <x-markdown-editor 
+                                    id="content_translation_bn"
+                                    name="content_translation[bn]"
+                                    :value="old('content_translation.bn', $course->getTranslation('content_translation', 'bn', false))"
+                                    placeholder="Write your course content in Bengali here..."
+                                />
                                 @error('content_translation.bn')
                                     <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                                 @enderror
@@ -111,7 +121,12 @@
                             <!-- Hindi Content Translation -->
                             <div>
                                 <label for="content_translation_hi" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hindi</label>
-                                <textarea id="content_translation_hi" name="content_translation[hi]" rows="6" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">{{ old('content_translation.hi', $course->getTranslation('content_translation', 'hi', false)) }}</textarea>
+                                <x-markdown-editor 
+                                    id="content_translation_hi"
+                                    name="content_translation[hi]"
+                                    :value="old('content_translation.hi', $course->getTranslation('content_translation', 'hi', false))"
+                                    placeholder="Write your course content in Hindi here..."
+                                />
                                 @error('content_translation.hi')
                                     <span class="text-red-500 text-xs mt-1">{{ $message }}</span>
                                 @enderror

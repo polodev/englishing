@@ -28,6 +28,22 @@
 
     <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css">
 
+    <!-- EasyMDE Markdown Editor -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde@2.15.0/dist/easymde.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/easymde@2.15.0/dist/easymde.min.js"></script>
+    <style>
+        /* Fix EasyMDE fullscreen z-index */
+        .EasyMDEContainer .CodeMirror-fullscreen,
+        .EasyMDEContainer .editor-toolbar.fullscreen,
+        .EasyMDEContainer .editor-preview-side,
+        .EasyMDEContainer.editor-preview-active-side .CodeMirror,
+        .editor-toolbar.fullscreen,
+        .CodeMirror-fullscreen,
+        .editor-preview-side {
+            z-index: 9999 !important;
+        }
+    </style>
+
     <!-- Livewire Styles -->
     @livewireStyles
 

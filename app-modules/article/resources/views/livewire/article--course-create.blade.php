@@ -239,7 +239,14 @@ new class extends Component {
                     <!-- Content Input -->
                     <div class="mb-4">
                         <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
-                        <textarea id="content" wire:model="content" rows="4" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter course content"></textarea>
+                        <div wire:ignore>
+                            <x-markdown-editor 
+                                id="content-create"
+                                :wire-model="'content'"
+                                :value="$content"
+                                placeholder="Write your course content here..."
+                            />
+                        </div>
                         @error('content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
