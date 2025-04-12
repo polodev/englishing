@@ -32,6 +32,8 @@ Route::middleware(['web', 'auth'])->group(function () {
         # course
         Route::get('/courses/index', [CourseController::class, 'index'])->name('courses.index');
         Route::get('/courses/show/{course}', [CourseController::class, 'show'])->name('courses.show');
+        Route::get('/courses/edit/{course}', [CourseController::class, 'edit'])->name('courses.edit');
+        Route::put('/courses/update/{course}', [CourseController::class, 'update'])->name('courses.update');
         Route::delete('/courses/destroy/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
         Route::match(['get', 'post'],'/json/courses-index-json', [CourseController::class, 'index_json'])->name('courses.index_json');
     });

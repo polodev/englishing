@@ -51,13 +51,12 @@ new class extends Component {
     // Auto-generate slug when title changes
     public function updatedTitle($value)
     {
-        $this->slug = Str::slug($value);
-        $this->slugExists = false;
-        $this->existingCourseId = null;
-        $this->existingCourseTitle = null;
-        
-        // Force a re-render to update the UI
-        $this->dispatch('slug-updated', ['slug' => $this->slug]);
+        if (!empty($value)) {
+            $this->slug = Str::slug($value);
+            $this->slugExists = false;
+            $this->existingCourseId = null;
+            $this->existingCourseTitle = null;
+        }
     }
     
     // Check if the slug already exists in the database - only called on form submission
@@ -224,8 +223,8 @@ new class extends Component {
                     <!-- Slug Input -->
                     <div class="mb-4">
                         <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug</label>
-                        <div class="flex">
-                            <input type="text" id="slug" wire:model.live="slug" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter slug">
+                        <div class="flex items-center">
+                            <input type="text" id="slug" wire:model="slug" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter slug">
                         </div>
                         @error('slug') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         

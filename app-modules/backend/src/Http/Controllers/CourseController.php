@@ -90,6 +90,11 @@ class CourseController
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                         </svg>
                     </a>
+                    <a href="' . route('backend::courses.edit', $course->id) . '" class="text-green-600 hover:text-green-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                    </a>
                     <button type="button" data-id="' . $course->id . '" class="delete-course text-red-600 hover:text-red-900">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -116,6 +121,62 @@ class CourseController
         $articles = $course->articles->sortBy('display_order');
         
         return view('backend::course.show', compact('course', 'articles'));
+    }
+
+    /**
+     * Show the form for editing the specified course.
+     *
+     * @param  \Modules\Article\Models\Course  $course
+     * @return \Illuminate\View\View
+     */
+    public function edit(Course $course)
+    {
+        return view('backend::course.edit', compact('course'));
+    }
+
+    /**
+     * Update the specified course in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Modules\Article\Models\Course  $course
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, Course $course)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:courses,slug,' . $course->id,
+            'content' => 'nullable|string',
+            'title_translation' => 'nullable|array',
+            'content_translation' => 'nullable|array',
+        ]);
+
+        // Update basic fields
+        $course->title = $validated['title'];
+        $course->slug = $validated['slug'];
+        $course->content = $validated['content'] ?? null;
+
+        // Update translations
+        if (isset($validated['title_translation']) && is_array($validated['title_translation'])) {
+            foreach ($validated['title_translation'] as $locale => $value) {
+                if (!empty($value)) {
+                    $course->setTranslation('title_translation', $locale, $value);
+                }
+            }
+        }
+
+        if (isset($validated['content_translation']) && is_array($validated['content_translation'])) {
+            foreach ($validated['content_translation'] as $locale => $value) {
+                if (!empty($value)) {
+                    $course->setTranslation('content_translation', $locale, $value);
+                }
+            }
+        }
+
+        $course->save();
+
+        return redirect()->route('backend::courses.edit', $course)
+            ->with('success', 'Course updated successfully');
     }
 
     /**
