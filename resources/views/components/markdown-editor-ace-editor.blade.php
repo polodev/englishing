@@ -118,12 +118,6 @@
     </div>
 </div>
 
-<!-- Load Ace Editor from CDN -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.4/ace.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.4/mode-markdown.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.4/keybinding-vim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
-
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize editor after a short delay to ensure DOM is ready

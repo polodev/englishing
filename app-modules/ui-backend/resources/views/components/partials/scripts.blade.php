@@ -7,7 +7,29 @@
 <script src="https://cdn.datatables.net/buttons/1.7.0/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/fixedheader/3.2.3/js/dataTables.fixedHeader.min.js"></script>
 
-
+<!-- Ace Editor for Markdown -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.4/ace.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.4/mode-markdown.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.23.4/keybinding-vim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@4.3.0/marked.min.js"></script>
+<script>
+    // Configure Marked.js globally
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof marked !== 'undefined') {
+            marked.setOptions({
+                breaks: true,           // Add line breaks on single line breaks
+                gfm: true,              // Enable GitHub Flavored Markdown
+                headerIds: true,        // Enable header IDs
+                mangle: false,          // Don't mangle header IDs
+                pedantic: false,        // Don't be pedantic about markdown spec
+                sanitize: false,        // Don't sanitize HTML
+                smartLists: true,       // Use smarter list behavior
+                smartypants: true,      // Use smart typography
+                xhtml: false            // Don't use XHTML
+            });
+        }
+    });
+</script>
 
 <!-- Custom Scripts -->
 <script>
