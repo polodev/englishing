@@ -240,7 +240,7 @@ new class extends Component {
                     <div class="mb-4">
                         <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
                         <div wire:ignore>
-                            <x-markdown-editor 
+                            <x-markdown-editor-easymde 
                                 id="content-create"
                                 :wire-model="'content'"
                                 :value="$content"

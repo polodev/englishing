@@ -60,7 +60,7 @@
                         <!-- Content Input -->
                         <div class="mb-4">
                             <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
-                            <x-markdown-editor 
+                            <x-markdown-editor-ace-editor 
                                 id="content"
                                 name="content"
                                 :value="old('content', $course->content)"
@@ -107,7 +107,7 @@
                             <!-- Bengali Content Translation -->
                             <div>
                                 <label for="content_translation_bn" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Bengali</label>
-                                <x-markdown-editor 
+                                <x-markdown-editor-ace-editor 
                                     id="content_translation_bn"
                                     name="content_translation[bn]"
                                     :value="old('content_translation.bn', $course->getTranslation('content_translation', 'bn', false))"
@@ -121,7 +121,7 @@
                             <!-- Hindi Content Translation -->
                             <div>
                                 <label for="content_translation_hi" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Hindi</label>
-                                <x-markdown-editor 
+                                <x-markdown-editor-ace-editor 
                                     id="content_translation_hi"
                                     name="content_translation[hi]"
                                     :value="old('content_translation.hi', $course->getTranslation('content_translation', 'hi', false))"
