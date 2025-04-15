@@ -21,7 +21,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 
 // Make Ace globally available
 window.ace = ace;
-Livewire.start();
+// Livewire.start();
 
 // Configure Ace
 ace.require('ace/ext/language_tools');
@@ -36,10 +36,10 @@ document.addEventListener('livewire:initialized', () => {
             editor.clearSelection();
         }
     });
-    
+
     // Listen for toast events from Livewire
     Livewire.on('toast', (data) => {
-        window.dispatchEvent(new CustomEvent('new-toast', { 
+        window.dispatchEvent(new CustomEvent('new-toast', {
             detail: data
         }));
     });

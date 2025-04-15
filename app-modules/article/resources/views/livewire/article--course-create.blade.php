@@ -18,10 +18,6 @@ new class extends Component {
         'bn' => '',
         'hi' => ''
     ];
-    public array $content_translation = [
-        'bn' => '',
-        'hi' => ''
-    ];
     
     // For slug validation
     public bool $slugExists = false;
@@ -43,27 +39,17 @@ new class extends Component {
             'content' => 'nullable|string',
             'title_translation.bn' => 'nullable|string|max:255',
             'title_translation.hi' => 'nullable|string|max:255',
-            'content_translation.bn' => 'nullable|string',
-            'content_translation.hi' => 'nullable|string',
         ];
     }
 
-    // Auto-generate slug when title changes
-    public function updatedTitle($value)
+    // Check if the slug already exists in the database
+    public function checkSlugExists()
     {
-        if (!empty($value)) {
-            $this->slug = Str::slug($value);
+        if (empty($this->slug)) {
             $this->slugExists = false;
             $this->existingCourseId = null;
             $this->existingCourseTitle = null;
-        }
-    }
-    
-    // Check if the slug already exists in the database - only called on form submission
-    public function validateSlug()
-    {
-        if (empty($this->slug)) {
-            return false;
+            return;
         }
         
         $existingCourse = Course::where('slug', $this->slug)->first();
@@ -73,9 +59,27 @@ new class extends Component {
             $this->existingCourseId = $existingCourse->id;
             $this->existingCourseTitle = $existingCourse->title;
             return false;
+        } else {
+            $this->slugExists = false;
+            $this->existingCourseId = null;
+            $this->existingCourseTitle = null;
+            return true;
         }
-        
-        return true;
+    }
+    
+    // Auto-generate slug when title changes
+    public function updatedTitle($value)
+    {
+        if (!empty($value)) {
+            $this->slug = Str::slug($value);
+            $this->checkSlugExists();
+        }
+    }
+    
+    // When slug is manually changed, check if it exists
+    public function updatedSlug()
+    {
+        $this->checkSlugExists();
     }
 
     // Open the modal
@@ -83,7 +87,7 @@ new class extends Component {
     {
         logger('CourseCreate::openModal called from Volt component');
         
-        $this->reset(['title', 'slug', 'content', 'title_translation', 'content_translation', 'showSuccessMessage', 'createdCourseId', 'createdCourseTitle', 'slugExists', 'existingCourseId', 'existingCourseTitle']);
+        $this->reset(['title', 'slug', 'content', 'title_translation', 'showSuccessMessage', 'createdCourseId', 'createdCourseTitle', 'slugExists', 'existingCourseId', 'existingCourseTitle']);
         $this->showModal = true;
         
         // For debugging
@@ -105,7 +109,7 @@ new class extends Component {
         }
         
         // Check if slug exists before validation
-        if (!$this->validateSlug()) {
+        if (!$this->checkSlugExists()) {
             // If slug exists, don't proceed with validation
             return;
         }
@@ -114,7 +118,6 @@ new class extends Component {
 
         // Filter out empty translation values
         $titleTranslationData = array_filter($this->title_translation, fn($value) => !empty($value));
-        $contentTranslationData = array_filter($this->content_translation, fn($value) => !empty($value));
 
         // Create the course
         $course = Course::create([
@@ -129,10 +132,6 @@ new class extends Component {
             $course->setTranslation('title_translation', $locale, $value);
         }
         
-        foreach ($contentTranslationData as $locale => $value) {
-            $course->setTranslation('content_translation', $locale, $value);
-        }
-        
         $course->save();
 
         // Show success message
@@ -144,7 +143,7 @@ new class extends Component {
     // Reset form for adding another course
     public function addAnotherCourse()
     {
-        $this->reset(['title', 'slug', 'content', 'title_translation', 'content_translation', 'showSuccessMessage', 'slugExists', 'existingCourseId', 'existingCourseTitle']);
+        $this->reset(['title', 'slug', 'content', 'title_translation', 'showSuccessMessage', 'slugExists', 'existingCourseId', 'existingCourseTitle']);
     }
 };
 ?>
@@ -173,7 +172,7 @@ new class extends Component {
             <div class="absolute inset-0 bg-gray-500 dark:bg-gray-800 opacity-75"></div>
         </div>
 
-        <div class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:max-w-lg mx-auto">
+        <div class="mb-6 bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full sm:max-w-4xl mx-auto">
             <!-- Success Message -->
             @if ($showSuccessMessage)
                 <div class="p-6">
@@ -224,32 +223,19 @@ new class extends Component {
                     <div class="mb-4">
                         <label for="slug" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Slug</label>
                         <div class="flex items-center">
-                            <input type="text" id="slug" wire:model="slug" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Enter slug">
+                            <input type="text" id="slug" wire:model="slug" readonly class="mt-1 block w-full bg-gray-100 dark:bg-gray-600 border-gray-300 dark:border-gray-700 dark:text-gray-200 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" value="{{ $slug }}">
+                            @if($slugExists)
+                                <a href="{{ route('backend::courses.show', $existingCourseId) }}" target="_blank" class="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                                    </svg>
+                                </a>
+                            @endif
                         </div>
                         @error('slug') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                        
-                        @if($slugExists)
-                            <div class="mt-2 text-red-500 text-xs">
-                                This slug is already in use by course "{{ $existingCourseTitle }}".
-                                <a href="{{ route('backend::courses.show', $existingCourseId) }}" class="text-blue-500 hover:underline" target="_blank">View Course</a>
-                            </div>
-                        @endif
                     </div>
 
-                    <!-- Content Input -->
-                    <div class="mb-4">
-                        <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
-                        <div wire:ignore>
-                            <x-markdown-editor-easymde 
-                                id="content-create"
-                                :wire-model="'content'"
-                                :value="$content"
-                                placeholder="Write your course content here..."
-                            />
-                        </div>
-                        @error('content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                    </div>
-
+                    <!-- Title Translations -->
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title Translations</label>
                         
@@ -270,24 +256,11 @@ new class extends Component {
                         </div>
                     </div>
 
+                    <!-- Content Input -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content Translations</label>
-                        
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Bengali Content Translation -->
-                            <div>
-                                <label for="content_translation_bn" class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Bengali</label>
-                                <textarea id="content_translation_bn" wire:model="content_translation.bn" rows="4" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Bengali content translation"></textarea>
-                                @error('content_translation.bn') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                            </div>
-                            
-                            <!-- Hindi Content Translation -->
-                            <div>
-                                <label for="content_translation_hi" class="block text-xs text-gray-500 dark:text-gray-400 mb-1">Hindi</label>
-                                <textarea id="content_translation_hi" wire:model="content_translation.hi" rows="4" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Hindi content translation"></textarea>
-                                @error('content_translation.hi') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
-                            </div>
-                        </div>
+                        <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
+                        <textarea id="content" wire:model="content" rows="8" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Write your course content here..."></textarea>
+                        @error('content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
                     <!-- Form Buttons -->
