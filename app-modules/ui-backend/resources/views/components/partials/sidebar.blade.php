@@ -31,18 +31,18 @@
                 </li>
                 @endhasrole
                 <li>
-                    <a href="#" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" :class="{'justify-center': !sidebarOpen}">
-                        <i class="fas fa-newspaper" :class="{'w-6': sidebarOpen}"></i>
-                        <span class="ml-3" x-show="sidebarOpen">Articles</span>
-                    </a>
-                </li>
-
-                <li>
                     <a href="{{ route('backend::courses.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" :class="{'justify-center': !sidebarOpen}">
                         <div class="w-5 h-5 text-gray-700 dark:text-gray-200" :class="{'w-6': sidebarOpen}">
                             @include('backend::svg.course')
                         </div>
                         <span class="ml-3" x-show="sidebarOpen">Courses</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('backend::articles.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" :class="{'justify-center': !sidebarOpen}">
+                        <i class="fas fa-newspaper" :class="{'w-6': sidebarOpen}"></i>
+                        <span class="ml-3" x-show="sidebarOpen">Articles</span>
                     </a>
                 </li>
 

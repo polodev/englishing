@@ -43,6 +43,16 @@
             z-index: 9999 !important;
         }
     </style>
+    
+    <!-- Marked.js for Markdown Preview -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <style>
+        [x-cloak] { display: none !important; }
+        .sidebar-transition {
+            transition: width 0.3s ease;
+        }
+    </style>
 
     <!-- Livewire Styles -->
     @livewireStyles
@@ -52,13 +62,6 @@
 
     <!-- Styles -->
     @stack('styles')
-
-    <style>
-        [x-cloak] { display: none !important; }
-        .sidebar-transition {
-            transition: width 0.3s ease;
-        }
-    </style>
 </head>
 <body class="font-['Miriam_Libre'] antialiased h-full bg-gray-100 dark:bg-gray-900 dark:text-white"
       x-data="{

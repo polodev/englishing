@@ -96,30 +96,9 @@
                 }
             });
 
-            // Delete course
-            $('#courses-table').on('click', '.delete-course', function() {
-                let courseId = $(this).data('id');
-
-                if (confirm('Are you sure you want to delete this course?')) {
-                    $.ajax({
-                        url: `/dashboard/courses/destroy/${courseId}`,
-                        type: 'DELETE',
-                        data: {
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function(response) {
-                            if (response.success) {
-                                table.draw();
-                            } else {
-                                alert(response.message || 'Failed to delete course');
-                            }
-                        },
-                        error: function() {
-                            alert('An error occurred while deleting the course');
-                        }
-                    });
-                }
-            });
+            // Fix for DataTable background in dark mode
+            $('.dark table.dataTable tbody tr').css('background-color', '#1f2937');
+            $('.dark table.dataTable tbody tr:hover').css('background-color', '#374151');
         });
     </script>
 

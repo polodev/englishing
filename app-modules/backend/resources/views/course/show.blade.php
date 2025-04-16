@@ -111,7 +111,7 @@
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200">{{ $article->id }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200">
-                                        <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">{{ $article->title }}</a>
+                                        <a href="{{ route('backend::articles.show', $article->id) }}" class="text-blue-600 dark:text-blue-400 hover:underline">{{ $article->title }}</a>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200">{{ $article->slug }}</td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-200">{{ $article->display_order }}</td>

@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Backend\Http\Controllers\ExpressionController;
-use Modules\Backend\Http\Controllers\SentenceController;
 use Modules\Backend\Http\Controllers\WordController;
 use Modules\Backend\Http\Controllers\CourseController;
+use Modules\Backend\Http\Controllers\ArticleController;
+use Modules\Backend\Http\Controllers\SentenceController;
+use Modules\Backend\Http\Controllers\ExpressionController;
 
 Route::middleware(['web', 'auth'])->group(function () {
     $route_arguments = [
@@ -36,5 +37,16 @@ Route::middleware(['web', 'auth'])->group(function () {
         Route::put('/courses/update/{course}', [CourseController::class, 'update'])->name('courses.update');
         Route::delete('/courses/destroy/{course}', [CourseController::class, 'destroy'])->name('courses.destroy');
         Route::match(['get', 'post'],'/json/courses-index-json', [CourseController::class, 'index_json'])->name('courses.index_json');
+
+        # article
+        Route::get('/articles/index', [ArticleController::class, 'index'])->name('articles.index');
+        Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
+        Route::post('/articles/store', [ArticleController::class, 'store'])->name('articles.store');
+        Route::get('/articles/show/{article}', [ArticleController::class, 'show'])->name('articles.show');
+        Route::get('/articles/edit/{article}', [ArticleController::class, 'edit'])->name('articles.edit');
+        Route::put('/articles/update/{article}', [ArticleController::class, 'update'])->name('articles.update');
+        Route::delete('/articles/destroy/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
+        Route::match(['get', 'post'],'/json/articles-index-json', [ArticleController::class, 'index_json'])->name('articles.index_json');
+
     });
 });
