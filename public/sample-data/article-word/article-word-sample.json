@@ -1,0 +1,119 @@
+[
+  {
+    "word": "happiness",
+    "slug": "happiness",
+    "phonetic": "ˈhæpinəs",
+    "pronunciation": {
+      "bn_pronunciation": "হ্যাপিনেস",
+      "hi_pronunciation": "हैप्पीनेस"
+    },
+    "parts_of_speech": "noun",
+    "static_content_1": "Happiness is a state of well-being characterized by emotions ranging from contentment to intense joy.",
+    "static_content_2": "Happiness is often associated with positive psychology and mental health.",
+    "meaning": "The state of being happy, feeling or showing pleasure or contentment.",
+    "example_sentence": "She couldn't hide her happiness when she received the award.",
+    "example_expression": "pursuit of happiness",
+    "example_expression_meaning": "The ongoing effort to find satisfaction, enjoyment, and meaning in life.",
+    "display_order": 1,
+    "translations": [
+      {
+        "locale": "bn",
+        "word_translation": "সুখ",
+        "word_transliteration": "shukh",
+        "example_sentence_translation": "তিনি পুরস্কার পাওয়ার সময় তার সুখ লুকাতে পারেননি।",
+        "example_sentence_transliteration": "Tini puroshkar paowar somoy tar shukh lukate parenni.",
+        "example_expression_translation": "সুখের অনুসরণ",
+        "example_expression_transliteration": "shukher onushoron",
+        "source": "oxford"
+      },
+      {
+        "locale": "hi",
+        "word_translation": "ख़ुशी",
+        "word_transliteration": "khushi",
+        "example_sentence_translation": "जब उन्हें पुरस्कार मिला तो वह अपनी ख़ुशी नहीं छिपा सकीं।",
+        "example_sentence_transliteration": "Jab unhein puraskaar mila to wah apni khushi nahin chhipa sakeen.",
+        "example_expression_translation": "ख़ुशी की खोज",
+        "example_expression_transliteration": "khushi ki khoj",
+        "source": "oxford"
+      }
+    ]
+  },
+  {
+    "word": "gratitude",
+    "slug": "gratitude",
+    "phonetic": "ˈɡrætɪtjuːd",
+    "pronunciation": {
+      "bn_pronunciation": "গ্র্যাটিটিউড",
+      "hi_pronunciation": "ग्रैटिट्यूड"
+    },
+    "parts_of_speech": "noun",
+    "static_content_1": "Gratitude is the quality of being thankful and showing appreciation.",
+    "static_content_2": "Research has shown that practicing gratitude can improve psychological well-being.",
+    "meaning": "The quality of being thankful; readiness to show appreciation for and to return kindness.",
+    "example_sentence": "She expressed her gratitude for their support during difficult times.",
+    "example_expression": "attitude of gratitude",
+    "example_expression_meaning": "A mindset focused on appreciating what one has rather than focusing on what is lacking.",
+    "display_order": 2,
+    "translations": [
+      {
+        "locale": "bn",
+        "word_translation": "কৃতজ্ঞতা",
+        "word_transliteration": "kritoggyota",
+        "example_sentence_translation": "তিনি কঠিন সময়ে তাদের সমর্থনের জন্য তার কৃতজ্ঞতা প্রকাশ করেছিলেন।",
+        "example_sentence_transliteration": "Tini kothin somoye tader somorthoner jonno tar kritoggyota prokash korechhilen.",
+        "example_expression_translation": "কৃতজ্ঞতার মনোভাব",
+        "example_expression_transliteration": "kritoggyotar monobhab",
+        "source": "oxford"
+      },
+      {
+        "locale": "hi",
+        "word_translation": "कृतज्ञता",
+        "word_transliteration": "kritagyata",
+        "example_sentence_translation": "उन्होंने कठिन समय में उनके समर्थन के लिए अपनी कृतज्ञता व्यक्त की।",
+        "example_sentence_transliteration": "Unhone kathin samay mein unke samarthan ke liye apni kritagyata vyakt ki.",
+        "example_expression_translation": "कृतज्ञता का दृष्टिकोण",
+        "example_expression_transliteration": "kritagyata ka drishtikon",
+        "source": "oxford"
+      }
+    ]
+  },
+  {
+    "word": "resilience",
+    "slug": "resilience",
+    "phonetic": "rɪˈzɪliəns",
+    "pronunciation": {
+      "bn_pronunciation": "রিজিলিয়েন্স",
+      "hi_pronunciation": "रेजिलिएंस"
+    },
+    "parts_of_speech": "noun",
+    "static_content_1": "Resilience is the capacity to recover quickly from difficulties; toughness.",
+    "static_content_2": "Building resilience involves developing coping mechanisms for stress and adversity.",
+    "meaning": "The ability to recover quickly from difficulties; mental toughness and adaptability.",
+    "example_sentence": "The resilience of the human spirit is remarkable in times of crisis.",
+    "example_expression": "emotional resilience",
+    "example_expression_meaning": "The ability to adapt to stressful situations and cope with life's challenges.",
+    "display_order": 3,
+    "translations": [
+      {
+        "locale": "bn",
+        "word_translation": "স্থিতিস্থাপকতা",
+        "word_transliteration": "sthitisthapokata",
+        "example_sentence_translation": "সংকটের সময়ে মানব আত্মার স্থিতিস্থাপকতা উল্লেখযোগ্য।",
+        "example_sentence_transliteration": "Shonkoter shomoye manob atmar sthitisthapokata ullekhjogyo.",
+        "example_expression_translation": "মানসিক স্থিতিস্থাপকতা",
+        "example_expression_transliteration": "manoshik sthitisthapokata",
+        "source": "oxford"
+      },
+      {
+        "locale": "hi",
+        "word_translation": "लचीलापन",
+        "word_transliteration": "lacheelāpan",
+        "example_sentence_translation": "संकट के समय में मानव आत्मा का लचीलापन उल्लेखनीय है।",
+        "example_sentence_transliteration": "Sankat ke samay mein manav aatma ka lacheelāpan ullekhaneey hai.",
+        "example_expression_translation": "भावनात्मक लचीलापन",
+        "example_expression_transliteration": "bhavnatmak lacheelāpan",
+        "source": "oxford"
+      }
+    ]
+  }
+]

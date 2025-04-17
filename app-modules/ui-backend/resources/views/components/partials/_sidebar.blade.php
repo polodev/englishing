@@ -54,15 +54,24 @@
                                     <span class="ml-3">Articles</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('backend::article-word-sets.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-list-alt w-5 h-5"></i>
+                                    <span class="ml-3">Article Word Sets</span>
+                                </a>
+                            </li>
                         </ul>
                         <div x-show="!sidebarOpen" class="py-1">
                             <a href="{{ route('backend::courses.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Courses">
-                                <div class="w-5 h-5 mx-auto text-gray-700 dark:text-gray-200">
+                                <div class="w-5 h-5 text-gray-700 dark:text-gray-200 mx-auto">
                                     @include('backend::svg.course')
                                 </div>
                             </a>
                             <a href="{{ route('backend::articles.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Articles">
                                 <i class="fas fa-newspaper mx-auto"></i>
+                            </a>
+                            <a href="{{ route('backend::article-word-sets.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Article Word Sets">
+                                <i class="fas fa-list-alt mx-auto"></i>
                             </a>
                         </div>
                     </div>

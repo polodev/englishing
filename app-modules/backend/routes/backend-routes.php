@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Modules\Backend\Http\Controllers\WordController;
+use Modules\Backend\Http\Controllers\ArticleWordSetController;
 use Modules\Backend\Http\Controllers\CourseController;
 use Modules\Backend\Http\Controllers\ArticleController;
 use Modules\Backend\Http\Controllers\SentenceController;
@@ -48,5 +49,13 @@ Route::middleware(['web', 'auth'])->group(function () {
         Route::delete('/articles/destroy/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
         Route::match(['get', 'post'],'/json/articles-index-json', [ArticleController::class, 'index_json'])->name('articles.index_json');
 
+        # article word set
+        Route::resource('article-word-sets', ArticleWordSetController::class);
+        Route::get('article-word-sets/index/json', [ArticleWordSetController::class, 'index_json'])->name('article-word-sets.index_json');
+
+        // API Routes
+        Route::prefix('api')->name('api.')->group(function () {
+            Route::get('articles/search', [ArticleWordSetController::class, 'searchArticles'])->name('articles.search');
+        });
     });
 });

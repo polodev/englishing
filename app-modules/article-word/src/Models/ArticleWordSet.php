@@ -2,12 +2,13 @@
 
 namespace Modules\ArticleWord\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\User;
 use Modules\Article\Models\Article;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ArticleWordSet extends Model
 {
@@ -47,6 +48,31 @@ class ArticleWordSet extends Model
     public function article(): BelongsTo
     {
         return $this->belongsTo(Article::class);
+    }
+    /**
+     * Get the article that owns the word set.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+    public static function getColumnsForColumnOrder()
+    {
+        return [
+            'word',
+            'phonetic',
+            'pronunciation',
+            'parts_of_speech',
+            'static_content_1',
+            'static_content_2',
+            'meaning',
+            'example_sentence',
+            'example_expression',
+            'example_expression_meaning',
+            'word_translation',
+            'example_sentence_translation',
+            'example_expression_translation',
+        ];
     }
 
     /**
