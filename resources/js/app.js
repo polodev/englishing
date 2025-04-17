@@ -21,7 +21,7 @@ import 'ace-builds/src-noconflict/ext-language_tools';
 
 // Make Ace globally available
 window.ace = ace;
-// Livewire.start();
+Livewire.start();
 
 // Configure Ace
 ace.require('ace/ext/language_tools');

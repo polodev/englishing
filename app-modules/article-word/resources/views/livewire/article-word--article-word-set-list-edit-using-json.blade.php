@@ -242,7 +242,7 @@ new class extends Component {
                         $wordTranslation = $translationData['word_translation'] ?? '';
                         $sentenceTranslation = $translationData['example_sentence_translation'] ?? '';
                         $expressionTranslation = $translationData['example_expression_translation'] ?? '';
-                        
+
                         // Only save if at least one of the translation fields has content
                         if (!empty($wordTranslation) || !empty($sentenceTranslation) || !empty($expressionTranslation)) {
                             $translationSaveData = [
@@ -263,7 +263,7 @@ new class extends Component {
                                 ],
                                 $translationSaveData
                             );
-                            
+
                             $this->debugInfo[] = "Updated/Created Translation ID: {$translation->id} for word_set_list_id: {$translation->article_word_set_list_id}, locale: $locale";
                         } else {
                             $this->debugInfo[] = "Skipping empty translation for locale: $locale";
@@ -359,16 +359,34 @@ new class extends Component {
                     </div>
                     @endif
 
-                    <!-- JSON Input -->
+                    <!-- Sample JSON Link -->
                     <div class="mb-4">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">JSON Data</label>
-                        <textarea
-                            wire:model.live="jsonData"
-                            rows="20"
-                            class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-                            placeholder='[{"word": "example", "translations": [...]}]'
-                        >{{ $jsonData }}</textarea>
+                        <div class="flex justify-between items-center">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">JSON Data</label>
+                            <a href="/sample-data/article-word/article-word-set-list-sample.json" target="_blank" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm">
+                                <span class="flex items-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    View Sample JSON Format
+                                </span>
+                            </a>
+                        </div>
                     </div>
+
+                    <!-- JSON Editor -->
+                    <div class="mb-4">
+                        <div wire:ignore>
+                            <x-json-editor
+                                label=""
+                                wire:model.live="jsonData"
+                                :content="$jsonData"
+                                placeholder='[{"word": "example", "translations": [...]}]'
+                                model-name="jsonData"
+                            />
+                        </div>
+                    </div>
+
 
                     <!-- Submit Button -->
                     <div class="flex justify-end">

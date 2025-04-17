@@ -1,322 +1,324 @@
 {
-    "words": [
-      {
-        "word": "happiness",
-        "slug": "happiness",
-        "phonetic": "ˈhæpinəs",
-        "part_of_speech": "noun",
-        "source": "oxford",
-        "meanings": [
-          {
-            "meaning": "the state of being happy",
-            "slug": "state-of-being-happy",
-            "display_order": 1,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "সুখ",
-                "transliteration": "shukh"
-              },
-              {
-                "locale": "hi",
-                "translation": "ख़ुशी",
-                "transliteration": "khushi"
-              }
-            ]
-          },
-          {
-            "meaning": "contentment, joy, or satisfaction",
-            "slug": "contentment-joy-satisfaction",
-            "display_order": 2,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "আনন্দ",
-                "transliteration": "anondo"
-              },
-              {
-                "locale": "hi",
-                "translation": "संतोष",
-                "transliteration": "santosh"
-              }
-            ]
-          }
-        ],
-        "pronunciation": {
-          "bn_pronunciation": "হ্যাপিনেস",
-          "hi_pronunciation": "हैप्पीनेस",
-          "es_pronunciation": "jápines"
+  "words": [
+    {
+      "word": "happiness",
+      "slug": "happiness",
+      "phonetic": "ˈhæpinəs",
+      "part_of_speech": "noun",
+      "source": "oxford",
+      "meanings": [
+        {
+          "meaning": "the state of being happy",
+          "slug": "state-of-being-happy",
+          "display_order": 1,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "সুখ",
+              "transliteration": "shukh"
+            },
+            {
+              "locale": "hi",
+              "translation": "ख़ुशी",
+              "transliteration": "khushi"
+            }
+          ]
         },
-        "translations": [
-          {
-            "locale": "bn",
-            "translation": "খুশি",
-            "transliteration": "khushi"
-          },
-          {
-            "locale": "hi",
-            "translation": "प्रसन्नता",
-            "transliteration": "prasannata"
-          }
-        ],
-        "synonyms": ["joy", "delight", "pleasure", "contentment", "satisfaction"],
-        "antonyms": ["sadness", "unhappiness", "misery", "sorrow"]
+        {
+          "meaning": "contentment, joy, or satisfaction",
+          "slug": "contentment-joy-satisfaction",
+          "display_order": 2,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "আনন্দ",
+              "transliteration": "anondo"
+            },
+            {
+              "locale": "hi",
+              "translation": "संतोष",
+              "transliteration": "santosh"
+            }
+          ]
+        }
+      ],
+      "pronunciation": {
+        "bn_pronunciation": "হ্যাপিনেস",
+        "hi_pronunciation": "हैप्पीनेस",
+        "es_pronunciation": "jápines"
       },
-      {
-        "word": "courage",
-        "slug": "courage",
-        "phonetic": "ˈkʌrɪdʒ",
-        "part_of_speech": "noun",
-        "source": "oxford",
-        "meanings": [
-          {
-            "meaning": "the ability to do something that frightens one",
-            "slug": "ability-to-do-something-frightening",
-            "display_order": 1,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "সাহস",
-                "transliteration": "shahosh"
-              },
-              {
-                "locale": "hi",
-                "translation": "साहस",
-                "transliteration": "sahas"
-              }
-            ]
-          },
-          {
-            "meaning": "strength in the face of pain or grief",
-            "slug": "strength-in-face-of-pain",
-            "display_order": 2,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "বীরত্ব",
-                "transliteration": "birottyo"
-              },
-              {
-                "locale": "hi",
-                "translation": "हिम्मत",
-                "transliteration": "himmat"
-              }
-            ]
-          }
-        ],
-        "pronunciation": {
-          "bn_pronunciation": "কারেজ",
-          "hi_pronunciation": "करेज",
-          "es_pronunciation": "córach"
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "খুশি",
+          "transliteration": "khushi"
         },
-        "translations": [
-          {
-            "locale": "bn",
-            "translation": "দুঃসাহস",
-            "transliteration": "duhsahosh"
-          },
-          {
-            "locale": "hi",
-            "translation": "बहादुरी",
-            "transliteration": "bahaduri"
-          }
-        ],
-        "synonyms": ["bravery", "valor", "fearlessness", "intrepidity", "nerve"],
-        "antonyms": ["cowardice", "fear", "timidity", "weakness"]
+        {
+          "locale": "hi",
+          "translation": "प्रसन्नता",
+          "transliteration": "prasannata"
+        }
+      ],
+      "synonyms": ["joy", "delight", "pleasure", "contentment", "satisfaction"],
+      "antonyms": ["sadness", "unhappiness", "misery", "sorrow"]
+    },
+    {
+      "word": "courage",
+      "slug": "courage",
+      "phonetic": "ˈkʌrɪdʒ",
+      "part_of_speech": "noun",
+      "source": "oxford",
+      "meanings": [
+        {
+          "meaning": "the ability to do something that frightens one",
+          "slug": "ability-to-do-something-frightening",
+          "display_order": 1,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "সাহস",
+              "transliteration": "shahosh"
+            },
+            {
+              "locale": "hi",
+              "translation": "साहस",
+              "transliteration": "sahas"
+            }
+          ]
+        },
+        {
+          "meaning": "strength in the face of pain or grief",
+          "slug": "strength-in-face-of-pain",
+          "display_order": 2,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "বীরত্ব",
+              "transliteration": "birottyo"
+            },
+            {
+              "locale": "hi",
+              "translation": "हिम्मत",
+              "transliteration": "himmat"
+            }
+          ]
+        }
+      ],
+      "pronunciation": {
+        "bn_pronunciation": "কারেজ",
+        "hi_pronunciation": "करेज",
+        "es_pronunciation": "córach"
       },
-      {
-        "word": "knowledge",
-        "slug": "knowledge",
-        "phonetic": "ˈnɒlɪdʒ",
-        "part_of_speech": "noun",
-        "source": "oxford",
-        "meanings": [
-          {
-            "meaning": "facts, information, and skills acquired through experience or education",
-            "slug": "facts-information-skills",
-            "display_order": 1,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "জ্ঞান",
-                "transliteration": "gyan"
-              },
-              {
-                "locale": "hi",
-                "translation": "ज्ञान",
-                "transliteration": "gyan"
-              }
-            ]
-          },
-          {
-            "meaning": "awareness or familiarity gained by experience",
-            "slug": "awareness-familiarity",
-            "display_order": 2,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "বিদ্যা",
-                "transliteration": "bidya",
-                "locale": "hi",
-                "translation": "जानकारी",
-                "transliteration": "jankari"
-              }
-            ]
-          }
-        ],
-        "pronunciation": {
-          "bn_pronunciation": "নলেজ",
-          "hi_pronunciation": "नॉलेज",
-          "es_pronunciation": "nólech"
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "দুঃসাহস",
+          "transliteration": "duhsahosh"
         },
-        "translations": [
-          {
-            "locale": "bn",
-            "translation": "শিক্ষা",
-            "transliteration": "shikkha"
-          },
-          {
-            "locale": "hi",
-            "translation": "विद्या",
-            "transliteration": "vidya"
-          }
-        ],
-        "synonyms": ["understanding", "comprehension", "expertise", "erudition", "wisdom"],
-        "antonyms": ["ignorance", "illiteracy", "inexperience", "misunderstanding"]
+        {
+          "locale": "hi",
+          "translation": "बहादुरी",
+          "transliteration": "bahaduri"
+        }
+      ],
+      "synonyms": ["bravery", "valor", "fearlessness", "intrepidity", "nerve"],
+      "antonyms": ["cowardice", "fear", "timidity", "weakness"]
+    },
+    {
+      "word": "knowledge",
+      "slug": "knowledge",
+      "phonetic": "ˈnɒlɪdʒ",
+      "part_of_speech": "noun",
+      "source": "oxford",
+      "meanings": [
+        {
+          "meaning": "facts, information, and skills acquired through experience or education",
+          "slug": "facts-information-skills",
+          "display_order": 1,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "জ্ঞান",
+              "transliteration": "gyan"
+            },
+            {
+              "locale": "hi",
+              "translation": "ज्ञान",
+              "transliteration": "gyan"
+            }
+          ]
+        },
+        {
+          "meaning": "awareness or familiarity gained by experience",
+          "slug": "awareness-familiarity",
+          "display_order": 2,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "বিদ্যা",
+              "transliteration": "bidya"
+            },
+            {
+              "locale": "hi",
+              "translation": "जानकारी",
+              "transliteration": "jankari"
+            }
+          ]
+        }
+      ],
+      "pronunciation": {
+        "bn_pronunciation": "নলেজ",
+        "hi_pronunciation": "नॉलेज",
+        "es_pronunciation": "nólech"
       },
-      {
-        "word": "freedom",
-        "slug": "freedom",
-        "phonetic": "ˈfriːdəm",
-        "part_of_speech": "noun",
-        "source": "oxford",
-        "meanings": [
-          {
-            "meaning": "the power or right to act, speak, or think as one wants",
-            "slug": "power-to-act-speak-think",
-            "display_order": 1,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "স্বাধীনতা",
-                "transliteration": "shadhinota"
-              },
-              {
-                "locale": "hi",
-                "translation": "स्वतंत्रता",
-                "transliteration": "swatantrata"
-              }
-            ]
-          },
-          {
-            "meaning": "the state of not being imprisoned or enslaved",
-            "slug": "state-not-imprisoned",
-            "display_order": 2,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "মুক্তি",
-                "transliteration": "mukti"
-              },
-              {
-                "locale": "hi",
-                "translation": "आज़ादी",
-                "transliteration": "azadi"
-              }
-            ]
-          }
-        ],
-        "pronunciation": {
-          "bn_pronunciation": "ফ্রিডম",
-          "hi_pronunciation": "फ्रीडम",
-          "es_pronunciation": "frídom"
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "শিক্ষা",
+          "transliteration": "shikkha"
         },
-        "translations": [
-          {
-            "locale": "bn",
-            "translation": "আজাদী",
-            "transliteration": "ajadi"
-          },
-          {
-            "locale": "hi",
-            "translation": "मुक्ति",
-            "transliteration": "mukti"
-          }
-        ],
-        "synonyms": ["liberty", "independence", "autonomy", "self-determination", "choice"],
-        "antonyms": ["captivity", "confinement", "imprisonment", "restraint", "slavery"]
+        {
+          "locale": "hi",
+          "translation": "विद्या",
+          "transliteration": "vidya"
+        }
+      ],
+      "synonyms": ["understanding", "comprehension", "expertise", "erudition", "wisdom"],
+      "antonyms": ["ignorance", "illiteracy", "inexperience", "misunderstanding"]
+    },
+    {
+      "word": "freedom",
+      "slug": "freedom",
+      "phonetic": "ˈfriːdəm",
+      "part_of_speech": "noun",
+      "source": "oxford",
+      "meanings": [
+        {
+          "meaning": "the power or right to act, speak, or think as one wants",
+          "slug": "power-to-act-speak-think",
+          "display_order": 1,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "স্বাধীনতা",
+              "transliteration": "shadhinota"
+            },
+            {
+              "locale": "hi",
+              "translation": "स्वतंत्रता",
+              "transliteration": "swatantrata"
+            }
+          ]
+        },
+        {
+          "meaning": "the state of not being imprisoned or enslaved",
+          "slug": "state-not-imprisoned",
+          "display_order": 2,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "মুক্তি",
+              "transliteration": "mukti"
+            },
+            {
+              "locale": "hi",
+              "translation": "आज़ादी",
+              "transliteration": "azadi"
+            }
+          ]
+        }
+      ],
+      "pronunciation": {
+        "bn_pronunciation": "ফ্রিডম",
+        "hi_pronunciation": "फ्रीडम",
+        "es_pronunciation": "frídom"
       },
-      {
-        "word": "patience",
-        "slug": "patience",
-        "phonetic": "ˈpeɪʃəns",
-        "part_of_speech": "noun",
-        "source": "oxford",
-        "meanings": [
-          {
-            "meaning": "the capacity to accept or tolerate delay, trouble, or suffering without getting angry or upset",
-            "slug": "capacity-accept-delay-trouble",
-            "display_order": 1,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "ধৈর্য",
-                "transliteration": "dhoirjo"
-              },
-              {
-                "locale": "hi",
-                "translation": "धैर्य",
-                "transliteration": "dhairya"
-              }
-            ]
-          },
-          {
-            "meaning": "the ability to endure difficult circumstances",
-            "slug": "ability-endure-difficult-circumstances",
-            "display_order": 2,
-            "source": "oxford",
-            "translations": [
-              {
-                "locale": "bn",
-                "translation": "সহনশীলতা",
-                "transliteration": "sohonshilota"
-              },
-              {
-                "locale": "hi",
-                "translation": "सब्र",
-                "transliteration": "sabr"
-              }
-            ]
-          }
-        ],
-        "pronunciation": {
-          "bn_pronunciation": "পেশেন্স",
-          "hi_pronunciation": "पेशन्स",
-          "es_pronunciation": "péishens"
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "আজাদী",
+          "transliteration": "ajadi"
         },
-        "translations": [
-          {
-            "locale": "bn",
-            "translation": "সবুর",
-            "transliteration": "sobur"
-          },
-          {
-            "locale": "hi",
-            "translation": "संयम",
-            "transliteration": "sanyam"
-          }
-        ],
-        "synonyms": ["forbearance", "tolerance", "restraint", "self-control", "composure"],
-        "antonyms": ["impatience", "intolerance", "restlessness", "agitation", "hastiness"]
-      }
-    ]
-  }
+        {
+          "locale": "hi",
+          "translation": "मुक्ति",
+          "transliteration": "mukti"
+        }
+      ],
+      "synonyms": ["liberty", "independence", "autonomy", "self-determination", "choice"],
+      "antonyms": ["captivity", "confinement", "imprisonment", "restraint", "slavery"]
+    },
+    {
+      "word": "patience",
+      "slug": "patience",
+      "phonetic": "ˈpeɪʃəns",
+      "part_of_speech": "noun",
+      "source": "oxford",
+      "meanings": [
+        {
+          "meaning": "the capacity to accept or tolerate delay, trouble, or suffering without getting angry or upset",
+          "slug": "capacity-accept-delay-trouble",
+          "display_order": 1,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "ধৈর্য",
+              "transliteration": "dhoirjo"
+            },
+            {
+              "locale": "hi",
+              "translation": "धैर्य",
+              "transliteration": "dhairya"
+            }
+          ]
+        },
+        {
+          "meaning": "the ability to endure difficult circumstances",
+          "slug": "ability-endure-difficult-circumstances",
+          "display_order": 2,
+          "source": "oxford",
+          "translations": [
+            {
+              "locale": "bn",
+              "translation": "সহনশীলতা",
+              "transliteration": "sohonshilota"
+            },
+            {
+              "locale": "hi",
+              "translation": "सब्र",
+              "transliteration": "sabr"
+            }
+          ]
+        }
+      ],
+      "pronunciation": {
+        "bn_pronunciation": "পেশেন্স",
+        "hi_pronunciation": "पेशन्स",
+        "es_pronunciation": "péishens"
+      },
+      "translations": [
+        {
+          "locale": "bn",
+          "translation": "সবুর",
+          "transliteration": "sobur"
+        },
+        {
+          "locale": "hi",
+          "translation": "संयम",
+          "transliteration": "sanyam"
+        }
+      ],
+      "synonyms": ["forbearance", "tolerance", "restraint", "self-control", "composure"],
+      "antonyms": ["impatience", "intolerance", "restlessness", "agitation", "hastiness"]
+    }
+  ]
+}
