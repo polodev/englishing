@@ -11,7 +11,7 @@
                 <a href="{{ route('backend::article-word-sets.edit', $articleWordSet) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
                     <i class="fas fa-edit mr-2"></i> Edit
                 </a>
-                <livewire:article-word--article-word-set-list-create-from-json :articleWordSetId="$articleWordSet->id" />
+                <livewire:article-word--article-word-set-list-edit-using-json :articleWordSet="$articleWordSet" />
             </div>
         </div>
 
@@ -131,6 +131,6 @@
                 </div>
             </div>
         </div>
-    
-</div>
+
+    </div>
 </x-ui-backend::layout>

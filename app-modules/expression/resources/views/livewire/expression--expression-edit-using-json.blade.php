@@ -64,7 +64,7 @@ new class extends Component {
         } catch (\Exception $e) {
             // Handle the case when pronunciation is not set
         }
-        
+
         if (!empty($pronunciations)) {
             // Merge with default empty structure to ensure all keys exist
             $data['pronunciation'] = array_merge([
@@ -261,7 +261,7 @@ new class extends Component {
                 'type' => 'success',
                 'message' => "Expression updated successfully"
             ]);
-            
+
             // Refresh the JSON data to reflect the updated state
             $this->expression = Expression::with(['meanings.translations', 'translations'])->find($this->expression->id);
             $this->jsonData = $this->generateJsonFromExpression($this->expression);
@@ -637,12 +637,12 @@ new class extends Component {
                 toast.className = `fixed bottom-4 right-4 px-4 py-2 rounded-md text-white ${event.type === 'success' ? 'bg-green-500' : 'bg-red-500'} transition-opacity duration-500 opacity-0`;
                 toast.textContent = event.message;
                 document.body.appendChild(toast);
-                
+
                 // Fade in
                 setTimeout(() => {
                     toast.style.opacity = '1';
                 }, 10);
-                
+
                 // Fade out and remove
                 setTimeout(() => {
                     toast.style.opacity = '0';
