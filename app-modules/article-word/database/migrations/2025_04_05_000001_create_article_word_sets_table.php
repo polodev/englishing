@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('article_word_sets', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id');
+            $table->foreignId('article_id')->nullable();
+            $table->foreignId('user_id')->nullable();
             $table->integer('display_order')->default(0);
             $table->string('title');
             $table->text('content')->nullable();

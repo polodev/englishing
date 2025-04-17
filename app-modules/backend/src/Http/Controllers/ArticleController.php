@@ -202,7 +202,10 @@ class ArticleController
         // Get associated articles if this article belongs to a course
         $associatedArticles = $article->getAssociatedArticles();
         
-        return view('backend::article.show', compact('article', 'associatedArticles'));
+        // Get article word set using the relationship
+        $articleWordSet = $article->wordSet;
+        
+        return view('backend::article.show', compact('article', 'associatedArticles', 'articleWordSet'));
     }
 
     /**

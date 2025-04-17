@@ -28,6 +28,11 @@ class VoltServiceProvider extends ServiceProvider
              base_path('app-modules/sentence/resources/views/livewire'),
              base_path('app-modules/expression/resources/views/livewire'),
              base_path('app-modules/article/resources/views/livewire'),
+             base_path('app-modules/article-word/resources/views/livewire'),
+             base_path('app-modules/article-sentence/resources/views/livewire'),
+             base_path('app-modules/article-double-sentence/resources/views/livewire'),
+             base_path('app-modules/article-expression/resources/views/livewire'),
+             base_path('app-modules/article-conversation/resources/views/livewire'),
         ]);
     }
 }

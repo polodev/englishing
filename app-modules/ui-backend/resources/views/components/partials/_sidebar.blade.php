@@ -30,20 +30,42 @@
                     </a>
                 </li>
                 @endhasrole
-                <li>
-                    <a href="{{ route('backend::courses.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" :class="{'justify-center': !sidebarOpen}">
-                        <div class="w-5 h-5 text-gray-700 dark:text-gray-200" :class="{'w-6': sidebarOpen}">
-                            @include('backend::svg.course')
+                <!-- Content Management Dropdown -->
+                <li x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="flex items-center w-full p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" :class="{'justify-center': !sidebarOpen}">
+                        <i class="fas fa-book-open" :class="{'w-6': sidebarOpen}"></i>
+                        <span class="ml-3" x-show="sidebarOpen">Contents</span>
+                        <i class="fas fa-chevron-down ml-auto" x-show="sidebarOpen && !open"></i>
+                        <i class="fas fa-chevron-up ml-auto" x-show="sidebarOpen && open"></i>
+                    </button>
+                    <div x-show="open || !sidebarOpen" x-transition class="mt-1" :class="{'pl-4': sidebarOpen}">
+                        <ul class="space-y-1" x-show="sidebarOpen">
+                            <li>
+                                <a href="{{ route('backend::courses.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <div class="w-5 h-5 text-gray-700 dark:text-gray-200">
+                                        @include('backend::svg.course')
+                                    </div>
+                                    <span class="ml-3">Courses</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('backend::articles.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-newspaper w-5 h-5"></i>
+                                    <span class="ml-3">Articles</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div x-show="!sidebarOpen" class="py-1">
+                            <a href="{{ route('backend::courses.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Courses">
+                                <div class="w-5 h-5 mx-auto text-gray-700 dark:text-gray-200">
+                                    @include('backend::svg.course')
+                                </div>
+                            </a>
+                            <a href="{{ route('backend::articles.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Articles">
+                                <i class="fas fa-newspaper mx-auto"></i>
+                            </a>
                         </div>
-                        <span class="ml-3" x-show="sidebarOpen">Courses</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{{ route('backend::articles.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" :class="{'justify-center': !sidebarOpen}">
-                        <i class="fas fa-newspaper" :class="{'w-6': sidebarOpen}"></i>
-                        <span class="ml-3" x-show="sidebarOpen">Articles</span>
-                    </a>
+                    </div>
                 </li>
 
                 <li>

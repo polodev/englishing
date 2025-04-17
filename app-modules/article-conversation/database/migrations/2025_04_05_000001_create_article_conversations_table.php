@@ -13,14 +13,15 @@ return new class extends Migration
     {
         Schema::create('article_conversations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id');
+            $table->foreignId('article_id')->nullable();
+            $table->foreignId('user_id')->nullable();
             $table->string('title');
             $table->string('slug');
             $table->text('content')->nullable();
             $table->json('title_translation')->nullable();
             $table->json('content_translation')->nullable();
             $table->timestamps();
-            
+
             $table->unique(['article_id', 'slug']);
         });
     }

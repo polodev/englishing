@@ -5,6 +5,8 @@ namespace Modules\Article\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Modules\ArticleWord\Models\ArticleWordSet;
 use Spatie\Translatable\HasTranslations;
 
 class Article extends Model
@@ -85,5 +87,13 @@ class Article extends Model
         
         // If no related articles, return empty array
         return [];
+    }
+
+    /**
+     * Get the word set for this article.
+     */
+    public function wordSet(): HasOne
+    {
+        return $this->hasOne(ArticleWordSet::class);
     }
 }

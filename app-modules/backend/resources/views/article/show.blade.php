@@ -149,6 +149,9 @@
                     </div>
                 </div>
 
+                <!-- Article Word Sets Section -->
+                @include('backend::article.partials._article_word_set_section')
+
                 <!-- Associated Articles Section -->
                 @if(count($associatedArticles) > 0)
                     <div class="mb-6">

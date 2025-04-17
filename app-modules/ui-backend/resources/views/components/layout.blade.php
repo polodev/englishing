@@ -43,10 +43,10 @@
             z-index: 9999 !important;
         }
     </style>
-    
+
     <!-- Marked.js for Markdown Preview -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
+
     <style>
         [x-cloak] { display: none !important; }
         .sidebar-transition {
@@ -94,77 +94,13 @@
     <x-toast />
 
     <!-- Mobile Navigation -->
-    <div x-cloak x-show="mobileMenuOpen" class="fixed inset-0 z-50 bg-gray-900 bg-opacity-50 lg:hidden"
-         x-transition:enter="transition-opacity ease-linear duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition-opacity ease-linear duration-300"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0">
-        <div class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg">
-            <div class="flex items-center justify-between p-4 border-b">
-                <div class="flex items-center">
-                    @if(config('app.logo'))
-                        <img src="{{ asset(config('app.logo')) }}" alt="Logo" class="w-8 h-8 mr-2">
-                    @else
-                        <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold mr-2">E</div>
-                    @endif
-                    <span class="text-xl font-semibold">{{ config('app.name', 'Englishing.org') }}</span>
-                </div>
-                <button @click="mobileMenuOpen = false" class="p-2 text-gray-500 rounded-md hover:bg-gray-100">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <nav class="p-4">
-                <ul class="space-y-2">
-                    <li>
-                        <a href="{{ route('ui-backend::index') }}" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
-                            <i class="fas fa-home w-6"></i>
-                            <span class="ml-3">Dashboard</span>
-                        </a>
-                    </li>
-                    @role('admin')
-                    <li>
-                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
-                            <i class="fas fa-users w-6"></i>
-                            <span class="ml-3">Users</span>
-                        </a>
-                    </li>
-                    @endrole
-                    <li>
-                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
-                            <i class="fas fa-newspaper w-6"></i>
-                            <span class="ml-3">Articles</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
-                            <i class="fas fa-comment w-6"></i>
-                            <span class="ml-3">Sentences</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
-                            <i class="fas fa-book w-6"></i>
-                            <span class="ml-3">Words</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center p-2 text-gray-700 rounded-md hover:bg-gray-100">
-                            <i class="fas fa-cog w-6"></i>
-                            <span class="ml-3">Settings</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
+    <x-ui-backend::partials._mobile-nav />
 
     <!-- Topbar -->
-    <x-ui-backend::partials.topnav />
+    <x-ui-backend::partials._topnav />
 
     <!-- Desktop Sidebar -->
-    <x-ui-backend::partials.sidebar />
+    <x-ui-backend::partials._sidebar />
 
     <!-- Main Content Area -->
     <main x-cloak class="pt-16 transition-all duration-300 dark:bg-gray-900" :class="{'lg:pl-64': sidebarOpen, 'lg:pl-16': !sidebarOpen}">
@@ -180,7 +116,7 @@
     </main>
 
     <!-- Scripts -->
-    <x-ui-backend::partials.scripts />
+    <x-ui-backend::partials._scripts />
     @stack('scripts')
 
     <!-- Livewire Scripts -->
