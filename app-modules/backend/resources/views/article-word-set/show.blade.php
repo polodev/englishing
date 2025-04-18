@@ -11,7 +11,6 @@
                 <a href="{{ route('backend::article-word-sets.edit', $articleWordSet) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded">
                     <i class="fas fa-edit mr-2"></i> Edit
                 </a>
-                <livewire:article-word--article-word-set-list-edit-using-json :articleWordSet="$articleWordSet" />
             </div>
         </div>
 
@@ -90,6 +89,9 @@
                     {{ $articleWordSet->content }}
                 </div>
             </div>
+            
+            <!-- Word Set Lists Section -->
+            @include('backend::article-word-set.partials._article-word-set-list-and-its-translation')
 
             <!-- Title Translations Section -->
             <div class="p-6 border-b border-gray-200 dark:border-gray-700">
