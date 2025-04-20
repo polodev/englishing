@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\ArticleWord\Models\ArticleWordSet;
+use Modules\ArticleExpression\Models\ArticleExpressionSet;
 use Spatie\Translatable\HasTranslations;
 
 class Article extends Model
@@ -96,5 +97,13 @@ class Article extends Model
     public function wordSet(): HasOne
     {
         return $this->hasOne(ArticleWordSet::class);
+    }
+    
+    /**
+     * Get the expression set for this article.
+     */
+    public function expressionSet(): HasOne
+    {
+        return $this->hasOne(ArticleExpressionSet::class);
     }
 }

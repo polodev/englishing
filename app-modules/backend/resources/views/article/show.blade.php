@@ -152,6 +152,9 @@
                 <!-- Article Word Sets Section -->
                 @include('backend::article.partials._article_word_set_section')
 
+                <!-- Article Expression Sets Section -->
+                @include('backend::article.partials._article_expression_set_section')
+
                 <!-- Associated Articles Section -->
                 @if(count($associatedArticles) > 0)
                     <div class="mb-6">

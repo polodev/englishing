@@ -205,7 +205,10 @@ class ArticleController
         // Get article word set using the relationship
         $articleWordSet = $article->wordSet;
         
-        return view('backend::article.show', compact('article', 'associatedArticles', 'articleWordSet'));
+        // Get article expression set using the relationship
+        $articleExpressionSet = $article->expressionSet;
+        
+        return view('backend::article.show', compact('article', 'associatedArticles', 'articleWordSet', 'articleExpressionSet'));
     }
 
     /**

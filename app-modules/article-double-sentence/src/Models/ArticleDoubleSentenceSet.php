@@ -38,6 +38,7 @@ class ArticleDoubleSentenceSet extends Model
     protected $casts = [
         'title_translation' => 'array',
         'content_translation' => 'array',
+        'column_order' => 'array',
     ];
 
     /**

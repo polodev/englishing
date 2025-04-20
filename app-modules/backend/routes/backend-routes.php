@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Modules\Backend\Http\Controllers\WordController;
 use Modules\Backend\Http\Controllers\ArticleWordSetController;
+use Modules\Backend\Http\Controllers\ArticleExpressionSetController;
 use Modules\Backend\Http\Controllers\CourseController;
 use Modules\Backend\Http\Controllers\ArticleController;
 use Modules\Backend\Http\Controllers\SentenceController;
@@ -69,5 +70,12 @@ Route::middleware(['web', 'auth'])->group(function () {
         Route::delete('/tags/destroy/{tag}', [TagController::class, 'destroy'])->name('tags.destroy');
         Route::match(['get', 'post'],'/json/tags-index-json', [TagController::class, 'index_json'])->name('tags.index_json');
 
+        # article expression sets
+        Route::resource('article-expression-sets', ArticleExpressionSetController::class);
+        Route::get('article-expression-sets/index/json', [ArticleExpressionSetController::class, 'index_json'])->name('article-expression-sets.index_json');
+
+        Route::prefix('api')->name('api.')->group(function () {
+            Route::get('article-expressions/search', [ArticleExpressionSetController::class, 'searchArticles'])->name('article-expressions.search');
+        });
     });
 });

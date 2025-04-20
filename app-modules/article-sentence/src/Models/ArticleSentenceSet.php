@@ -38,7 +38,26 @@ class ArticleSentenceSet extends Model
     protected $casts = [
         'title_translation' => 'array',
         'content_translation' => 'array',
+        'column_order' => 'array',
     ];
+    public static function getColumnsForColumnOrder()
+    {
+        return [
+            'word',
+            'phonetic',
+            'pronunciation',
+            'parts_of_speech',
+            'static_content_1',
+            'static_content_2',
+            'meaning',
+            'example_sentence',
+            'example_expression',
+            'example_expression_meaning',
+            'word_translation',
+            'example_sentence_translation',
+            'example_expression_translation',
+        ];
+    }
 
     /**
      * Get the article that owns the sentence set.

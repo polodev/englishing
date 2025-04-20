@@ -66,6 +66,12 @@
                                     <span class="ml-3">Article Word Sets</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('backend::article-expression-sets.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-language w-5 h-5"></i>
+                                    <span class="ml-3">Article Expression Sets</span>
+                                </a>
+                            </li>
                         </ul>
                         <div x-show="!sidebarOpen" class="py-1">
                             <a href="{{ route('backend::tags.index') }}" class="block py-2 text-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" title="Tags">
@@ -81,6 +87,9 @@
                             </a>
                             <a href="{{ route('backend::article-word-sets.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Article Word Sets">
                                 <i class="fas fa-list-alt mx-auto"></i>
+                            </a>
+                            <a href="{{ route('backend::article-expression-sets.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Article Expression Sets">
+                                <i class="fas fa-language mx-auto"></i>
                             </a>
                         </div>
                     </div>

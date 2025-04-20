@@ -21,6 +21,7 @@ return new class extends Migration
             $table->json('title_translation')->nullable();
             $table->json('content_translation')->nullable();
             $table->timestamp('sync_at')->nullable();
+            $table->json('column_order')->nullable();
             $table->timestamps();
         });
     }
