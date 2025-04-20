@@ -7,6 +7,7 @@ use Modules\Backend\Http\Controllers\CourseController;
 use Modules\Backend\Http\Controllers\ArticleController;
 use Modules\Backend\Http\Controllers\SentenceController;
 use Modules\Backend\Http\Controllers\ExpressionController;
+use Modules\Backend\Http\Controllers\TagController;
 
 Route::middleware(['web', 'auth'])->group(function () {
     $route_arguments = [
@@ -57,5 +58,16 @@ Route::middleware(['web', 'auth'])->group(function () {
         Route::prefix('api')->name('api.')->group(function () {
             Route::get('articles/search', [ArticleWordSetController::class, 'searchArticles'])->name('articles.search');
         });
+
+        # tags
+        Route::get('/tags/index', [TagController::class, 'index'])->name('tags.index');
+        Route::get('/tags/create', [TagController::class, 'create'])->name('tags.create');
+        Route::post('/tags/store', [TagController::class, 'store'])->name('tags.store');
+        Route::get('/tags/show/{tag}', [TagController::class, 'show'])->name('tags.show');
+        Route::get('/tags/edit/{tag}', [TagController::class, 'edit'])->name('tags.edit');
+        Route::put('/tags/update/{tag}', [TagController::class, 'update'])->name('tags.update');
+        Route::delete('/tags/destroy/{tag}', [TagController::class, 'destroy'])->name('tags.destroy');
+        Route::match(['get', 'post'],'/json/tags-index-json', [TagController::class, 'index_json'])->name('tags.index_json');
+
     });
 });

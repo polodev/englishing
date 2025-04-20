@@ -40,6 +40,7 @@ class Article extends Model
         'title_translation' => 'array',
         'content_translation' => 'array',
         'excerpt_translation' => 'array',
+        'locales' => 'array',
         'is_premium' => 'boolean',
     ];
 
@@ -63,11 +64,11 @@ class Article extends Model
 
     /**
      * Get associated articles for the same course.
-     * 
+     *
      * @return array
      */
     public function getAssociatedArticles()
-    {        
+    {
         // If this article belongs to a course, get all articles in the same course
         if ($this->course_id) {
             return Article::where('course_id', $this->course_id)
@@ -84,7 +85,7 @@ class Article extends Model
                 })
                 ->toArray();
         }
-        
+
         // If no related articles, return empty array
         return [];
     }

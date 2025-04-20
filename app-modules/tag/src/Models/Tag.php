@@ -27,7 +27,10 @@ class Tag extends Model
      * @var array<int, string>
      */
     public $translatable = [
-        'title',
+        'title_translation',
+    ];
+    protected $casts = [
+        'title_translation' => 'array',
     ];
 
 
