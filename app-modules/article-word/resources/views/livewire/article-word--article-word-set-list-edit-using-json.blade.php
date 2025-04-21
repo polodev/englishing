@@ -57,20 +57,11 @@ new class extends Component {
                     ];
                 }
 
-                // Get pronunciation data
-                $pronunciation = [];
-                if ($wordSetList->pronunciation) {
-                    try {
-                        $pronunciation = json_decode($wordSetList->pronunciation, true);
-                        if (!is_array($pronunciation)) {
-                            $pronunciation = ['bn_pronunciation' => '', 'hi_pronunciation' => ''];
-                        }
-                    } catch (\Exception $e) {
-                        $pronunciation = ['bn_pronunciation' => '', 'hi_pronunciation' => ''];
-                    }
-                } else {
-                    $pronunciation = ['bn_pronunciation' => '', 'hi_pronunciation' => ''];
-                }
+                // Get pronunciation data using Spatie's getTranslation method
+                $pronunciation = [
+                    'bn' => $wordSetList->getTranslation('pronunciation', 'bn', false) ?: '',
+                    'hi' => $wordSetList->getTranslation('pronunciation', 'hi', false) ?: ''
+                ];
 
                 $data[] = [
                     'id' => $wordSetList->id,
@@ -96,8 +87,8 @@ new class extends Component {
                     'word' => '',
                     'phonetic' => '',
                     'pronunciation' => [
-                        'bn_pronunciation' => '',
-                        'hi_pronunciation' => ''
+                        'bn' => '',
+                        'hi' => ''
                     ],
                     'parts_of_speech' => '',
                     'static_content_1' => '',
@@ -206,7 +197,7 @@ new class extends Component {
                     'word' => $word,
                     'slug' => $slug, // Generated slug
                     'phonetic' => $wordData['phonetic'] ?? null,
-                    'pronunciation' => isset($wordData['pronunciation']) ? json_encode($wordData['pronunciation']) : null,
+                    // We'll manually handle pronunciation after model creation
                     'parts_of_speech' => $wordData['parts_of_speech'] ?? null,
                     'static_content_1' => $wordData['static_content_1'] ?? null,
                     'static_content_2' => $wordData['static_content_2'] ?? null,
@@ -228,7 +219,31 @@ new class extends Component {
                 );
 
                 $this->debugInfo[] = "Updated/Created ArticleWordSetList ID: {$wordSetList->id} with article_word_set_id: {$wordSetList->article_word_set_id}";
-
+                
+                // Set pronunciation data using Spatie's setTranslation method
+                if (isset($wordData['pronunciation']) && is_array($wordData['pronunciation'])) {
+                    // Set Bengali pronunciation
+                    if (isset($wordData['pronunciation']['bn'])) {
+                        $wordSetList->setTranslation('pronunciation', 'bn', $wordData['pronunciation']['bn']);
+                        $this->debugInfo[] = "Set Bengali pronunciation: {$wordData['pronunciation']['bn']}";
+                    }
+                    
+                    // Set Hindi pronunciation
+                    if (isset($wordData['pronunciation']['hi'])) {
+                        $wordSetList->setTranslation('pronunciation', 'hi', $wordData['pronunciation']['hi']);
+                        $this->debugInfo[] = "Set Hindi pronunciation: {$wordData['pronunciation']['hi']}";
+                    }
+                    
+                    // Save the model with the updated translations
+                    $wordSetList->save();
+                    
+                    // Verify the saved data
+                    $savedBn = $wordSetList->getTranslation('pronunciation', 'bn', false);
+                    $savedHi = $wordSetList->getTranslation('pronunciation', 'hi', false);
+                    $this->debugInfo[] = "Saved Bengali pronunciation: {$savedBn}";
+                    $this->debugInfo[] = "Saved Hindi pronunciation: {$savedHi}";
+                }
+                
                 // Process translations
                 if (isset($wordData['translations']) && is_array($wordData['translations'])) {
                     foreach ($wordData['translations'] as $translationData) {

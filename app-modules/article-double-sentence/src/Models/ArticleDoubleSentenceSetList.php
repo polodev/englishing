@@ -29,15 +29,6 @@ class ArticleDoubleSentenceSetList extends Model
         'pronunciation_2', # pronunciation should be for non english locale.
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'pronunciation_1' => 'array',
-        'pronunciation_2' => 'array',
-    ];
 
     /**
      * Get the double sentence set that owns the list.
@@ -61,7 +52,7 @@ class ArticleDoubleSentenceSetList extends Model
      * @param string $locale
      * @return \Modules\ArticleDoubleSentence\Models\ArticleDoubleSentenceTranslation|null
      */
-    public function getTranslation(string $locale)
+    public function getMyTranslation(string $locale)
     {
         return $this->translations()->where('locale', $locale)->first();
     }

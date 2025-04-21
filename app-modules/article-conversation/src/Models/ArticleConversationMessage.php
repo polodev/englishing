@@ -59,7 +59,7 @@ class ArticleConversationMessage extends Model
      * @param string $locale
      * @return \Modules\ArticleConversation\Models\ArticleConversationMessageTranslation|null
      */
-    public function getTranslation(string $locale)
+    public function getMyTranslation(string $locale)
     {
         return $this->translations()->where('locale', $locale)->first();
     }

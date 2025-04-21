@@ -18,7 +18,7 @@ class ArticleSentenceSetList extends Model
      * @var array<int, string>
      */
     protected $guarded = [];
-    
+
     /**
      * The attributes that are translatable.
      *
@@ -27,15 +27,7 @@ class ArticleSentenceSetList extends Model
     public $translatable = [
         'pronunciation', # pronunciation should be for non english locale.
     ];
-    
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'pronunciation' => 'array',
-    ];
+
 
     /**
      * Get the sentence set that owns the list.
@@ -59,7 +51,7 @@ class ArticleSentenceSetList extends Model
      * @param string $locale
      * @return \Modules\ArticleSentence\Models\ArticleSentenceTranslation|null
      */
-    public function getTranslation(string $locale)
+    public function getMyTranslation(string $locale)
     {
         return $this->translations()->where('locale', $locale)->first();
     }

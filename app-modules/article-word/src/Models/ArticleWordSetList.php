@@ -18,7 +18,7 @@ class ArticleWordSetList extends Model
      * @var array<int, string>
      */
     protected $guarded = [];
-    
+
     /**
      * The attributes that are translatable.
      *
@@ -27,7 +27,7 @@ class ArticleWordSetList extends Model
     public $translatable = [
         'pronunciation', # pronunciation should be for non english locale.
     ];
-    
+
     /**
      * The attributes that should be cast.
      *
@@ -36,6 +36,7 @@ class ArticleWordSetList extends Model
     protected $casts = [
         'pronunciation' => 'array',
     ];
+   
 
     /**
      * Get the word set that owns the list.
@@ -59,7 +60,7 @@ class ArticleWordSetList extends Model
      * @param string $locale
      * @return \Modules\ArticleWord\Models\ArticleWordTranslation|null
      */
-    public function getTranslation(string $locale)
+    public function getMyTranslation(string $locale)
     {
         return $this->translations()->where('locale', $locale)->first();
     }

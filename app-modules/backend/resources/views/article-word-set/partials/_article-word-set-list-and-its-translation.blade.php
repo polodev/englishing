@@ -1,6 +1,7 @@
 @php
     // Get all word set lists for this article word set
     $wordSetLists = $articleWordSet->lists()->with('translations')->orderBy('display_order')->get();
+
 @endphp
 
 <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden my-4">
@@ -52,38 +53,48 @@
                                     @if($wordList->parts_of_speech)
                                         <div><span class="font-medium">Parts of Speech:</span> {{ $wordList->parts_of_speech }}</div>
                                     @endif
-                                    
-                                    @if($wordList->pronunciation)
-                                        <div><span class="font-medium">Pronunciation:</span> {{ is_array($wordList->pronunciation) ? json_encode($wordList->pronunciation) : $wordList->pronunciation }}</div>
-                                    @endif
-                                    
+
+
+                                    <!-- Pronunciation Section (non-English locales) -->
+            @if($wordList->getTranslations('pronunciation'))
+            <div class="">
+                <div class="font-medium">Pronunciation:</div>
+                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
+                    @foreach($wordList->getTranslations('pronunciation') as $locale => $pronunciation)
+                        <div class="mb-1"><span class="font-bold text-blue-600 dark:text-blue-400 inline-block w-10">{{ strtoupper($locale) }}:</span> <span class="dark:text-gray-200">{{ $pronunciation }}</span></div>
+                    @endforeach
+                </div>
+            </div>
+            @endif
+
+
                                     @if($wordList->static_content_1)
                                         <div><span class="font-medium">Static Content 1:</span> {{ $wordList->static_content_1 }}</div>
                                     @endif
-                                    
+
                                     @if($wordList->static_content_2)
                                         <div><span class="font-medium">Static Content 2:</span> {{ $wordList->static_content_2 }}</div>
                                     @endif
-                                    
+
                                     @if($wordList->meaning)
                                         <div><span class="font-medium">Meaning:</span> {{ $wordList->meaning }}</div>
                                     @endif
-                                    
+
                                     @if($wordList->example_sentence)
                                         <div><span class="font-medium">Example Sentence:</span> {{ $wordList->example_sentence }}</div>
                                     @endif
-                                    
+
                                     @if($wordList->example_expression)
                                         <div><span class="font-medium">Example Expression:</span> {{ $wordList->example_expression }}</div>
                                     @endif
-                                    
+
                                     @if($wordList->example_expression_meaning)
                                         <div><span class="font-medium">Example Expression Meaning:</span> {{ $wordList->example_expression_meaning }}</div>
                                     @endif
                                 </div>
                             </td>
                         </tr>
-                        
+
                         <!-- Translation Rows -->
                         @foreach($wordList->translations as $translation)
                             <tr class="bg-gray-50 dark:bg-gray-900">
@@ -99,7 +110,7 @@
                                                 <span class="ml-2 text-xs text-gray-500 dark:text-gray-400">({{ $translation->word_transliteration }})</span>
                                             @endif
                                         </div>
-                                        
+
                                         @if($translation->example_sentence_translation)
                                             <div>
                                                 <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Example Sentence:</span>
@@ -109,7 +120,7 @@
                                                 @endif
                                             </div>
                                         @endif
-                                        
+
                                         @if($translation->example_expression_translation)
                                             <div>
                                                 <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Example Expression:</span>
@@ -119,7 +130,7 @@
                                                 @endif
                                             </div>
                                         @endif
-                                        
+
                                         @if($translation->source)
                                             <div>
                                                 <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Source:</span>

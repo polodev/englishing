@@ -28,14 +28,6 @@ class ArticleExpressionSetList extends Model
         'pronunciation', # pronunciation should be for non english locale.
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'pronunciation' => 'array',
-    ];
 
     /**
      * Get the expression set that owns the list.
@@ -59,7 +51,7 @@ class ArticleExpressionSetList extends Model
      * @param string $locale
      * @return \Modules\ArticleExpression\Models\ArticleExpressionTranslation|null
      */
-    public function getTranslation(string $locale)
+    public function getMyTranslation(string $locale)
     {
         return $this->translations()->where('locale', $locale)->first();
     }

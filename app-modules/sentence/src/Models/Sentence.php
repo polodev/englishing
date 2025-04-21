@@ -50,7 +50,7 @@ class Sentence extends Model
      * @param string $locale
      * @return \Modules\Sentence\Models\SentenceTranslation|null
      */
-    public function getTranslation(string $locale)
+    public function getMyTranslation(string $locale)
     {
         return $this->translations()->where('locale', $locale)->first();
     }
