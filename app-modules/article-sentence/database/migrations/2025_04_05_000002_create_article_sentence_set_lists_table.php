@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('slug');
             $table->integer('display_order')->default(0);
             $table->json('pronunciation')->nullable();
+            $table->timestamp('sync_at')->nullable();
             $table->timestamps();
 
             $table->unique(['article_sentence_set_id', 'slug']);

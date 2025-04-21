@@ -21,8 +21,9 @@ return new class extends Migration
             $table->integer('display_order')->default(0);
             $table->json('pronunciation_1')->nullable();
             $table->json('pronunciation_2')->nullable();
+            $table->timestamp('sync_at')->nullable();
             $table->timestamps();
-            
+
             $table->unique(['article_double_sentence_set_id', 'sentence_1_slug', 'sentence_2_slug'], 'article_double_sentence_set_lists_unique');
         });
     }

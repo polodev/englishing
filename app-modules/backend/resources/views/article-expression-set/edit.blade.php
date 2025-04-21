@@ -167,7 +167,12 @@
                     <!-- Content -->
                     <div class="mb-4">
                         <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content (English)</label>
-                        <textarea id="content" name="content" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">{{ old('content', $articleExpressionSet->content) }}</textarea>
+                        <x-markdown-editor-ace-editor
+                            id="content"
+                            name="content"
+                            :value="old('content', $articleExpressionSet->content)"
+                            placeholder="Write your content here..."
+                        />
                         @error('content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
@@ -186,7 +191,12 @@
 
                             <div>
                                 <label for="content_translation_bn" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content (Bengali)</label>
-                                <textarea id="content_translation_bn" name="content_translation[bn]" rows="2" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">{{ old('content_translation.bn', $articleExpressionSet->getTranslation('content_translation', 'bn', false)) }}</textarea>
+                                <x-markdown-editor-ace-editor
+                                    id="content_translation_bn"
+                                    name="content_translation[bn]"
+                                    :value="old('content_translation.bn', $articleExpressionSet->getTranslation('content_translation', 'bn', false))"
+                                    placeholder="Write your Bengali content here..."
+                                />
                             </div>
                         </div>
 
@@ -201,7 +211,12 @@
 
                             <div>
                                 <label for="content_translation_hi" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content (Hindi)</label>
-                                <textarea id="content_translation_hi" name="content_translation[hi]" rows="2" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50">{{ old('content_translation.hi', $articleExpressionSet->getTranslation('content_translation', 'hi', false)) }}</textarea>
+                                <x-markdown-editor-ace-editor
+                                    id="content_translation_hi"
+                                    name="content_translation[hi]"
+                                    :value="old('content_translation.hi', $articleExpressionSet->getTranslation('content_translation', 'hi', false))"
+                                    placeholder="Write your Hindi content here..."
+                                />
                             </div>
                         </div>
                     </div>

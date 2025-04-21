@@ -73,6 +73,7 @@ new class extends Component {
                 $data[] = [
                     'id' => $expressionSetList->id,
                     'expression' => $expressionSetList->expression,
+                    'type' => $expressionSetList->type ?? 'idiom',
                     'slug' => $expressionSetList->slug,
                     'pronunciation' => $pronunciation,
                     'meaning' => $expressionSetList->meaning,
@@ -86,6 +87,7 @@ new class extends Component {
             $data = [
                 [
                     'expression' => '',
+                    'type' => 'idiom',
                     'pronunciation' => [
                         'bn_pronunciation' => '',
                         'hi_pronunciation' => ''
@@ -192,6 +194,7 @@ new class extends Component {
 
                 // Update fields
                 $expressionSetList->expression = $item['expression'];
+                $expressionSetList->type = $item['type'] ?? 'idiom';
                 $expressionSetList->slug = $slug;
                 $expressionSetList->meaning = $item['meaning'] ?? null;
                 $expressionSetList->example_sentence = $item['example_sentence'] ?? null;
