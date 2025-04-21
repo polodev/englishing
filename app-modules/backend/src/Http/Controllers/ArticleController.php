@@ -198,17 +198,18 @@ class ArticleController
     public function show(Article $article)
     {
         $article->load(['course', 'user']);
-        
+
         // Get associated articles if this article belongs to a course
         $associatedArticles = $article->getAssociatedArticles();
-        
+
         // Get article word set using the relationship
         $articleWordSet = $article->wordSet;
-        
+
         // Get article expression set using the relationship
         $articleExpressionSet = $article->expressionSet;
-        
-        return view('backend::article.show', compact('article', 'associatedArticles', 'articleWordSet', 'articleExpressionSet'));
+        $articleSentenceSet = $article->sentenceSet;
+
+        return view('backend::article.show', compact('article', 'associatedArticles', 'articleWordSet', 'articleExpressionSet', 'articleSentenceSet'));
     }
 
     /**
@@ -297,5 +298,35 @@ class ArticleController
         $article->delete();
 
         return response()->json(['success' => true]);
+    }
+    public function searchArticles(Request $request)
+    {
+        $query = $request->input('q');
+        $page = $request->input('page', 1);
+        $perPage = 10;
+        $exactId = $request->input('exact_id', false);
+
+        $articlesQuery = Article::query();
+
+        if ($exactId) {
+            // If exact_id is true, search for the exact ID
+            $articlesQuery->where('id', $query);
+        } else {
+            // Otherwise do a fuzzy search on title or ID
+            $articlesQuery->where(function($q) use ($query) {
+                $q->where('title', 'LIKE', '%' . $query . '%')
+                  ->orWhere('id', $query);
+            });
+        }
+
+        $articles = $articlesQuery->orderBy('title')
+            ->paginate($perPage, ['id', 'title'], 'page', $page);
+
+        return response()->json([
+            'items' => $articles->items(),
+            'pagination' => [
+                'more' => $articles->hasMorePages()
+            ]
+        ]);
     }
 }

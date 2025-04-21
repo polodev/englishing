@@ -67,6 +67,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="{{ route('backend::article-sentence-sets.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-language w-5 h-5"></i>
+                                    <span class="ml-3">Article Sentence Sets</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('backend::article-expression-sets.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
                                     <i class="fas fa-language w-5 h-5"></i>
                                     <span class="ml-3">Article Expression Sets</span>

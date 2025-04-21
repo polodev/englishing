@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Backend\Http\Controllers\ArticleSentenceSetController;
 use Modules\Backend\Http\Controllers\WordController;
 use Modules\Backend\Http\Controllers\ArticleWordSetController;
 use Modules\Backend\Http\Controllers\ArticleExpressionSetController;
@@ -50,15 +51,15 @@ Route::middleware(['web', 'auth'])->group(function () {
         Route::put('/articles/update/{article}', [ArticleController::class, 'update'])->name('articles.update');
         Route::delete('/articles/destroy/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy');
         Route::match(['get', 'post'],'/json/articles-index-json', [ArticleController::class, 'index_json'])->name('articles.index_json');
+        // API Routes
+        Route::prefix('api')->name('api.')->group(function () {
+            Route::get('articles/search', [ArticleController::class, 'searchArticles'])->name('articles.search');
+        });
 
         # article word set
         Route::resource('article-word-sets', ArticleWordSetController::class);
         Route::get('article-word-sets/index/json', [ArticleWordSetController::class, 'index_json'])->name('article-word-sets.index_json');
 
-        // API Routes
-        Route::prefix('api')->name('api.')->group(function () {
-            Route::get('articles/search', [ArticleWordSetController::class, 'searchArticles'])->name('articles.search');
-        });
 
         # tags
         Route::get('/tags/index', [TagController::class, 'index'])->name('tags.index');
@@ -74,8 +75,9 @@ Route::middleware(['web', 'auth'])->group(function () {
         Route::resource('article-expression-sets', ArticleExpressionSetController::class);
         Route::get('article-expression-sets/index/json', [ArticleExpressionSetController::class, 'index_json'])->name('article-expression-sets.index_json');
 
-        Route::prefix('api')->name('api.')->group(function () {
-            Route::get('article-expressions/search', [ArticleExpressionSetController::class, 'searchArticles'])->name('article-expressions.search');
-        });
+        # article sentence sets
+        Route::resource('article-sentence-sets', ArticleSentenceSetController::class);
+        Route::get('article-sentence-sets/index/json', [ArticleSentenceSetController::class, 'index_json'])->name('article-sentence-sets.index_json');
+
     });
 });

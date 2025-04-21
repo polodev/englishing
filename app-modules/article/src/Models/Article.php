@@ -2,13 +2,15 @@
 
 namespace Modules\Article\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Modules\ArticleWord\Models\ArticleWordSet;
-use Modules\ArticleExpression\Models\ArticleExpressionSet;
 use Spatie\Translatable\HasTranslations;
+use Modules\ArticleWord\Models\ArticleWordSet;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\ArticleSentence\Models\ArticleSentenceSet;
+use Modules\ArticleExpression\Models\ArticleExpressionSet;
+use Modules\ArticleDoubleSentence\Models\ArticleDoubleSentenceSet;
 
 class Article extends Model
 {
@@ -98,12 +100,26 @@ class Article extends Model
     {
         return $this->hasOne(ArticleWordSet::class);
     }
-    
+
     /**
      * Get the expression set for this article.
      */
     public function expressionSet(): HasOne
     {
         return $this->hasOne(ArticleExpressionSet::class);
+    }
+    /**
+     * Get the sentence set for this article.
+     */
+    public function sentenceSet(): HasOne
+    {
+        return $this->hasOne(ArticleSentenceSet::class);
+    }
+    /**
+     * Get the sentence set for this article.
+     */
+    public function doubleSentenceSet(): HasOne
+    {
+        return $this->hasOne(ArticleDoubleSentenceSet::class);
     }
 }

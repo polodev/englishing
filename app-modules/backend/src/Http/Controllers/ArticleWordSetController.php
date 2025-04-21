@@ -262,40 +262,4 @@ class ArticleWordSetController
         return response()->json(['success' => true]);
     }
     
-    /**
-     * Search articles for the select2 dropdown.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function searchArticles(Request $request)
-    {
-        $query = $request->input('q');
-        $page = $request->input('page', 1);
-        $perPage = 10;
-        $exactId = $request->input('exact_id', false);
-        
-        $articlesQuery = Article::query();
-        
-        if ($exactId) {
-            // If exact_id is true, search for the exact ID
-            $articlesQuery->where('id', $query);
-        } else {
-            // Otherwise do a fuzzy search on title or ID
-            $articlesQuery->where(function($q) use ($query) {
-                $q->where('title', 'LIKE', '%' . $query . '%')
-                  ->orWhere('id', $query);
-            });
-        }
-        
-        $articles = $articlesQuery->orderBy('title')
-            ->paginate($perPage, ['id', 'title'], 'page', $page);
-        
-        return response()->json([
-            'items' => $articles->items(),
-            'pagination' => [
-                'more' => $articles->hasMorePages()
-            ]
-        ]);
-    }
 }
