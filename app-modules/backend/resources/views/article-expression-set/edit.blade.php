@@ -40,7 +40,8 @@
                 @endif
 
 
-                {{-- Hello --}}
+
+                <!-- Basic Info Section -->
                 <div class="mb-6">
                     <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 border-b-2 border-gray-200 dark:border-gray-600 pb-2 mb-3">Basic Information</h2>
 
@@ -67,8 +68,6 @@
 
 
                 <div class="mb-6">
-                    <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 border-b-2 border-gray-200 dark:border-gray-600 pb-2 mb-3">Basic Information</h2>
-
                     <!-- Column Order and Visibility -->
                     <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md mb-4">
                         <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Drag columns between buckets to set display order and visibility. Only columns in the "Active Columns" bucket will be displayed in the frontend.</p>
