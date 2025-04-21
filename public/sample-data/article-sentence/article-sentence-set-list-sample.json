@@ -3,8 +3,8 @@
         "sentence": "The early morning sun illuminated the dew-covered grass with a golden glow.",
         "display_order": 1,
         "pronunciation": {
-            "bn_pronunciation": "সকালের সূর্য স্ফুটান্ত ঘাসে জলাশয় স্পর্শ করে সোনালী আলো ফেলে দিল।",
-            "hi_pronunciation": "सुबह की सूरज जल से भरे हुए घास पर सोने का चमक डालती है।"
+            "bn": "সকালের সূর্য স্ফুটান্ত ঘাসে জলাশয় স্পর্শ করে সোনালী আলো ফেলে দিল।",
+            "hi": "सुबह की सूरज जल से भरे हुए घास पर सोने का चमक डालती है।"
         },
         "translations": {
             "bn": {
@@ -21,8 +21,8 @@
         "sentence": "Birds chirped melodiously in the fresh morning air.",
         "display_order": 2,
         "pronunciation": {
-            "bn_pronunciation": "পাখিরা সুরে সুরে সকালের মৃদু বাতাসে চিরিয়ে উঠল।",
-            "hi_pronunciation": "पक्षियों ने सुबह के ताज़े हवा में सुरमेली तरह से चिराहट की।"
+            "bn": "পাখিরা সুরে সুরে সকালের মৃদু বাতাসে চিরিয়ে উঠল।",
+            "hi": "पक्षियों ने सुबह के ताज़े हवा में सुरमेली तरह से चिराहट की।"
         },
         "translations": {
             "bn": {

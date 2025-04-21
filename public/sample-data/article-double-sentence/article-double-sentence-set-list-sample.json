@@ -4,12 +4,12 @@
         "sentence_2": "Birds were already singing their morning songs.",
         "display_order": 1,
         "pronunciation_1": {
-            "bn_pronunciation": "সূর্য কেবল অরুণ উঠেছে।",
-            "hi_pronunciation": "सूरज अरुण के ऊपर बस उठा है।"
+            "bn": "সূর্য কেবল অরুণ উঠেছে।",
+            "hi": "सूरज अरुण के ऊपर बस उठा है।"
         },
         "pronunciation_2": {
-            "bn_pronunciation": "পাখিরা তাদের সকালের গান গাইতে শুরু করেছে।",
-            "hi_pronunciation": "पक्षियों ने अपने सुबह के गाने गाना शुरू कर दिया है।"
+            "bn": "পাখিরা তাদের সকালের গান গাইতে শুরু করেছে।",
+            "hi": "पक्षियों ने अपने सुबह के गाने गाना शुरू कर दिया है।"
         },
         "translations": {
             "bn": {
@@ -31,12 +31,12 @@
         "sentence_2": "The air was filled with the scent of blooming flowers.",
         "display_order": 2,
         "pronunciation_1": {
-            "bn_pronunciation": "মৃদু হাওয়া পাতার মধ্যে ঝুঁকিয়ে গেল।",
-            "hi_pronunciation": "मृदु हवा पत्तों के बीच से गुजर गई।"
+            "bn": "মৃদু হাওয়া পাতার মধ্যে ঝুঁকিয়ে গেল।",
+            "hi": "मृदु हवा पत्तों के बीच से गुजर गई।"
         },
         "pronunciation_2": {
-            "bn_pronunciation": "হাওয়ায় ফুলের গন্ধ ছড়িয়ে পড়েছে।",
-            "hi_pronunciation": "हवा में फूलों की सुगंध फैली है।"
+            "bn": "হাওয়ায় ফুলের গন্ধ ছড়িয়ে পড়েছে।",
+            "hi": "हवा में फूलों की सुगंध फैली है।"
         },
         "translations": {
             "bn": {

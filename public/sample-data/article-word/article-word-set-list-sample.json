@@ -3,8 +3,8 @@
     "word": "happiness",
     "phonetic": "ˈhæpinəs",
     "pronunciation": {
-      "bn_pronunciation": "হ্যাপিনেস",
-      "hi_pronunciation": "हैप्पीनेस"
+      "bn": "হ্যাপিনেস",
+      "hi": "हैप्पीनेस"
     },
     "parts_of_speech": "noun",
     "static_content_1": "Happiness is a state of well-being characterized by emotions ranging from contentment to intense joy.",
@@ -41,8 +41,8 @@
     "word": "freedom",
     "phonetic": "ˈfriːdəm",
     "pronunciation": {
-      "bn_pronunciation": "ফ্রিডম",
-      "hi_pronunciation": "फ्रीडम"
+      "bn": "ফ্রিডম",
+      "hi": "फ्रीडम"
     },
     "parts_of_speech": "noun",
     "static_content_1": "Freedom is the power or right to act, speak, or think as one wants without hindrance or restraint.",
@@ -79,8 +79,8 @@
     "word": "example",
     "phonetic": "ɪɡˈzæmpəl",
     "pronunciation": {
-      "bn_pronunciation": "উদাহরণ",
-      "hi_pronunciation": "उदाहरण"
+      "bn": "উদাহরণ",
+      "hi": "उदाहरण"
     },
     "parts_of_speech": "noun",
     "static_content_1": "An example is a thing characteristic of its kind or illustrating a general rule.",

@@ -56,7 +56,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-600">
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
                     </tbody>
                 </table>
             </div>
@@ -97,6 +97,23 @@
         .language-label {
             font-weight: bold;
             margin-right: 5px;
+        }
+
+        /* Fix DataTables background in dark mode */
+        .dark .dataTables_wrapper .dataTable tbody tr {
+            background-color: #1f2937;
+            color: #e5e7eb;
+        }
+
+        .dark .dataTables_wrapper .dataTable tbody tr:hover {
+            background-color: #374151;
+        }
+
+        .dark .dataTables_wrapper .dataTables_length,
+        .dark .dataTables_wrapper .dataTables_filter,
+        .dark .dataTables_wrapper .dataTables_info,
+        .dark .dataTables_wrapper .dataTables_processing {
+            color: #e5e7eb;
         }
     </style>
     @endpush
