@@ -1,0 +1,89 @@
+[
+    {
+      "expression": "break the ice",
+      "type": "idiom",
+      "pronunciation": {
+        "bn_pronunciation": "ব্রেক দি আইস",
+        "hi_pronunciation": "ब्रेक द आइस"
+      },
+      "meaning": "To do or say something to relieve initial tension or awkwardness in a social situation.",
+      "example_sentence": "At the party, John broke the ice by telling a joke that made everyone laugh.",
+      "display_order": 1,
+      "translations": [
+        {
+          "locale": "bn",
+          "expression_translation": "প্রথম সংকোচ কাটানো",
+          "expression_transliteration": "prothom songkoch katano",
+          "example_sentence_translation": "পার্টিতে, জন একটি কৌতুক বলে আইস ভেঙ্গেছিল যা সবাইকে হাসিয়েছিল।",
+          "example_sentence_transliteration": "Partite, Jon ekti kowtuk bole ice bhengechchilo ja shobaike hasiyechhilo.",
+          "source": "cambridge"
+        },
+        {
+          "locale": "hi",
+          "expression_translation": "औपचारिकता को दूर करना",
+          "expression_transliteration": "aupcharikta ko door karna",
+          "example_sentence_translation": "पार्टी में, जॉन ने एक मजाक सुनाकर माहौल हल्का कर दिया जिससे सभी हंस पड़े।",
+          "example_sentence_transliteration": "Party mein, John ne ek mazak sunakar mahol halka kar diya jisse sabhi hans pade.",
+          "source": "cambridge"
+        }
+      ]
+    },
+    {
+      "expression": "under the weather",
+      "type": "idiom",
+      "pronunciation": {
+        "bn_pronunciation": "আন্ডার দি ওয়েদার",
+        "hi_pronunciation": "अंडर द वेदर"
+      },
+      "meaning": "Feeling ill or slightly unwell.",
+      "example_sentence": "Sarah called in sick because she was feeling under the weather.",
+      "display_order": 2,
+      "translations": [
+        {
+          "locale": "bn",
+          "expression_translation": "অসুস্থ বোধ করা",
+          "expression_transliteration": "osustho bodh kora",
+          "example_sentence_translation": "সারাহ অসুস্থ বোধ করার কারণে অফিসে না যাওয়ার জন্য ফোন করেছিল।",
+          "example_sentence_transliteration": "Sarah osustho bodh korar karone office na jaowar jonno phone korechhilo.",
+          "source": "oxford"
+        },
+        {
+          "locale": "hi",
+          "expression_translation": "तबीयत ठीक न होना",
+          "expression_transliteration": "tabiyat thik na hona",
+          "example_sentence_translation": "सारा ने बीमार होने की वजह से फोन करके छुट्टी ली क्योंकि उसकी तबीयत ठीक नहीं थी।",
+          "example_sentence_transliteration": "Sara ne bimar hone ki wajah se phone karke chutti li kyunki uski tabiyat thik nahi thi.",
+          "source": "oxford"
+        }
+      ]
+    },
+    {
+      "expression": "piece of cake",
+      "type": "idiom",
+      "pronunciation": {
+        "bn_pronunciation": "পিস অফ কেক",
+        "hi_pronunciation": "पीस ऑफ केक"
+      },
+      "meaning": "Something that is very easy to do or accomplish.",
+      "example_sentence": "The math test was a piece of cake for him since he had studied all week.",
+      "display_order": 3,
+      "translations": [
+        {
+          "locale": "bn",
+          "expression_translation": "খুব সহজ কাজ",
+          "expression_transliteration": "khub shohoj kaj",
+          "example_sentence_translation": "সে সারা সপ্তাহ পড়াশোনা করেছিল বলে অঙ্কের পরীক্ষাটি তার কাছে খুব সহজ ছিল।",
+          "example_sentence_transliteration": "She shara shoptah porasona korechhilo bole onker porikhati tar kachhe khub shohoj chhilo.",
+          "source": "collins"
+        },
+        {
+          "locale": "hi",
+          "expression_translation": "बहुत आसान काम",
+          "expression_transliteration": "bahut aasan kaam",
+          "example_sentence_translation": "गणित की परीक्षा उसके लिए बहुत आसान थी क्योंकि उसने पूरे हफ्ते अध्ययन किया था।",
+          "example_sentence_transliteration": "Ganit ki pariksha uske liye bahut aasan thi kyunki usne pure hafte adhyayan kiya tha.",
+          "source": "collins"
+        }
+      ]
+    }
+  ]
