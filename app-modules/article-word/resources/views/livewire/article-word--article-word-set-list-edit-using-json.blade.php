@@ -29,14 +29,35 @@ new class extends Component {
     // Generate JSON representation of the word set list items
     private function generateJsonData()
     {
+        // Get the article word set data
+        $wordSet = $this->articleWordSet;
         $wordSetLists = ArticleWordSetList::where('article_word_set_id', $this->articleWordSetId)
             ->with('translations')
             ->orderBy('display_order', 'asc')
             ->get();
 
-        if ($wordSetLists->isNotEmpty()) {
-            $data = [];
+        // Initialize the data structure with word set information
+        $data = [
+            'id' => $wordSet->id,
+            'article_id' => $wordSet->article_id,
+            'title' => $wordSet->title,
+            'content' => $wordSet->content,
+            'display_order' => $wordSet->display_order,
+            'static_content_1' => $wordSet->static_content_1 ?? '',
+            'static_content_2' => $wordSet->static_content_2 ?? '',
+            'title_translation' => [
+                'bn' => $wordSet->getTranslation('title_translation', 'bn', false) ?: '',
+                'hi' => $wordSet->getTranslation('title_translation', 'hi', false) ?: ''
+            ],
+            'content_translation' => [
+                'bn' => $wordSet->getTranslation('content_translation', 'bn', false) ?: '',
+                'hi' => $wordSet->getTranslation('content_translation', 'hi', false) ?: ''
+            ],
+            'column_order' => is_string($wordSet->column_order) ? json_decode($wordSet->column_order, true) : ($wordSet->column_order ?? ['word', 'phonetic', 'meaning', 'example_sentence']),
+            'word_set_lists' => []
+        ];
 
+        if ($wordSetLists->isNotEmpty()) {
             foreach ($wordSetLists as $wordSetList) {
                 $translations = $wordSetList->translations->keyBy('locale');
                 $formattedTranslations = [];
@@ -63,7 +84,11 @@ new class extends Component {
                     'hi' => $wordSetList->getTranslation('pronunciation', 'hi', false) ?: ''
                 ];
 
-                $data[] = [
+                // Format synonyms and antonyms (could be string or array in JSON)
+                $synonyms = $wordSetList->synonyms;
+                $antonyms = $wordSetList->antonyms;
+
+                $data['word_set_lists'][] = [
                     'id' => $wordSetList->id,
                     'word' => $wordSetList->word,
                     'slug' => $wordSetList->slug,
@@ -77,12 +102,14 @@ new class extends Component {
                     'example_expression' => $wordSetList->example_expression,
                     'example_expression_meaning' => $wordSetList->example_expression_meaning,
                     'display_order' => $wordSetList->display_order,
+                    'synonyms' => $synonyms,
+                    'antonyms' => $antonyms,
                     'translations' => $formattedTranslations,
                 ];
             }
         } else {
             // Generate stub data if no existing data
-            $data = [
+            $data['word_set_lists'] = [
                 [
                     'word' => '',
                     'phonetic' => '',
@@ -98,6 +125,8 @@ new class extends Component {
                     'example_expression' => '',
                     'example_expression_meaning' => '',
                     'display_order' => 1,
+                    'synonyms' => '',
+                    'antonyms' => '',
                     'translations' => [
                         [
                             'locale' => 'bn',
@@ -149,10 +178,6 @@ new class extends Component {
         $this->reset(['errors', 'updateSuccess', 'debugInfo']);
         $this->processing = true;
 
-        // Debug info - safer than dd() as it doesn't halt execution
-        // $this->debugInfo[] = "JSON Data Length: " . strlen($this->jsonData);
-        // $this->debugInfo[] = "JSON Data Preview: " . substr($this->jsonData, 0, 100) . '...';
-
         try {
             // Decode JSON data
             $data = json_decode($this->jsonData, true);
@@ -163,11 +188,10 @@ new class extends Component {
 
             // Debug info
             $this->debugInfo[] = "Using article_word_set_id: {$this->articleWordSetId}";
-            $this->debugInfo[] = "Decoded JSON data: " . print_r($data, true);
-
+            
             // Validate the JSON structure
             if (!is_array($data)) {
-                throw new \Exception("JSON must be an array of word items");
+                throw new \Exception("JSON must be an object with word set data");
             }
 
             // Verify article_word_set_id is valid
@@ -177,116 +201,180 @@ new class extends Component {
 
             DB::beginTransaction();
             $this->debugInfo[] = "Started database transaction";
-
-            // Process each word in the array
-            foreach ($data as $index => $wordData) {
-                // Skip if word is empty
-                if (empty($wordData['word'])) {
-                    $this->debugInfo[] = "Skipping item at index $index: 'word' field is empty";
-                    continue;
+            
+            // 1. Update the Article Word Set (parent) data
+            if (isset($data['title'])) {
+                // Process column_order - ensure it's stored as a JSON string in the database
+                $columnOrder = null;
+                if (isset($data['column_order'])) {
+                    // Ensure column_order is saved as a JSON string, not an array
+                    $columnOrder = is_array($data['column_order']) ? json_encode($data['column_order']) : $data['column_order'];
                 }
-
-                $word = $wordData['word'];
-                // Always generate the slug from the word, ignoring any provided slug
-                $slug = Str::slug($word);
-
-                $this->debugInfo[] = "Processing word: $word (Slug: $slug)";
-
-                // Prepare ArticleWordSetList data
-                $listData = [
-                    'word' => $word,
-                    'slug' => $slug, // Generated slug
-                    'phonetic' => $wordData['phonetic'] ?? null,
-                    // We'll manually handle pronunciation after model creation
-                    'parts_of_speech' => $wordData['parts_of_speech'] ?? null,
-                    'static_content_1' => $wordData['static_content_1'] ?? null,
-                    'static_content_2' => $wordData['static_content_2'] ?? null,
-                    'meaning' => $wordData['meaning'] ?? null,
-                    'example_sentence' => $wordData['example_sentence'] ?? null,
-                    'example_expression' => $wordData['example_expression'] ?? null,
-                    'example_expression_meaning' => $wordData['example_expression_meaning'] ?? null,
-                    'display_order' => $wordData['display_order'] ?? ($index + 1) * 10,
-                    'article_word_set_id' => $this->articleWordSetId // Ensure this is explicitly set
+                
+                $wordSetData = [
+                    'title' => $data['title'] ?? $this->articleWordSet->title,
+                    'content' => $data['content'] ?? $this->articleWordSet->content,
+                    'display_order' => $data['display_order'] ?? $this->articleWordSet->display_order,
+                    'static_content_1' => $data['static_content_1'] ?? null,
+                    'static_content_2' => $data['static_content_2'] ?? null,
+                    'column_order' => $columnOrder,
+                    // Don't update id or article_id as requested
                 ];
-
-                // Update or create word set list
-                $wordSetList = ArticleWordSetList::updateOrCreate(
-                    [
-                        'article_word_set_id' => $this->articleWordSetId,
-                        'slug' => $slug
-                    ],
-                    $listData
-                );
-
-                $this->debugInfo[] = "Updated/Created ArticleWordSetList ID: {$wordSetList->id} with article_word_set_id: {$wordSetList->article_word_set_id}";
                 
-                // Set pronunciation data using Spatie's setTranslation method
-                if (isset($wordData['pronunciation']) && is_array($wordData['pronunciation'])) {
-                    // Set Bengali pronunciation
-                    if (isset($wordData['pronunciation']['bn'])) {
-                        $wordSetList->setTranslation('pronunciation', 'bn', $wordData['pronunciation']['bn']);
-                        $this->debugInfo[] = "Set Bengali pronunciation: {$wordData['pronunciation']['bn']}";
+                // Update the word set
+                $this->articleWordSet->update($wordSetData);
+                $this->debugInfo[] = "Updated ArticleWordSet ID: {$this->articleWordSet->id}";
+                
+                // Handle title_translation directly for bn and hi
+                if (isset($data['title_translation'])) {
+                    // Set Bengali title translation
+                    if (isset($data['title_translation']['bn'])) {
+                        $this->articleWordSet->setTranslation('title_translation', 'bn', $data['title_translation']['bn']);
+                        $this->debugInfo[] = "Set Bengali title translation: {$data['title_translation']['bn']}";
                     }
                     
-                    // Set Hindi pronunciation
-                    if (isset($wordData['pronunciation']['hi'])) {
-                        $wordSetList->setTranslation('pronunciation', 'hi', $wordData['pronunciation']['hi']);
-                        $this->debugInfo[] = "Set Hindi pronunciation: {$wordData['pronunciation']['hi']}";
+                    // Set Hindi title translation
+                    if (isset($data['title_translation']['hi'])) {
+                        $this->articleWordSet->setTranslation('title_translation', 'hi', $data['title_translation']['hi']);
+                        $this->debugInfo[] = "Set Hindi title translation: {$data['title_translation']['hi']}";
                     }
-                    
-                    // Save the model with the updated translations
-                    $wordSetList->save();
-                    
-                    // Verify the saved data
-                    $savedBn = $wordSetList->getTranslation('pronunciation', 'bn', false);
-                    $savedHi = $wordSetList->getTranslation('pronunciation', 'hi', false);
-                    $this->debugInfo[] = "Saved Bengali pronunciation: {$savedBn}";
-                    $this->debugInfo[] = "Saved Hindi pronunciation: {$savedHi}";
                 }
                 
-                // Process translations
-                if (isset($wordData['translations']) && is_array($wordData['translations'])) {
-                    foreach ($wordData['translations'] as $translationData) {
-                        $locale = $translationData['locale'] ?? null;
-                        if (!$locale || !in_array($locale, $this->supportedLocales)) {
-                            $this->debugInfo[] = "Skipping translation: Invalid or unsupported locale '$locale'";
-                            continue;
-                        }
-
-                        // Prepare translation data
-                        $wordTranslation = $translationData['word_translation'] ?? '';
-                        $sentenceTranslation = $translationData['example_sentence_translation'] ?? '';
-                        $expressionTranslation = $translationData['example_expression_translation'] ?? '';
-
-                        // Only save if at least one of the translation fields has content
-                        if (!empty($wordTranslation) || !empty($sentenceTranslation) || !empty($expressionTranslation)) {
-                            $translationSaveData = [
-                                'word_translation' => $wordTranslation,
-                                'word_transliteration' => $translationData['word_transliteration'] ?? null,
-                                'example_sentence_translation' => $sentenceTranslation,
-                                'example_sentence_transliteration' => $translationData['example_sentence_transliteration'] ?? null,
-                                'example_expression_translation' => $expressionTranslation,
-                                'example_expression_transliteration' => $translationData['example_expression_transliteration'] ?? null,
-                                'source' => $translationData['source'] ?? 'oxford',
-                                'article_word_set_list_id' => $wordSetList->id // Ensure this is explicitly set
-                            ];
-
-                            $translation = ArticleWordTranslation::updateOrCreate(
-                                [
-                                    'article_word_set_list_id' => $wordSetList->id,
-                                    'locale' => $locale
-                                ],
-                                $translationSaveData
-                            );
-
-                            $this->debugInfo[] = "Updated/Created Translation ID: {$translation->id} for word_set_list_id: {$translation->article_word_set_list_id}, locale: $locale";
-                        } else {
-                            $this->debugInfo[] = "Skipping empty translation for locale: $locale";
-                        }
-
-
+                // Handle content_translation directly for bn and hi
+                if (isset($data['content_translation'])) {
+                    // Set Bengali content translation
+                    if (isset($data['content_translation']['bn'])) {
+                        $this->articleWordSet->setTranslation('content_translation', 'bn', $data['content_translation']['bn']);
+                        $this->debugInfo[] = "Set Bengali content translation: {$data['content_translation']['bn']}";
+                    }
+                    
+                    // Set Hindi content translation
+                    if (isset($data['content_translation']['hi'])) {
+                        $this->articleWordSet->setTranslation('content_translation', 'hi', $data['content_translation']['hi']);
+                        $this->debugInfo[] = "Set Hindi content translation: {$data['content_translation']['hi']}";
                     }
                 }
+                
+                // Save translations
+                $this->articleWordSet->save();
+            }
+
+            // 2. Process the word set list items
+            if (isset($data['word_set_lists']) && is_array($data['word_set_lists'])) {
+                $wordSetListData = $data['word_set_lists'];
+                
+                foreach ($wordSetListData as $index => $wordData) {
+                    // Skip if word is empty
+                    if (empty($wordData['word'])) {
+                        $this->debugInfo[] = "Skipping item at index $index: 'word' field is empty";
+                        continue;
+                    }
+
+                    $word = $wordData['word'];
+                    // Always generate the slug from the word, ignoring any provided slug
+                    $slug = Str::slug($word);
+
+                    $this->debugInfo[] = "Processing word: $word (Slug: $slug)";
+
+                    // Prepare ArticleWordSetList data
+                    $listData = [
+                        'word' => $word,
+                        'slug' => $slug, // Generated slug
+                        'phonetic' => $wordData['phonetic'] ?? null,
+                        // We'll manually handle pronunciation after model creation
+                        'parts_of_speech' => $wordData['parts_of_speech'] ?? null,
+                        'static_content_1' => $wordData['static_content_1'] ?? null,
+                        'static_content_2' => $wordData['static_content_2'] ?? null,
+                        'meaning' => $wordData['meaning'] ?? null,
+                        'example_sentence' => $wordData['example_sentence'] ?? null,
+                        'example_expression' => $wordData['example_expression'] ?? null,
+                        'example_expression_meaning' => $wordData['example_expression_meaning'] ?? null,
+                        'display_order' => $wordData['display_order'] ?? ($index + 1) * 10,
+                        'article_word_set_id' => $this->articleWordSetId, // Ensure this is explicitly set
+                        // Add synonyms and antonyms handling
+                        'synonyms' => is_array($wordData['synonyms']) ? implode(', ', $wordData['synonyms']) : ($wordData['synonyms'] ?? null),
+                        'antonyms' => is_array($wordData['antonyms']) ? implode(', ', $wordData['antonyms']) : ($wordData['antonyms'] ?? null)
+                    ];
+
+                    // Update or create word set list
+                    $wordSetList = ArticleWordSetList::updateOrCreate(
+                        [
+                            'article_word_set_id' => $this->articleWordSetId,
+                            'slug' => $slug
+                        ],
+                        $listData
+                    );
+
+                    $this->debugInfo[] = "Updated/Created ArticleWordSetList ID: {$wordSetList->id} with article_word_set_id: {$wordSetList->article_word_set_id}";
+                    
+                    // Set pronunciation data using Spatie's setTranslation method
+                    if (isset($wordData['pronunciation']) && is_array($wordData['pronunciation'])) {
+                        // Set Bengali pronunciation
+                        if (isset($wordData['pronunciation']['bn'])) {
+                            $wordSetList->setTranslation('pronunciation', 'bn', $wordData['pronunciation']['bn']);
+                            $this->debugInfo[] = "Set Bengali pronunciation: {$wordData['pronunciation']['bn']}";
+                        }
+                        
+                        // Set Hindi pronunciation
+                        if (isset($wordData['pronunciation']['hi'])) {
+                            $wordSetList->setTranslation('pronunciation', 'hi', $wordData['pronunciation']['hi']);
+                            $this->debugInfo[] = "Set Hindi pronunciation: {$wordData['pronunciation']['hi']}";
+                        }
+                        
+                        // Save the model with the updated translations
+                        $wordSetList->save();
+                        
+                        // Verify the saved data
+                        $savedBn = $wordSetList->getTranslation('pronunciation', 'bn', false);
+                        $savedHi = $wordSetList->getTranslation('pronunciation', 'hi', false);
+                        $this->debugInfo[] = "Saved Bengali pronunciation: {$savedBn}";
+                        $this->debugInfo[] = "Saved Hindi pronunciation: {$savedHi}";
+                    }
+                    
+                    // Process translations
+                    if (isset($wordData['translations']) && is_array($wordData['translations'])) {
+                        foreach ($wordData['translations'] as $translationData) {
+                            $locale = $translationData['locale'] ?? null;
+                            if (!$locale || !in_array($locale, $this->supportedLocales)) {
+                                $this->debugInfo[] = "Skipping translation: Invalid or unsupported locale '$locale'";
+                                continue;
+                            }
+
+                            // Prepare translation data
+                            $wordTranslation = $translationData['word_translation'] ?? '';
+                            $sentenceTranslation = $translationData['example_sentence_translation'] ?? '';
+                            $expressionTranslation = $translationData['example_expression_translation'] ?? '';
+
+                            // Only save if at least one of the translation fields has content
+                            if (!empty($wordTranslation) || !empty($sentenceTranslation) || !empty($expressionTranslation)) {
+                                $translationSaveData = [
+                                    'word_translation' => $wordTranslation,
+                                    'word_transliteration' => $translationData['word_transliteration'] ?? null,
+                                    'example_sentence_translation' => $sentenceTranslation,
+                                    'example_sentence_transliteration' => $translationData['example_sentence_transliteration'] ?? null,
+                                    'example_expression_translation' => $expressionTranslation,
+                                    'example_expression_transliteration' => $translationData['example_expression_transliteration'] ?? null,
+                                    'source' => $translationData['source'] ?? 'oxford',
+                                    'article_word_set_list_id' => $wordSetList->id // Ensure this is explicitly set
+                                ];
+
+                                $translation = ArticleWordTranslation::updateOrCreate(
+                                    [
+                                        'article_word_set_list_id' => $wordSetList->id,
+                                        'locale' => $locale
+                                    ],
+                                    $translationSaveData
+                                );
+
+                                $this->debugInfo[] = "Updated/Created Translation ID: {$translation->id} for word_set_list_id: {$translation->article_word_set_list_id}, locale: $locale";
+                            } else {
+                                $this->debugInfo[] = "Skipping empty translation for locale: $locale";
+                            }
+                        }
+                    }
+                }
+            } else {
+                $this->debugInfo[] = "No word_set_lists data found in JSON";
             }
 
             DB::commit();
@@ -329,7 +417,7 @@ new class extends Component {
                 <!-- Modal Header -->
                 <div class="bg-gray-50 dark:bg-gray-700 px-4 py-3 sm:px-6 flex justify-between items-center">
                     <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">
-                        Edit Word Set List JSON
+                        Edit Word Set & Word Set List JSON
                     </h3>
                     <button
                         wire:click="closeModal"

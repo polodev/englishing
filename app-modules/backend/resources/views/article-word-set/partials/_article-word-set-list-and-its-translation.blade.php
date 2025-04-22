@@ -91,6 +91,15 @@
                                     @if($wordList->example_expression_meaning)
                                         <div><span class="font-medium">Example Expression Meaning:</span> {{ $wordList->example_expression_meaning }}</div>
                                     @endif
+
+                                    @if($wordList->synonyms)
+                                        <div><span class="font-medium">Synonyms:</span> {{ $wordList->synonyms }}</div>
+                                    @endif
+
+                                    @if($wordList->antonyms)
+                                        <div><span class="font-medium">Antonyms:</span> {{ $wordList->antonyms }}</div>
+                                    @endif
+
                                 </div>
                             </td>
                         </tr>

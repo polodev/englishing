@@ -70,10 +70,18 @@
                     <div>
                         <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Column Order</p>
                         <p class="text-lg font-medium text-gray-800 dark:text-gray-200">
-                            @if($articleWordSet->column_order && json_decode($articleWordSet->column_order))
-                                {{ implode(', ', array_map(function($column) {
-                                    return str_replace('_', ' ', $column);
-                                }, json_decode($articleWordSet->column_order))) }}
+                            @if($articleWordSet->column_order)
+                                @php
+                                    $columnOrder = $articleWordSet->column_order;
+                                    if (is_string($columnOrder)) {
+                                        $columnOrder = json_decode($columnOrder, true);
+                                    }
+                                @endphp
+                                @if(is_array($columnOrder))
+                                    {{ implode(', ', array_map(function($column) {
+                                        return str_replace('_', ' ', $column);
+                                    }, $columnOrder)) }}
+                                @endif
                             @else
                                 <span class="text-gray-500 dark:text-gray-400 italic">No column order specified</span>
                             @endif

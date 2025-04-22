@@ -1,0 +1,116 @@
+[
+  {
+    "word": "happiness",
+    "phonetic": "ˈhæpinəs",
+    "pronunciation": {
+      "bn": "হ্যাপিনেস",
+      "hi": "हैप्पीनेस"
+    },
+    "parts_of_speech": "noun",
+    "static_content_1": "Happiness is a state of well-being characterized by emotions ranging from contentment to intense joy.",
+    "static_content_2": "Happiness is often associated with positive psychology and mental health.",
+    "meaning": "The state of being happy, feeling or showing pleasure or contentment.",
+    "example_sentence": "She couldn't hide her happiness when she received the award.",
+    "example_expression": "pursuit of happiness",
+    "example_expression_meaning": "The ongoing effort to find satisfaction, enjoyment, and meaning in life.",
+    "display_order": 1,
+    "translations": [
+      {
+        "locale": "bn",
+        "word_translation": "সুখ",
+        "word_transliteration": "shukh",
+        "example_sentence_translation": "তিনি পুরস্কার পাওয়ার সময় তার সুখ লুকাতে পারেননি।",
+        "example_sentence_transliteration": "Tini puroshkar paowar somoy tar shukh lukate parenni.",
+        "example_expression_translation": "সুখের অনুসরণ",
+        "example_expression_transliteration": "shukher onushoron",
+        "source": "oxford"
+      },
+      {
+        "locale": "hi",
+        "word_translation": "ख़ुशी",
+        "word_transliteration": "khushi",
+        "example_sentence_translation": "जब उन्हें पुरस्कार मिला तो वह अपनी ख़ुशी नहीं छिपा सकीं।",
+        "example_sentence_transliteration": "Jab unhein puraskaar mila to wah apni khushi nahin chhipa sakeen.",
+        "example_expression_translation": "ख़ुशी की खोज",
+        "example_expression_transliteration": "khushi ki khoj",
+        "source": "oxford"
+      }
+    ]
+  },
+  {
+    "word": "freedom",
+    "phonetic": "ˈfriːdəm",
+    "pronunciation": {
+      "bn": "ফ্রিডম",
+      "hi": "फ्रीडम"
+    },
+    "parts_of_speech": "noun",
+    "static_content_1": "Freedom is the power or right to act, speak, or think as one wants without hindrance or restraint.",
+    "static_content_2": "Freedom is a fundamental human right and is the foundation of democratic societies.",
+    "meaning": "The state of being free or at liberty rather than in confinement or under physical restraint.",
+    "example_sentence": "The prisoners were granted their freedom after serving their sentences.",
+    "example_expression": "freedom of speech",
+    "example_expression_meaning": "The right to express any opinions without censorship or restraint.",
+    "display_order": 2,
+    "translations": [
+      {
+        "locale": "bn",
+        "word_translation": "স্বাধীনতা",
+        "word_transliteration": "shadhinota",
+        "example_sentence_translation": "বন্দীরা তাদের বাক্য পরিবেশন করার পরে তাদের স্বাধীনতা পেয়েছিল।",
+        "example_sentence_transliteration": "Bondira tader bakyo poribeshon korar pore tader shadhinota peyechhilo.",
+        "example_expression_translation": "বাকস্বাধীনতা",
+        "example_expression_transliteration": "bakshadhinota",
+        "source": "oxford"
+      },
+      {
+        "locale": "hi",
+        "word_translation": "आज़ादी",
+        "word_transliteration": "aazadi",
+        "example_sentence_translation": "कैदियों को उनकी सजा पूरी करने के बाद आजादी दी गई थी।",
+        "example_sentence_transliteration": "Kaidiyon ko unki saja poori karne ke baad aazadi di gayi thi.",
+        "example_expression_translation": "बोलने की आजादी",
+        "example_expression_transliteration": "bolne ki aazadi",
+        "source": "oxford"
+      }
+    ]
+  },
+  {
+    "word": "example",
+    "phonetic": "ɪɡˈzæmpəl",
+    "pronunciation": {
+      "bn": "উদাহরণ",
+      "hi": "उदाहरण"
+    },
+    "parts_of_speech": "noun",
+    "static_content_1": "An example is a thing characteristic of its kind or illustrating a general rule.",
+    "static_content_2": "Examples are often used in teaching and learning to demonstrate concepts.",
+    "meaning": "A thing characteristic of its kind or illustrating a general rule.",
+    "example_sentence": "This is a good example of how the system works.",
+    "example_expression": "lead by example",
+    "example_expression_meaning": "To demonstrate behavior that you would like others to copy.",
+    "display_order": 3,
+    "translations": [
+      {
+        "locale": "bn",
+        "word_translation": "উদাহরণ",
+        "word_transliteration": "udahoron",
+        "example_sentence_translation": "এটি একটি ভাল উদাহরণ যে কিভাবে সিস্টেমটি কাজ করে।",
+        "example_sentence_transliteration": "Eti ekta bhalo udahoron je kivabe sistamti kaj kore.",
+        "example_expression_translation": "উদাহরণ দিয়ে নেতৃত্ব দেওয়া",
+        "example_expression_transliteration": "udahoron diye netritto deoa",
+        "source": "oxford"
+      },
+      {
+        "locale": "hi",
+        "word_translation": "उदाहरण",
+        "word_transliteration": "udaharan",
+        "example_sentence_translation": "यह एक अच्छा उदाहरण है कि कैसे सिस्टम काम करता है।",
+        "example_sentence_transliteration": "Yah ek achchha udaharan hai ki kaise system kaam karta hai.",
+        "example_expression_translation": "उदाहरण के द्वारा नेतृत्व करना",
+        "example_expression_transliteration": "udaharan ke dwara netritva karna",
+        "source": "oxford"
+      }
+    ]
+  }
+]
