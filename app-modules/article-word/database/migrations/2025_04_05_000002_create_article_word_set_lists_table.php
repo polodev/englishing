@@ -26,6 +26,8 @@ return new class extends Migration
             $table->text('example_sentence')->nullable();
             $table->text('example_expression')->nullable();
             $table->text('example_expression_meaning')->nullable();
+            $table->text('synonyms')->nullable();
+            $table->text('antonyms')->nullable();
             $table->timestamp('sync_at')->nullable();
             $table->timestamps();
 
