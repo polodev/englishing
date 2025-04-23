@@ -31,7 +31,7 @@ new class extends Component {
     {
         // Initialize the root data structure with sentence set data
         $sentenceSet = $this->articleSentenceSet;
-        
+
         // Build the root structure with sentence set properties
         $data = [
             'id' => $sentenceSet->id,
@@ -47,8 +47,8 @@ new class extends Component {
                 'bn' => $sentenceSet->getTranslation('content_translation', 'bn', false) ?: '',
                 'hi' => $sentenceSet->getTranslation('content_translation', 'hi', false) ?: ''
             ],
-            'column_order' => is_string($sentenceSet->column_order) ? 
-                json_decode($sentenceSet->column_order, true) : 
+            'column_order' => is_string($sentenceSet->column_order) ?
+                json_decode($sentenceSet->column_order, true) :
                 ($sentenceSet->column_order ?? ['sentence']),
             'sentence_set_lists' => []
         ];
@@ -69,8 +69,8 @@ new class extends Component {
                     $formattedTranslations[] = [
                         'id' => $translation->id ?? null,
                         'locale' => $locale,
-                        'sentence_translation' => $translation->translation ?? '',
-                        'sentence_transliteration' => $translation->transliteration ?? '',
+                        'translation' => $translation->translation ?? '',
+                        'transliteration' => $translation->transliteration ?? '',
                     ];
                 }
 
@@ -102,13 +102,13 @@ new class extends Component {
                     'translations' => [
                         [
                             'locale' => 'bn',
-                            'sentence_translation' => '',
-                            'sentence_transliteration' => '',
+                            'translation' => '',
+                            'transliteration' => '',
                         ],
                         [
                             'locale' => 'hi',
-                            'sentence_translation' => '',
-                            'sentence_transliteration' => '',
+                            'translation' => '',
+                            'transliteration' => '',
                         ]
                     ]
                 ]
@@ -153,7 +153,7 @@ new class extends Component {
             // Initialize arrays to track processed IDs
             $processedIds = [];
             $savedTranslationIds = [];
-            
+
             // 1. Update the Article Sentence Set (parent) data
             if (isset($data['title'])) {
                 // Process column_order - ensure it's stored as a JSON string in the database
@@ -162,7 +162,7 @@ new class extends Component {
                     // Ensure column_order is saved as a JSON string, not an array
                     $columnOrder = is_array($data['column_order']) ? json_encode($data['column_order']) : $data['column_order'];
                 }
-                
+
                 // Prepare sentence set data, excluding id and article_id as requested
                 $sentenceSetData = [
                     'title' => $data['title'] ?? $this->articleSentenceSet->title,
@@ -171,11 +171,11 @@ new class extends Component {
                     'column_order' => $columnOrder,
                     // Don't update id or article_id as requested
                 ];
-                
+
                 // Update the sentence set
                 $this->articleSentenceSet->update($sentenceSetData);
                 $this->debugInfo[] = "Updated ArticleSentenceSet ID: {$this->articleSentenceSet->id}";
-                
+
                 // Handle title_translation directly for bn and hi
                 if (isset($data['title_translation'])) {
                     // Set Bengali title translation
@@ -183,14 +183,14 @@ new class extends Component {
                         $this->articleSentenceSet->setTranslation('title_translation', 'bn', $data['title_translation']['bn']);
                         $this->debugInfo[] = "Set Bengali title translation: {$data['title_translation']['bn']}";
                     }
-                    
+
                     // Set Hindi title translation
                     if (isset($data['title_translation']['hi'])) {
                         $this->articleSentenceSet->setTranslation('title_translation', 'hi', $data['title_translation']['hi']);
                         $this->debugInfo[] = "Set Hindi title translation: {$data['title_translation']['hi']}";
                     }
                 }
-                
+
                 // Handle content_translation directly for bn and hi
                 if (isset($data['content_translation'])) {
                     // Set Bengali content translation
@@ -198,22 +198,22 @@ new class extends Component {
                         $this->articleSentenceSet->setTranslation('content_translation', 'bn', $data['content_translation']['bn']);
                         $this->debugInfo[] = "Set Bengali content translation: {$data['content_translation']['bn']}";
                     }
-                    
+
                     // Set Hindi content translation
                     if (isset($data['content_translation']['hi'])) {
                         $this->articleSentenceSet->setTranslation('content_translation', 'hi', $data['content_translation']['hi']);
                         $this->debugInfo[] = "Set Hindi content translation: {$data['content_translation']['hi']}";
                     }
                 }
-                
+
                 // Save the translations
                 $this->articleSentenceSet->save();
             }
-            
+
             // 2. Process each sentence in the array
             $processedIds = [];
             $displayOrder = 1;
-            
+
             // Filter out items with empty sentences
             $validItems = [];
             foreach ($data['sentence_set_lists'] as $index => $item) {
@@ -223,17 +223,17 @@ new class extends Component {
                     $this->debugInfo[] = "Skipped item #" . ($index + 1) . " with empty sentence";
                 }
             }
-            
+
             // Process only valid items
             foreach ($validItems as $index => $item) {
                 // Create or update sentence set list using slug as the primary lookup key
                 $slug = $item['slug'] ?? Str::slug($item['sentence']);
-                
+
                 // Always try to find by slug first
                 $sentenceList = ArticleSentenceSetList::where('slug', $slug)
                     ->where('article_sentence_set_id', $this->articleSentenceSetId)
                     ->first();
-                    
+
                 if (!$sentenceList) {
                     // Create new record if not found by slug
                     $sentenceList = new ArticleSentenceSetList();
@@ -242,15 +242,15 @@ new class extends Component {
                 } else {
                     $this->debugInfo[] = "Updating existing sentence list item with slug: {$slug}";
                 }
-                
+
                 $sentenceList->sentence = $item['sentence'];
                 $sentenceList->display_order = $displayOrder++;
-                
+
                 // Generate a unique slug to avoid duplicates
                 $baseSlug = Str::slug($item['sentence']) ?: Str::uuid();
                 $slug = $baseSlug;
                 $counter = 1;
-                
+
                 // Check if this is a new record or we're changing the slug
                 if (!$sentenceList->exists || $sentenceList->slug !== $baseSlug) {
                     // Check for duplicate slugs and make unique if needed
@@ -263,7 +263,7 @@ new class extends Component {
                 }
 
                 $sentenceList->slug = $slug;
-                
+
                 // Handle pronunciation using Spatie's translatable functionality
                 if (isset($item['pronunciation']) && is_array($item['pronunciation'])) {
                     // Handle Bengali pronunciation
@@ -271,7 +271,7 @@ new class extends Component {
                         $sentenceList->setTranslation('pronunciation', 'bn', $item['pronunciation']['bn']);
                         $this->debugInfo[] = "Set Bengali pronunciation for sentence: {$item['pronunciation']['bn']}";
                     }
-                    
+
                     // Handle Hindi pronunciation
                     if (isset($item['pronunciation']['hi'])) {
                         $sentenceList->setTranslation('pronunciation', 'hi', $item['pronunciation']['hi']);
@@ -282,7 +282,7 @@ new class extends Component {
                     $sentenceList->setTranslation('pronunciation', 'bn', '');
                     $sentenceList->setTranslation('pronunciation', 'hi', '');
                 }
-                
+
                 $sentenceList->save();
 
                 $processedIds[] = $sentenceList->id;
@@ -290,19 +290,19 @@ new class extends Component {
                 // Process translations - only handle sequential format
                 if (isset($item['translations']) && is_array($item['translations'])) {
                     $this->debugInfo[] = "Processing translations for sentence: {$item['sentence']}";
-                    
+
                     // Process translations in sequential array format (array of objects with locale key)
                     foreach ($item['translations'] as $trData) {
                         if (!isset($trData['locale']) || !in_array($trData['locale'], $this->supportedLocales)) {
                             $this->debugInfo[] = "Skipping translation with invalid locale: " . ($trData['locale'] ?? 'unknown');
                             continue;
                         }
-                        
+
                         $locale = $trData['locale'];
                         $tr = ArticleSentenceTranslation::where('article_sentence_set_list_id', $sentenceList->id)
                             ->where('locale', $locale)
                             ->first();
-                            
+
                         if (!$tr) {
                             $tr = new ArticleSentenceTranslation();
                             $tr->article_sentence_set_list_id = $sentenceList->id;
@@ -311,9 +311,9 @@ new class extends Component {
                         } else {
                             $this->debugInfo[] = "Updating existing translation for locale: {$locale}";
                         }
-                        
-                        $tr->translation = $trData['sentence_translation'] ?? '';
-                        $tr->transliteration = $trData['sentence_transliteration'] ?? '';
+
+                        $tr->translation = $trData['translation'] ?? '';
+                        $tr->transliteration = $trData['transliteration'] ?? '';
                         $tr->save();
                         $savedTranslationIds[] = $tr->id;
                     }
@@ -346,12 +346,12 @@ new class extends Component {
             if (DB::transactionLevel() > 0) {
                 DB::rollBack();
             }
-            
+
             // Provide more detailed error information
             $this->errors[] = "Error: " . $e->getMessage();
             $this->debugInfo[] = "Exception caught: " . $e->getMessage();
             $this->debugInfo[] = "Error code: " . $e->getCode();
-            
+
             // For SQL errors, try to extract more detailed information
             if (strpos($e->getMessage(), 'SQLSTATE') !== false) {
                 $this->debugInfo[] = "SQL error detected - check for duplicate entries or constraint violations";
