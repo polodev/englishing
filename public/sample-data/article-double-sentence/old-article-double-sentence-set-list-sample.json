@@ -1,0 +1,56 @@
+[
+    {
+        "sentence_1": "The sun had barely risen over the horizon.",
+        "sentence_2": "Birds were already singing their morning songs.",
+        "display_order": 1,
+        "pronunciation_1": {
+            "bn": "সূর্য কেবল অরুণ উঠেছে।",
+            "hi": "सूरज अरुण के ऊपर बस उठा है।"
+        },
+        "pronunciation_2": {
+            "bn": "পাখিরা তাদের সকালের গান গাইতে শুরু করেছে।",
+            "hi": "पक्षियों ने अपने सुबह के गाने गाना शुरू कर दिया है।"
+        },
+        "translations": {
+            "bn": {
+                "sentence_1_translation": "সূর্য কেবল অরুণ উঠেছে।",
+                "sentence_1_transliteration": "sūrya kebala aruṇ uṭhēchē.",
+                "sentence_2_translation": "পাখিরা তাদের সকালের গান গাইতে শুরু করেছে।",
+                "sentence_2_transliteration": "pākhirā tādēra sokāler gāna gāitē śurū karēchē."
+            },
+            "hi": {
+                "sentence_1_translation": "सूरज अरुण के ऊपर बस उठा है।",
+                "sentence_1_transliteration": "sūraj aruṇ kē ūpar bas uttha hai.",
+                "sentence_2_translation": "पक्षियों ने अपने सुबह के गाने गाना शुरू कर दिया है।",
+                "sentence_2_transliteration": "pakṣiyōṁ ne apnē subah kē gānē gānā śurū kar diyā hai."
+            }
+        }
+    },
+    {
+        "sentence_1": "A gentle breeze rustled through the leaves.",
+        "sentence_2": "The air was filled with the scent of blooming flowers.",
+        "display_order": 2,
+        "pronunciation_1": {
+            "bn": "মৃদু হাওয়া পাতার মধ্যে ঝুঁকিয়ে গেল।",
+            "hi": "मृदु हवा पत्तों के बीच से गुजर गई।"
+        },
+        "pronunciation_2": {
+            "bn": "হাওয়ায় ফুলের গন্ধ ছড়িয়ে পড়েছে।",
+            "hi": "हवा में फूलों की सुगंध फैली है।"
+        },
+        "translations": {
+            "bn": {
+                "sentence_1_translation": "মৃদু হাওয়া পাতার মধ্যে ঝুঁকিয়ে গেল।",
+                "sentence_1_transliteration": "mṛdu hāẏā pātāra madhyē jhuñkiyē gēla.",
+                "sentence_2_translation": "হাওয়ায় ফুলের গন্ধ ছড়িয়ে পড়েছে।",
+                "sentence_2_transliteration": "hāẏāy phulēra gandha chhāriyē paḍēchē."
+            },
+            "hi": {
+                "sentence_1_translation": "मृदु हवा पत्तों के बीच से गुजर गई।",
+                "sentence_1_transliteration": "mṛdu havā pattōṁ kē bīca sē gujar ga'ī.",
+                "sentence_2_translation": "हवा में फूलों की सुगंध फैली है।",
+                "sentence_2_transliteration": "havā mēṁ phūlōṁ kī sugandh phailī hai."
+            }
+        }
+    }
+]

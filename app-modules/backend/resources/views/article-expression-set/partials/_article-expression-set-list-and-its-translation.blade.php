@@ -48,6 +48,10 @@
                                     @if($expressionList->pronunciation)
                                         <div><span class="font-medium">Pronunciation:</span> {{ is_array($expressionList->pronunciation) ? json_encode($expressionList->pronunciation) : $expressionList->pronunciation }}</div>
                                     @endif
+                                    <div>
+                                        <div><span class="font-medium">Bn Pronunciation:</span> {{ $expressionList->getTranslation('pronunciation', 'bn') }}</div>
+                                        <div><span class="font-medium">Hi Pronunciation:</span> {{ $expressionList->getTranslation('pronunciation', 'hi') }}</div>
+                                    </div>
                                     
                                     @if($expressionList->meaning)
                                         <div><span class="font-medium">Meaning:</span> {{ $expressionList->meaning }}</div>

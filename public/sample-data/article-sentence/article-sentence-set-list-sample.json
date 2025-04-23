@@ -1,38 +1,54 @@
-[
+{
+  "id": 1,
+  "article_id": 15,
+  "title": "Common English Idioms and Expressions",
+  "content": "This set contains frequently used English idioms and expressions that every language learner should know.",
+  "display_order": 1,
+  "title_translation": {
+    "bn": "সাধারণ ইংরেজি ইডিয়ম এবং এক্সপ্রেশনস",
+    "hi": "आम अंग्रेजी मुहावरे और अभिव्यक्तियां"
+  },
+  "content_translation": {
+    "bn": "এই সেটে প্রতিটি ভাষা শিক্ষার্থীর জানা উচিত এমন প্রায়শই ব্যবহৃত ইংরেজি ইডিয়ম এবং এক্সপ্রেশনস রয়েছে।",
+    "hi": "इस सेट में अक्सर इस्तेमाल किए जाने वाले अंग्रेजी मुहावरे और अभिव्यक्तियां शामिल हैं जिन्हें हर भाषा सीखने वाले को जानना चाहिए।"
+  },
+  "column_order": ["expression", "type", "meaning", "example_sentence"],
+  "sentence_set_lists": [
     {
-        "sentence": "The early morning sun illuminated the dew-covered grass with a golden glow.",
-        "display_order": 1,
-        "pronunciation": {
-            "bn": "সকালের সূর্য স্ফুটান্ত ঘাসে জলাশয় স্পর্শ করে সোনালী আলো ফেলে দিল।",
-            "hi": "सुबह की सूरज जल से भरे हुए घास पर सोने का चमक डालती है।"
+      "sentence": "The early morning sun illuminated the dew-covered grass with a golden glow.",
+      "display_order": 1,
+      "pronunciation": {
+        "bn": "সকালের সূর্য স্ফুটান্ত ঘাসে জলাশয় স্পর্শ করে সোনালী আলো ফেলে দিল।",
+        "hi": "सुबह की सूरज जल से भरे हुए घास पर सोने का चमक डालती है।"
+      },
+      "translations": {
+        "bn": {
+          "sentence_translation": "সকালের সূর্য স্ফুটান্ত ঘাসে জলাশয় স্পর্শ করে সোনালী আলো ফেলে দিল।",
+          "sentence_transliteration": "sokāler sūrya sphuṭanta ghāse jalāśaya sparśa kore sōnāli ālo fēlē dila."
         },
-        "translations": {
-            "bn": {
-                "sentence_translation": "সকালের সূর্য স্ফুটান্ত ঘাসে জলাশয় স্পর্শ করে সোনালী আলো ফেলে দিল।",
-                "sentence_transliteration": "sokāler sūrya sphuṭanta ghāse jalāśaya sparśa kore sōnāli ālo fēlē dila."
-            },
-            "hi": {
-                "sentence_translation": "सुबह की सूरज जल से भरे हुए घास पर सोने का चमक डालती है।",
-                "sentence_transliteration": "subah kī sūraj jal se bhare hue ghās par sonē kā chamak dālatī hai."
-            }
+        "hi": {
+          "sentence_translation": "सुबह की सूरज जल से भरे हुए घास पर सोने का चमक डालती है।",
+          "sentence_transliteration": "subah kī sūraj jal se bhare hue ghās par sonē kā chamak dālatī hai."
         }
+      }
     },
     {
-        "sentence": "Birds chirped melodiously in the fresh morning air.",
-        "display_order": 2,
-        "pronunciation": {
-            "bn": "পাখিরা সুরে সুরে সকালের মৃদু বাতাসে চিরিয়ে উঠল।",
-            "hi": "पक्षियों ने सुबह के ताज़े हवा में सुरमेली तरह से चिराहट की।"
+      "sentence": "Birds chirped melodiously in the fresh morning air.",
+      "display_order": 2,
+      "pronunciation": {
+        "bn": "পাখিরা সুরে সুরে সকালের মৃদু বাতাসে চিরিয়ে উঠল।",
+        "hi": "पक्षियों ने सुबह के ताज़े हवा में सुरमेली तरह से चिराहट की।"
+      },
+      "translations": {
+        "bn": {
+          "sentence_translation": "পাখিরা সুরে সুরে সকালের মৃদু বাতাসে চিরিয়ে উঠল।",
+          "sentence_transliteration": "pākhirā surē surē sokāler mṛdu bātāse chiriyē uṭhala."
         },
-        "translations": {
-            "bn": {
-                "sentence_translation": "পাখিরা সুরে সুরে সকালের মৃদু বাতাসে চিরিয়ে উঠল।",
-                "sentence_transliteration": "pākhirā surē surē sokāler mṛdu bātāse chiriyē uṭhala."
-            },
-            "hi": {
-                "sentence_translation": "पक्षियों ने सुबह के ताज़े हवा में सुरमेली तरह से चिराहट की।",
-                "sentence_transliteration": "pakṣiyōṁ ne subah kē tājē havā mēṁ suramēlī tarah sē chirāhaṭ kī."
-            }
+        "hi": {
+          "sentence_translation": "पक्षियों ने सुबह के ताज़े हवा में सुरमेली तरह से चिराहट की।",
+          "sentence_transliteration": "pakṣiyōṁ ne subah kē tājē havā mēṁ suramēlī tarah sē chirāhaṭ kī."
         }
+      }
     }
-]
+  ]
+}
