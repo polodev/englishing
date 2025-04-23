@@ -54,6 +54,7 @@
                         
                         <!-- Translation Rows -->
                         @foreach($sentenceList->translations as $translation)
+                            Translation: {{ $translation  }}
                             <tr class="bg-gray-50 dark:bg-gray-900">
                                 <td class="pl-8 py-2 text-xs text-gray-500 dark:text-gray-400">
                                     <span class="uppercase">{{ $translation->locale }}</span>
@@ -62,12 +63,9 @@
                                     <div class="text-sm space-y-2">
                                         <div>
                                             <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Translation:</span>
-                                            <span class="ml-2 text-sm text-gray-800 dark:text-gray-200">{{ $translation->sentence_translation }}</span>
-                                            @if($translation->sentence_transliteration)
-                                                <span class="ml-2 text-xs text-gray-500 dark:text-gray-400">({{ $translation->sentence_transliteration }})</span>
-                                            @endif
+                                            <span class="ml-2 text-sm text-gray-800 dark:text-gray-200">{{ $translation->translation }}</span>
+                                            <span class="ml-2 text-xs text-gray-500 dark:text-gray-400">({{ $translation->transliteration }})</span>
                                         </div>
-                                        
                                         @if($translation->source)
                                             <div>
                                                 <span class="text-xs text-gray-500 dark:text-gray-400 font-medium">Source:</span>
