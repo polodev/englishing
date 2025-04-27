@@ -179,7 +179,7 @@ new class extends Component {
 
                     <div class="flex justify-between">
                         <button type="button" wire:click="addAnotherSet" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 disabled:opacity-25 transition">
-                            Add Another Expression Set
+                            Add Another Triple Word Set
                         </button>
                         <button type="button" wire:click="closeModal" class="inline-flex items-center px-4 py-2 bg-gray-300 dark:bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-gray-700 dark:text-white uppercase tracking-widest hover:bg-gray-400 dark:hover:bg-gray-500 active:bg-gray-500 dark:active:bg-gray-400 focus:outline-none focus:border-gray-500 focus:ring focus:ring-gray-200 disabled:opacity-25 transition">
                             Close
@@ -189,13 +189,13 @@ new class extends Component {
             @else
                 <!-- Modal Header -->
                 <div class="px-6 py-4 bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Add New Expression Set to Article</h3>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Add New Triple Word Set to Article</h3>
                     @if($article)
                         <p class="text-sm text-gray-600 dark:text-gray-400">Article: {{ $article->title }}</p>
                     @endif
                 </div>
 
-                <form wire:submit.prevent="createArticleExpressionSet" class="p-6 dark:bg-gray-800">
+                <form wire:submit.prevent="createArticleTripleWordSet" class="p-6 dark:bg-gray-800">
                     <!-- Title Input -->
                     <div class="mb-4">
                         <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title</label>
@@ -234,7 +234,7 @@ new class extends Component {
                     <!-- Content Input -->
                     <div class="mb-4">
                         <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
-                        <textarea id="content" wire:model="content" rows="5" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Write your expression set content here..."></textarea>
+                        <textarea id="content" wire:model="content" rows="5" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Write your triple word set content here..."></textarea>
                         @error('content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
@@ -265,7 +265,7 @@ new class extends Component {
                             Cancel
                         </button>
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 disabled:opacity-25 transition">
-                            Create Expression Set
+                            Create Triple Word Set
                         </button>
                     </div>
                 </form>

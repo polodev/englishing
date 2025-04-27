@@ -113,7 +113,7 @@
                 <!-- Content Translations Section -->
                 <div class="mb-6">
                     <h2 class="text-xl font-semibold text-gray-700 dark:text-gray-300 border-b-2 border-gray-200 dark:border-gray-600 pb-2 mb-3">Content Translations</h2>
-                    
+
                     @if(count($article->getTranslations('content_translation')) === 0)
                         <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-md">
                             <div class="text-gray-500 dark:text-gray-400 italic">No translations available</div>
@@ -157,6 +157,17 @@
 
                 <!-- Article Sentence Sets Section -->
                 @include('backend::article.partials._article_sentence_set_section')
+
+                <!-- Article Double Word Sets Section -->
+                @include('backend::article.partials._article_double_word_set_section')
+
+                <!-- Article Double Sentence Sets Section -->
+                @include('backend::article.partials._article_double_sentence_set_section')
+
+                <!-- Article Triple Word Sets Section -->
+                @include('backend::article.partials._article_triple_word_set_section')
+                <!-- Article Conversation Sets Section -->
+                @include('backend::article.partials._article_conversation_set_section')
 
                 <!-- Associated Articles Section -->
                 @if(count($associatedArticles) > 0)
