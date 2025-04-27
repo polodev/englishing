@@ -83,18 +83,6 @@ list sentence has many translations but each locale have only one
 
 
 
-# article-double-sentence
-article_double_sentence_sets(id, article_id, display_order, title, content, title_translation, content_translation)  
-article_double_sentence_set_lists(id, article_double_sentence_set_id, sentence_1, sentence_1_slug, sentence_2, sentence_2_slug, display_order)  
-article_double_sentence_translations(id, article_double_sentence_set_list_id, sentence_1_translation, sentence_2_translation, sentence_1_transliteration, sentence_2_transliteration, locale, slug) # unique(article_double_sentence_set_list_id locale slug)
-
-```relation
-article_double_sentence_set has many article_double_sentence_set_lists
-article_double_sentence_set_list has many article_double_sentence_translation but each locale have only one
-````
-
-
-
 
 
 # article-expression
@@ -105,6 +93,31 @@ article_expression_translations(id, article_expression_set_list_id, slug, expres
 ```relation
 article_expression_set has many article_expression_set_lists
 list has many article_expression_translations however each locale have only one relation
+````
+
+
+# article-double-word
+article_double_word_sets(id, article_id, display_order, title, content, title_translation, content_translation)  
+article_double_word_set_lists(id, article_double_word_set_id, word_1, word_1_slug, word_2, word_2_slug, word_1_meaning
+, word_2_meaning, word_1_example_sentence, word_2_example_sentence, display_order)  
+article_double_word_translations(id, article_double_word_set_list_id, word_1_translation, word_2_translation, word_1_transliteration, word_2_transliteration, locale, slug) # unique(article_double_word_set_list_id locale slug)
+
+```relation
+article_double_word_set has many article_double_word_set_lists
+article_double_word_set_list has many article_double_word_translation but each locale have only one
+````
+
+
+
+
+# article-double-sentence
+article_double_sentence_sets(id, article_id, display_order, title, content, title_translation, content_translation)  
+article_double_sentence_set_lists(id, article_double_sentence_set_id, sentence_1, sentence_1_slug, sentence_2, sentence_2_slug, display_order)  
+article_double_sentence_translations(id, article_double_sentence_set_list_id, sentence_1_translation, sentence_2_translation, sentence_1_transliteration, sentence_2_transliteration, locale, slug) # unique(article_double_sentence_set_list_id locale slug)
+
+```relation
+article_double_sentence_set has many article_double_sentence_set_lists
+article_double_sentence_set_list has many article_double_sentence_translation but each locale have only one
 ````
 
 

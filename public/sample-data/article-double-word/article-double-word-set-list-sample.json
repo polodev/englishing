@@ -1,0 +1,93 @@
+{
+  "id": 1,
+  "article_id": 15,
+  "title": "Common English Word Pairs",
+  "content": "This set contains frequently used English word pairs that are often confused or related in meaning.",
+  "display_order": 1,
+  "title_translation": {
+    "bn": "সাধারণ ইংরেজি শব্দ জোড়া",
+    "hi": "आम अंग्रेजी शब्द जोड़े"
+  },
+  "content_translation": {
+    "bn": "এই সেটে প্রায়শই ব্যবহৃত ইংরেজি শব্দ জোড়া রয়েছে যা প্রায়ই বিভ্রান্ত বা অর্থে সম্পর্কিত হয়।",
+    "hi": "इस सेट में अक्सर इस्तेमाल किए जाने वाले अंग्रेजी शब्द जोड़े शामिल हैं जिन्हें अक्सर भ्रमित या अर्थ में संबंधित होते हैं।"
+  },
+  "column_order": ["word_1", "word_2", "word_1_meaning", "word_2_meaning", "word_1_example_sentence", "word_2_example_sentence"],
+  "word_set_lists": [
+    {
+      "word_1": "affect",
+      "word_1_slug": "affect",
+      "word_2": "effect", 
+      "word_2_slug": "effect",
+      "word_1_meaning": "To influence or have an impact on something",
+      "word_2_meaning": "The result or outcome of a cause",
+      "word_1_example_sentence": "The weather will affect our travel plans.",
+      "word_2_example_sentence": "The medicine had a rapid effect on the symptoms.",
+      "display_order": 1,
+      "translations": {
+        "bn": {
+          "word_1_translation": "প্রভাবিত করা",
+          "word_1_transliteration": "prabhābita karā",
+          "word_2_translation": "ফলাফল",
+          "word_2_transliteration": "phalāphala"
+        },
+        "hi": {
+          "word_1_translation": "प्रभावित करना",
+          "word_1_transliteration": "prabhāvit karnā",
+          "word_2_translation": "प्रभाव",
+          "word_2_transliteration": "prabhāv"
+        }
+      }
+    },
+    {
+      "word_1": "accept",
+      "word_1_slug": "accept",
+      "word_2": "except",
+      "word_2_slug": "except",
+      "word_1_meaning": "To agree to receive or take something offered",
+      "word_2_meaning": "Not including; other than",
+      "word_1_example_sentence": "I gratefully accept your offer.",
+      "word_2_example_sentence": "Everyone went to the party except John.",
+      "display_order": 2,
+      "translations": {
+        "bn": {
+          "word_1_translation": "গ্রহণ করা",
+          "word_1_transliteration": "grahaṇa karā",
+          "word_2_translation": "ব্যতীত",
+          "word_2_transliteration": "byatīta"
+        },
+        "hi": {
+          "word_1_translation": "स्वीकार करना",
+          "word_1_transliteration": "svīkār karnā",
+          "word_2_translation": "सिवाय",
+          "word_2_transliteration": "sivāy"
+        }
+      }
+    },
+    {
+      "word_1": "advice",
+      "word_1_slug": "advice",
+      "word_2": "advise",
+      "word_2_slug": "advise",
+      "word_1_meaning": "Guidance or recommendations offered",
+      "word_2_meaning": "To give advice or counsel to someone",
+      "word_1_example_sentence": "He gave me some good advice about buying a car.",
+      "word_2_example_sentence": "The lawyer will advise you on legal matters.",
+      "display_order": 3,
+      "translations": {
+        "bn": {
+          "word_1_translation": "পরামর্শ",
+          "word_1_transliteration": "parāmarśa",
+          "word_2_translation": "পরামর্শ দেওয়া",
+          "word_2_transliteration": "parāmarśa dēōẏā"
+        },
+        "hi": {
+          "word_1_translation": "सलाह",
+          "word_1_transliteration": "salāh",
+          "word_2_translation": "सलाह देना",
+          "word_2_transliteration": "salāh dēnā"
+        }
+      }
+    }
+  ]
+}

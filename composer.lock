@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "558ec6e53ca637ef6a39d9dc1e000dcd",
+    "content-hash": "18febe4a3852a50e342edee168a682f9",
     "packages": [
         {
             "name": "brick/math",
@@ -3781,6 +3781,38 @@
             }
         },
         {
+            "name": "modules/article-double-word",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/article-double-word",
+                "reference": "f0c518de2df59c2b1d92ab2393f713c307b8322c"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\ArticleDoubleWord\\Providers\\ArticleDoubleWordServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\ArticleDoubleWord\\": "src/",
+                    "Modules\\ArticleDoubleWord\\Tests\\": "tests/",
+                    "Modules\\ArticleDoubleWord\\Database\\Factories\\": "database/factories/",
+                    "Modules\\ArticleDoubleWord\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
             "name": "modules/article-expression",
             "version": "1.0",
             "dist": {
@@ -3866,6 +3898,38 @@
                     "Modules\\ArticleTable\\Tests\\": "tests/",
                     "Modules\\ArticleTable\\Database\\Factories\\": "database/factories/",
                     "Modules\\ArticleTable\\Database\\Seeders\\": "database/seeders/"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "transport-options": {
+                "symlink": true,
+                "relative": true
+            }
+        },
+        {
+            "name": "modules/article-triple-word",
+            "version": "1.0",
+            "dist": {
+                "type": "path",
+                "url": "app-modules/article-triple-word",
+                "reference": "d8d3c887810e12bbfac546f73441236109c94a85"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Modules\\ArticleTripleWord\\Providers\\ArticleTripleWordServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Modules\\ArticleTripleWord\\": "src/",
+                    "Modules\\ArticleTripleWord\\Tests\\": "tests/",
+                    "Modules\\ArticleTripleWord\\Database\\Factories\\": "database/factories/",
+                    "Modules\\ArticleTripleWord\\Database\\Seeders\\": "database/seeders/"
                 }
             },
             "license": [

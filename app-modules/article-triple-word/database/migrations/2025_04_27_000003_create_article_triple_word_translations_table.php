@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('article_triple_word_translations', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('article_triple_word_set_list_id');
+            $table->string('word_1_translation')->nullable();
+            $table->string('word_2_translation')->nullable();
+            $table->string('word_3_translation')->nullable();
+            $table->string('word_1_transliteration')->nullable();
+            $table->string('word_2_transliteration')->nullable();
+            $table->string('word_3_transliteration')->nullable();
+            $table->string('locale');
+            $table->string('slug')->nullable();
+            $table->timestamps();
+            
+            // Create a unique constraint for one translation per locale per triple word set list
+            $table->unique(['article_triple_word_set_list_id', 'locale'], 'unique_triple_word_trans_locale');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('article_triple_word_translations');
+    }
+};

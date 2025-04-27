@@ -1,0 +1,24 @@
+{
+	"name": "modules/article-triple-word",
+	"description": "",
+	"type": "library",
+	"version": "1.0",
+	"license": "proprietary",
+	"require": {},
+	"autoload": {
+		"psr-4": {
+			"Modules\\ArticleTripleWord\\": "src/",
+			"Modules\\ArticleTripleWord\\Tests\\": "tests/",
+			"Modules\\ArticleTripleWord\\Database\\Factories\\": "database/factories/",
+			"Modules\\ArticleTripleWord\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"minimum-stability": "stable",
+	"extra": {
+		"laravel": {
+			"providers": [
+				"Modules\\ArticleTripleWord\\Providers\\ArticleTripleWordServiceProvider"
+			]
+		}
+	}
+}

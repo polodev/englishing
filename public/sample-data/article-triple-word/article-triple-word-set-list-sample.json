@@ -1,0 +1,117 @@
+{
+  "id": 1,
+  "article_id": 15,
+  "title": "Common English Word Triads",
+  "content": "This set contains groups of three related English words that are commonly confused or used together.",
+  "display_order": 1,
+  "title_translation": {
+    "bn": "সাধারণ ইংরেজি শব্দ ত্রয়ী",
+    "hi": "आम अंग्रेजी शब्द त्रिक"
+  },
+  "content_translation": {
+    "bn": "এই সেটে তিনটি সম্পর্কিত ইংরেজি শব্দের গ্রুপ রয়েছে যা সাধারণত বিভ্রান্ত হয় বা একসাথে ব্যবহৃত হয়।",
+    "hi": "इस सेट में तीन संबंधित अंग्रेजी शब्दों के समूह शामिल हैं जो आमतौर पर भ्रमित होते हैं या एक साथ उपयोग किए जाते हैं।"
+  },
+  "column_order": ["word_1", "word_2", "word_3", "word_1_meaning", "word_2_meaning", "word_3_meaning", "word_1_example_sentence", "word_2_example_sentence", "word_3_example_sentence"],
+  "word_set_lists": [
+    {
+      "word_1": "their",
+      "word_1_slug": "their",
+      "word_2": "there", 
+      "word_2_slug": "there",
+      "word_3": "they're", 
+      "word_3_slug": "theyre",
+      "word_1_meaning": "Belonging to them",
+      "word_2_meaning": "In, at, or to that place",
+      "word_3_meaning": "Contraction of 'they are'",
+      "word_1_example_sentence": "Their car is parked outside.",
+      "word_2_example_sentence": "The restaurant is over there.",
+      "word_3_example_sentence": "They're coming to the party tonight.",
+      "display_order": 1,
+      "translations": {
+        "bn": {
+          "word_1_translation": "তাদের",
+          "word_1_transliteration": "tādera",
+          "word_2_translation": "সেখানে",
+          "word_2_transliteration": "sēkhānē",
+          "word_3_translation": "তারা আছে",
+          "word_3_transliteration": "tārā āchē"
+        },
+        "hi": {
+          "word_1_translation": "उनका",
+          "word_1_transliteration": "unakā",
+          "word_2_translation": "वहाँ",
+          "word_2_transliteration": "vahāṁ",
+          "word_3_translation": "वे हैं",
+          "word_3_transliteration": "vē haiṁ"
+        }
+      }
+    },
+    {
+      "word_1": "to",
+      "word_1_slug": "to",
+      "word_2": "too",
+      "word_2_slug": "too",
+      "word_3": "two",
+      "word_3_slug": "two",
+      "word_1_meaning": "Expressing motion in the direction of",
+      "word_2_meaning": "Also; in addition; excessively",
+      "word_3_meaning": "The number 2",
+      "word_1_example_sentence": "I'm going to the store.",
+      "word_2_example_sentence": "I want to come too.",
+      "word_3_example_sentence": "I bought two books yesterday.",
+      "display_order": 2,
+      "translations": {
+        "bn": {
+          "word_1_translation": "প্রতি",
+          "word_1_transliteration": "prati",
+          "word_2_translation": "অতিরিক্ত",
+          "word_2_transliteration": "atirikta",
+          "word_3_translation": "দুই",
+          "word_3_transliteration": "du'i"
+        },
+        "hi": {
+          "word_1_translation": "के लिए",
+          "word_1_transliteration": "kē liē",
+          "word_2_translation": "भी",
+          "word_2_transliteration": "bhī",
+          "word_3_translation": "दो",
+          "word_3_transliteration": "dō"
+        }
+      }
+    },
+    {
+      "word_1": "buy",
+      "word_1_slug": "buy",
+      "word_2": "by",
+      "word_2_slug": "by",
+      "word_3": "bye",
+      "word_3_slug": "bye",
+      "word_1_meaning": "To purchase something",
+      "word_2_meaning": "Preposition indicating proximity, means, or agency",
+      "word_3_meaning": "Short for goodbye",
+      "word_1_example_sentence": "I want to buy a new computer.",
+      "word_2_example_sentence": "The book was written by a famous author.",
+      "word_3_example_sentence": "She waved and said bye as she left.",
+      "display_order": 3,
+      "translations": {
+        "bn": {
+          "word_1_translation": "কেনা",
+          "word_1_transliteration": "kēnā",
+          "word_2_translation": "দ্বারা",
+          "word_2_transliteration": "dbārā",
+          "word_3_translation": "বিদায়",
+          "word_3_transliteration": "bidāẏa"
+        },
+        "hi": {
+          "word_1_translation": "खरीदना",
+          "word_1_transliteration": "kharīdanā",
+          "word_2_translation": "द्वारा",
+          "word_2_transliteration": "dvārā",
+          "word_3_translation": "अलविदा",
+          "word_3_transliteration": "alavid"
+        }
+      }
+    }
+  ]
+}
