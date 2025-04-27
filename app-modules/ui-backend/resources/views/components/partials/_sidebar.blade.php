@@ -78,6 +78,30 @@
                                     <span class="ml-3">Article Expression Sets</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('backend::article-double-word-sets.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-file-word w-5 h-5"></i>
+                                    <span class="ml-3">Article Double Word Sets</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('backend::article-triple-word-sets.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-cube w-5 h-5"></i>
+                                    <span class="ml-3">Article Triple Word Sets</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('backend::article-double-sentence-sets.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-paragraph w-5 h-5"></i>
+                                    <span class="ml-3">Article Double Sentence Sets</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('backend::article-conversation-sets.index') }}" class="flex items-center p-2 text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <i class="fas fa-comments w-5 h-5"></i>
+                                    <span class="ml-3">Article Conversation Sets</span>
+                                </a>
+                            </li>
                         </ul>
                         <div x-show="!sidebarOpen" class="py-1">
                             <a href="{{ route('backend::tags.index') }}" class="block py-2 text-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" title="Tags">
@@ -96,6 +120,18 @@
                             </a>
                             <a href="{{ route('backend::article-expression-sets.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Article Expression Sets">
                                 <i class="fas fa-language mx-auto"></i>
+                            </a>
+                            <a href="{{ route('backend::article-double-word-sets.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Article Double Word Sets">
+                                <i class="fas fa-file-word mx-auto"></i>
+                            </a>
+                            <a href="{{ route('backend::article-triple-word-sets.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Article Triple Word Sets">
+                                <i class="fas fa-cube mx-auto"></i>
+                            </a>
+                            <a href="{{ route('backend::article-double-sentence-sets.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Article Double Sentence Sets">
+                                <i class="fas fa-paragraph mx-auto"></i>
+                            </a>
+                            <a href="{{ route('backend::article-conversation-sets.index') }}" class="block p-2 text-center text-gray-700 dark:text-gray-200 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700" title="Article Conversation Sets">
+                                <i class="fas fa-comments mx-auto"></i>
                             </a>
                         </div>
                     </div>

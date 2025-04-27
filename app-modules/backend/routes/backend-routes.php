@@ -10,6 +10,10 @@ use Modules\Backend\Http\Controllers\ArticleController;
 use Modules\Backend\Http\Controllers\SentenceController;
 use Modules\Backend\Http\Controllers\ExpressionController;
 use Modules\Backend\Http\Controllers\TagController;
+use Modules\Backend\Http\Controllers\ArticleDoubleWordSetController;
+use Modules\Backend\Http\Controllers\ArticleTrippleWordSetController;
+use Modules\Backend\Http\Controllers\ArticleDoubleSentenceSetController;
+use Modules\Backend\Http\Controllers\ArticleConversationController;
 
 Route::middleware(['web', 'auth'])->group(function () {
     $route_arguments = [
@@ -78,6 +82,22 @@ Route::middleware(['web', 'auth'])->group(function () {
         # article sentence sets
         Route::resource('article-sentence-sets', ArticleSentenceSetController::class);
         Route::get('article-sentence-sets/index/json', [ArticleSentenceSetController::class, 'index_json'])->name('article-sentence-sets.index_json');
+
+        # Article Double Word Sets
+        Route::resource('article-double-word-sets', ArticleDoubleWordSetController::class);
+        Route::get('article-double-word-sets/index/json', [ArticleDoubleWordSetController::class, 'index_json'])->name('article-double-word-sets.index_json');
+
+        # Article Triple Word Sets
+        Route::resource('article-triple-word-sets', ArticleTrippleWordSetController::class);
+        Route::get('article-triple-word-sets/index/json', [ArticleTrippleWordSetController::class, 'index_json'])->name('article-triple-word-sets.index_json');
+
+        # Article Double Sentence Sets
+        Route::resource('article-double-sentence-sets', ArticleDoubleSentenceSetController::class);
+        Route::get('article-double-sentence-sets/index/json', [ArticleDoubleSentenceSetController::class, 'index_json'])->name('article-double-sentence-sets.index_json');
+
+        # Article Conversation Sets
+        Route::resource('article-conversation-sets', ArticleConversationController::class);
+        Route::get('article-conversation-sets/index/json', [ArticleConversationController::class, 'index_json'])->name('article-conversation-sets.index_json');
 
     });
 });

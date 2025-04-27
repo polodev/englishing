@@ -5,19 +5,19 @@ namespace Modules\Backend\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Modules\Article\Models\Article;
-use Modules\ArticleTripleWord\Models\ArticleTripleWordSet;
+use Modules\ArticleConversation\Models\ArticleConversationSet;
 use Yajra\DataTables\Facades\DataTables;
 
-class ArticleTrippleWordSetController
+class ArticleConversationController
 {
     /**
-     * Display a listing of the article triple word sets.
+     * Display a listing of the article conversation sets.
      * 
      * @return \Illuminate\View\View
      */
     public function index()
     {        
-        return view('backend::article-triple-word-set.index');
+        return view('backend::article-conversation.index');
     }
 
     /**
@@ -28,7 +28,7 @@ class ArticleTrippleWordSetController
      */
     public function index_json(Request $request)
     {        
-        $model = ArticleTripleWordSet::with(['article', 'user']);
+        $model = ArticleConversationSet::with(['article', 'user']);
 
         return DataTables::eloquent($model)
             ->filter(function ($query) use ($request) {
@@ -46,53 +46,53 @@ class ArticleTrippleWordSetController
                     $query->where('article_id', $request->article_id);
                 }
             }, true)
-            ->addColumn('title_translation_text', function (ArticleTripleWordSet $tripleWordSet) {
+            ->addColumn('title_translation_text', function (ArticleConversationSet $conversationSet) {
                 $translations = [];
-                foreach ($tripleWordSet->getTranslations('title_translation') as $locale => $value) {
+                foreach ($conversationSet->getTranslations('title_translation') as $locale => $value) {
                     $translations[] = '<span class="language-label">' . strtoupper($locale) . ':</span> ' . e($value);
                 }
                 return !empty($translations) ? implode('<br>', $translations) : 'No translations available';
             })
-            ->addColumn('content_translation_text', function (ArticleTripleWordSet $tripleWordSet) {
+            ->addColumn('content_translation_text', function (ArticleConversationSet $conversationSet) {
                 $translations = [];
-                foreach ($tripleWordSet->getTranslations('content_translation') as $locale => $value) {
+                foreach ($conversationSet->getTranslations('content_translation') as $locale => $value) {
                     $translations[] = '<span class="language-label">' . strtoupper($locale) . ':</span> ' . e(substr($value, 0, 100)) . (strlen($value) > 100 ? '...' : '');
                 }
                 return !empty($translations) ? implode('<br>', $translations) : 'No translations available';
             })
-            ->addColumn('created_at_formatted', function (ArticleTripleWordSet $tripleWordSet) {
-                return $tripleWordSet->created_at->format('Y-m-d H:i:s');
+            ->addColumn('created_at_formatted', function (ArticleConversationSet $conversationSet) {
+                return $conversationSet->created_at->format('Y-m-d H:i:s');
             })
-            ->addColumn('updated_at_formatted', function (ArticleTripleWordSet $tripleWordSet) {
-                return $tripleWordSet->updated_at->format('Y-m-d H:i:s');
+            ->addColumn('updated_at_formatted', function (ArticleConversationSet $conversationSet) {
+                return $conversationSet->updated_at->format('Y-m-d H:i:s');
             })
-            ->addColumn('id', function (ArticleTripleWordSet $tripleWordSet) {
+            ->addColumn('id', function (ArticleConversationSet $conversationSet) {
                 return sprintf(
                     '<a href="%s">%s</a>',
-                    route('backend::article-triple-word-sets.show', $tripleWordSet->id),
-                    $tripleWordSet->id
+                    route('backend::article-conversation-sets.show', $conversationSet->id),
+                    $conversationSet->id
                 );
             })
-            ->addColumn('title', function (ArticleTripleWordSet $tripleWordSet) {
+            ->addColumn('title', function (ArticleConversationSet $conversationSet) {
                 return sprintf(
                     '<a href="%s">%s</a>',
-                    route('backend::article-triple-word-sets.show', $tripleWordSet->id),
-                    $tripleWordSet->title
+                    route('backend::article-conversation-sets.show', $conversationSet->id),
+                    $conversationSet->title
                 );
             })
-            ->addColumn('article_title', function (ArticleTripleWordSet $tripleWordSet) {
-                return $tripleWordSet->article ? sprintf(
+            ->addColumn('article_title', function (ArticleConversationSet $conversationSet) {
+                return $conversationSet->article ? sprintf(
                     '<a href="%s">%s</a>',
-                    route('backend::articles.show', $tripleWordSet->article->id),
-                    $tripleWordSet->article->title
+                    route('backend::articles.show', $conversationSet->article->id),
+                    $conversationSet->article->title
                 ) : 'N/A';
             })
-            ->addColumn('user_name', function (ArticleTripleWordSet $tripleWordSet) {
-                return $tripleWordSet->user ? $tripleWordSet->user->name : 'N/A';
+            ->addColumn('user_name', function (ArticleConversationSet $conversationSet) {
+                return $conversationSet->user ? $conversationSet->user->name : 'N/A';
             })
-            ->addColumn('actions', function (ArticleTripleWordSet $tripleWordSet) {
-                $showUrl = route('backend::article-triple-word-sets.show', $tripleWordSet->id);
-                $editUrl = route('backend::article-triple-word-sets.edit', $tripleWordSet->id);
+            ->addColumn('actions', function (ArticleConversationSet $conversationSet) {
+                $showUrl = route('backend::article-conversation-sets.show', $conversationSet->id);
+                $editUrl = route('backend::article-conversation-sets.edit', $conversationSet->id);
                 
                 return sprintf(
                     '<div class="btn-group" role="group">
@@ -108,7 +108,7 @@ class ArticleTrippleWordSetController
                     </div>',
                     $showUrl,
                     $editUrl,
-                    $tripleWordSet->id
+                    $conversationSet->id
                 );
             })
             ->rawColumns(['id', 'title', 'article_title', 'title_translation_text', 'content_translation_text', 'actions'])
@@ -116,18 +116,18 @@ class ArticleTrippleWordSetController
     }
 
     /**
-     * Show the form for creating a new article triple word set.
+     * Show the form for creating a new article conversation set.
      * 
      * @return \Illuminate\View\View
      */
     public function create()
     {        
         $articles = Article::orderBy('title')->get();
-        return view('backend::article-triple-word-set.create', compact('articles'));
+        return view('backend::article-conversation.create', compact('articles'));
     }
 
     /**
-     * Store a newly created article triple word set in storage.
+     * Store a newly created article conversation set in storage.
      * 
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
@@ -143,20 +143,20 @@ class ArticleTrippleWordSetController
             'content_translation' => 'nullable|array',
         ]);
 
-        // Create new triple word set
-        $tripleWordSet = new ArticleTripleWordSet();
-        $tripleWordSet->article_id = $validated['article_id'];
-        $tripleWordSet->title = $validated['title'];
-        $tripleWordSet->content = $validated['content'] ?? null;
-        $tripleWordSet->display_order = $validated['display_order'] ?? 0;
-        $tripleWordSet->user_id = Auth::id();
-        $tripleWordSet->save();
+        // Create new conversation set
+        $conversationSet = new ArticleConversationSet();
+        $conversationSet->article_id = $validated['article_id'];
+        $conversationSet->title = $validated['title'];
+        $conversationSet->content = $validated['content'] ?? null;
+        $conversationSet->display_order = $validated['display_order'] ?? 0;
+        $conversationSet->user_id = Auth::id();
+        $conversationSet->save();
 
         // Handle translations
         if (isset($validated['title_translation']) && is_array($validated['title_translation'])) {
             foreach ($validated['title_translation'] as $locale => $value) {
                 if (!empty($value)) {
-                    $tripleWordSet->setTranslation('title_translation', $locale, $value);
+                    $conversationSet->setTranslation('title_translation', $locale, $value);
                 }
             }
         }
@@ -164,49 +164,49 @@ class ArticleTrippleWordSetController
         if (isset($validated['content_translation']) && is_array($validated['content_translation'])) {
             foreach ($validated['content_translation'] as $locale => $value) {
                 if (!empty($value)) {
-                    $tripleWordSet->setTranslation('content_translation', $locale, $value);
+                    $conversationSet->setTranslation('content_translation', $locale, $value);
                 }
             }
         }
 
-        $tripleWordSet->save();
+        $conversationSet->save();
 
-        return redirect()->route('backend::article-triple-word-sets.edit', $tripleWordSet)
-            ->with('success', 'Article triple word set created successfully');
+        return redirect()->route('backend::article-conversation-sets.edit', $conversationSet)
+            ->with('success', 'Article conversation set created successfully');
     }
 
     /**
-     * Display the specified article triple word set.
+     * Display the specified article conversation set.
      * 
-     * @param  \Modules\ArticleTripleWord\Models\ArticleTripleWordSet  $articleTripleWordSet
+     * @param  \Modules\ArticleConversation\Models\ArticleConversationSet  $articleConversationSet
      * @return \Illuminate\View\View
      */
-    public function show(ArticleTripleWordSet $articleTripleWordSet)
+    public function show(ArticleConversationSet $articleConversationSet)
     {        
-        $articleTripleWordSet->load(['article', 'user', 'lists']);
-        return view('backend::article-triple-word-set.show', compact('articleTripleWordSet'));
+        $articleConversationSet->load(['article', 'user']);
+        return view('backend::article-conversation.show', compact('articleConversationSet'));
     }
 
     /**
-     * Show the form for editing the specified article triple word set.
+     * Show the form for editing the specified article conversation set.
      * 
-     * @param  \Modules\ArticleTripleWord\Models\ArticleTripleWordSet  $articleTripleWordSet
+     * @param  \Modules\ArticleConversation\Models\ArticleConversationSet  $articleConversationSet
      * @return \Illuminate\View\View
      */
-    public function edit(ArticleTripleWordSet $articleTripleWordSet)
+    public function edit(ArticleConversationSet $articleConversationSet)
     {        
         $articles = Article::orderBy('title')->get();
-        return view('backend::article-triple-word-set.edit', compact('articleTripleWordSet', 'articles'));
+        return view('backend::article-conversation.edit', compact('articleConversationSet', 'articles'));
     }
 
     /**
-     * Update the specified article triple word set in storage.
+     * Update the specified article conversation set in storage.
      * 
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Modules\ArticleTripleWord\Models\ArticleTripleWordSet  $articleTripleWordSet
+     * @param  \Modules\ArticleConversation\Models\ArticleConversationSet  $articleConversationSet
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, ArticleTripleWordSet $articleTripleWordSet)
+    public function update(Request $request, ArticleConversationSet $articleConversationSet)
     {        
         $validated = $request->validate([
             'article_id' => 'nullable|exists:articles,id',
@@ -219,21 +219,21 @@ class ArticleTrippleWordSetController
         ]);
 
         // Update basic fields
-        $articleTripleWordSet->article_id = $validated['article_id'] ?? null;
-        $articleTripleWordSet->title = $validated['title'];
-        $articleTripleWordSet->content = $validated['content'] ?? null;
-        $articleTripleWordSet->display_order = $validated['display_order'] ?? 0;
+        $articleConversationSet->article_id = $validated['article_id'] ?? null;
+        $articleConversationSet->title = $validated['title'];
+        $articleConversationSet->content = $validated['content'] ?? null;
+        $articleConversationSet->display_order = $validated['display_order'] ?? 0;
         
         // Set column order
         if (isset($validated['column_order']) && !empty($validated['column_order'])) {
-            $articleTripleWordSet->column_order = json_decode($validated['column_order'], true);
+            $articleConversationSet->column_order = json_decode($validated['column_order'], true);
         }
 
         // Update translations
         if (isset($validated['title_translation']) && is_array($validated['title_translation'])) {
             foreach ($validated['title_translation'] as $locale => $value) {
                 if (!empty($value)) {
-                    $articleTripleWordSet->setTranslation('title_translation', $locale, $value);
+                    $articleConversationSet->setTranslation('title_translation', $locale, $value);
                 }
             }
         }
@@ -241,27 +241,27 @@ class ArticleTrippleWordSetController
         if (isset($validated['content_translation']) && is_array($validated['content_translation'])) {
             foreach ($validated['content_translation'] as $locale => $value) {
                 if (!empty($value)) {
-                    $articleTripleWordSet->setTranslation('content_translation', $locale, $value);
+                    $articleConversationSet->setTranslation('content_translation', $locale, $value);
                 }
             }
         }
 
-        $articleTripleWordSet->save();
+        $articleConversationSet->save();
 
-        return redirect()->route('backend::article-triple-word-sets.edit', $articleTripleWordSet)
-            ->with('success', 'Article triple word set updated successfully');
+        return redirect()->route('backend::article-conversation-sets.edit', $articleConversationSet)
+            ->with('success', 'Article conversation set updated successfully');
     }
 
     /**
-     * Remove the specified article triple word set from storage.
+     * Remove the specified article conversation set from storage.
      * 
-     * @param  \Modules\ArticleTripleWord\Models\ArticleTripleWordSet  $articleTripleWordSet
+     * @param  \Modules\ArticleConversation\Models\ArticleConversationSet  $articleConversationSet
      * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(ArticleTripleWordSet $articleTripleWordSet)
+    public function destroy(ArticleConversationSet $articleConversationSet)
     {        
-        // Delete the article triple word set
-        $articleTripleWordSet->delete();
+        // Delete the article conversation set
+        $articleConversationSet->delete();
 
         return response()->json(['success' => true]);
     }
