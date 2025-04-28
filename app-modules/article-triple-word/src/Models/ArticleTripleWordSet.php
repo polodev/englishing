@@ -2,9 +2,12 @@
 
 namespace Modules\ArticleTripleWord\Models;
 
+use App\Models\User;
+use Modules\Article\Models\Article;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\ArticleTripleWord\Models\ArticleTripleWordSetList;
 
 class ArticleTripleWordSet extends Model
 {
@@ -62,5 +65,20 @@ class ArticleTripleWordSet extends Model
             'word_2_translation',
             'word_3_translation',
         ];
+    }
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    /**
+     * Get the lists for the word set.
+     */
+    public function lists(): HasMany
+    {
+        return $this->hasMany(ArticleTripleWordSetList::class);
     }
 }

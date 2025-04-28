@@ -1,11 +1,16 @@
 <x-ui-backend::layout>
     <x-slot:title>Edit Article Double Word Set</x-slot:title>
     <div class="container mx-auto px-4 py-6">
-        <div class="flex items-center mb-6">
-            <a href="{{ route('backend::article-double-word-sets.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-2">
-                <i class="fas fa-arrow-left mr-2"></i> Back to List
-            </a>
+        <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Edit Article Double Word Set #{{ $articleDoubleWordSet->id }}</h1>
+            <div class="flex space-x-2">
+                <a href="{{ route('backend::article-double-word-sets.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to List
+                </a>
+                <a href="{{ route('backend::article-double-word-sets.show', $articleDoubleWordSet->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    <i class="fas fa-eye mr-2"></i> View Details
+                </a>
+            </div>
         </div>
 
         <!-- Success Message -->
@@ -108,105 +113,103 @@
         <!-- Double Word Lists -->
         <livewire:article-double-word--create-article-double-word-set :articleDoubleWordSet="$articleDoubleWordSet" />
     </div>
-</x-ui-backend::layout>
+    
+    @push('styles')
+    <style>
+        .select2-container--default .select2-selection--single {
+            height: 38px;
+            border-color: rgb(209 213 219);
+        }
+        .dark .select2-container--default .select2-selection--single {
+            background-color: rgb(55 65 81);
+            border-color: rgb(75 85 99);
+            color: white;
+        }
+        .dark .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: white;
+        }
+        .dark .select2-dropdown {
+            background-color: rgb(55 65 81);
+            border-color: rgb(75 85 99);
+            color: white;
+        }
+        .dark .select2-search__field {
+            background-color: rgb(55 65 81);
+            color: white;
+        }
+        .dark .select2-results__option {
+            color: white;
+        }
+        .dark .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: rgb(75 85 99);
+        }
+    </style>
+    @endpush
 
-@push('styles')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<style>
-    .select2-container--default .select2-selection--single {
-        height: 38px;
-        border-color: rgb(209 213 219);
-    }
-    .dark .select2-container--default .select2-selection--single {
-        background-color: rgb(55 65 81);
-        border-color: rgb(75 85 99);
-        color: white;
-    }
-    .dark .select2-container--default .select2-selection--single .select2-selection__rendered {
-        color: white;
-    }
-    .dark .select2-dropdown {
-        background-color: rgb(55 65 81);
-        border-color: rgb(75 85 99);
-        color: white;
-    }
-    .dark .select2-search__field {
-        background-color: rgb(55 65 81);
-        color: white;
-    }
-    .dark .select2-results__option {
-        color: white;
-    }
-    .dark .select2-container--default .select2-results__option--highlighted[aria-selected] {
-        background-color: rgb(75 85 99);
-    }
-</style>
-@endpush
+    @push('scripts')
+    <script>
+        $(document).ready(function() {
+            // Initialize Select2 for Article Selection
+            $('.article-select').select2({
+                ajax: {
+                    url: '{{ route("backend::api.articles.search") }}',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            q: params.term,
+                            page: params.page
+                        };
+                    },
+                    processResults: function(data, params) {
+                        return {
+                            results: data.items,
+                            pagination: {
+                                more: data.pagination.more
+                            }
+                        };
+                    },
+                    cache: true
+                },
+                placeholder: 'Search for an article...',
+                minimumInputLength: 1,
+                templateResult: formatArticle,
+                templateSelection: formatArticleSelection
+            });
 
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Initialize Select2 for Article Selection
-        $('.article-select').select2({
-            ajax: {
+            // Function to format articles in dropdown
+            function formatArticle(article) {
+                if (article.loading) {
+                    return article.text;
+                }
+                return $('<div class="select2-result-article">' +
+                    '<div class="select2-result-article__title">' + article.title + '</div>' +
+                    '</div>');
+            }
+
+            // Function to format the selected article
+            function formatArticleSelection(article) {
+                return article.title || article.text;
+            }
+
+            // Load the current article or any old selected article
+            @if($articleDoubleWordSet->article_id || old('article_id'))
+            $.ajax({
                 url: '{{ route("backend::api.articles.search") }}',
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        q: params.term,
-                        page: params.page
-                    };
+                data: {
+                    q: '{{ old('article_id', $articleDoubleWordSet->article_id) }}',
+                    exact_id: true
                 },
-                processResults: function(data, params) {
-                    return {
-                        results: data.items,
-                        pagination: {
-                            more: data.pagination.more
-                        }
-                    };
-                },
-                cache: true
-            },
-            placeholder: 'Search for an article...',
-            minimumInputLength: 1,
-            templateResult: formatArticle,
-            templateSelection: formatArticleSelection
+                dataType: 'json'
+            }).then(function(data) {
+                if (data.items.length > 0) {
+                    var article = data.items[0];
+                    var option = new Option(article.title, article.id, true, true);
+                    $('.article-select').append(option).trigger('change');
+                }
+            });
+            @endif
         });
-
-        // Function to format articles in dropdown
-        function formatArticle(article) {
-            if (article.loading) {
-                return article.text;
-            }
-            return $('<div class="select2-result-article">' +
-                '<div class="select2-result-article__title">' + article.title + '</div>' +
-                '</div>');
-        }
-
-        // Function to format the selected article
-        function formatArticleSelection(article) {
-            return article.title || article.text;
-        }
-
-        // Load the current article or any old selected article
-        @if($articleDoubleWordSet->article_id || old('article_id'))
-        $.ajax({
-            url: '{{ route("backend::api.articles.search") }}',
-            data: {
-                q: '{{ old('article_id', $articleDoubleWordSet->article_id) }}',
-                exact_id: true
-            },
-            dataType: 'json'
-        }).then(function(data) {
-            if (data.items.length > 0) {
-                var article = data.items[0];
-                var option = new Option(article.title, article.id, true, true);
-                $('.article-select').append(option).trigger('change');
-            }
-        });
-        @endif
-    });
-</script>
-@endpush
+    </script>
+    @endpush
+</x-ui-backend::layout>

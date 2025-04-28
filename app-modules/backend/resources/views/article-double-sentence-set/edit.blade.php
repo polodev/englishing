@@ -1,11 +1,16 @@
 <x-ui-backend::layout>
     <x-slot:title>Edit Article Double Sentence Set</x-slot:title>
     <div class="container mx-auto px-4 py-6">
-        <div class="flex items-center mb-6">
-            <a href="{{ route('backend::article-double-sentence-sets.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded mr-2">
-                <i class="fas fa-arrow-left mr-2"></i> Back to List
-            </a>
+        <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Edit Article Double Sentence Set #{{ $articleDoubleSentenceSet->id }}</h1>
+            <div class="flex space-x-2">
+                <a href="{{ route('backend::article-double-sentence-sets.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to List
+                </a>
+                <a href="{{ route('backend::article-double-sentence-sets.show', $articleDoubleSentenceSet->id) }}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+                    <i class="fas fa-eye mr-2"></i> View Details
+                </a>
+            </div>
         </div>
 
         <!-- Success Message -->

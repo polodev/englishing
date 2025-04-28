@@ -2,9 +2,12 @@
 
 namespace Modules\ArticleDoubleWord\Models;
 
+use App\Models\User;
+use Modules\Article\Models\Article;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Translatable\HasTranslations;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Modules\ArticleDoubleWord\Models\ArticleDoubleWordSetList;
 
 class ArticleDoubleWordSet extends Model
 {
@@ -58,5 +61,20 @@ class ArticleDoubleWordSet extends Model
             'word_1_translation',
             'word_2_translation',
         ];
+    }
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    /**
+     * Get the lists for the word set.
+     */
+    public function lists(): HasMany
+    {
+        return $this->hasMany(ArticleDoubleWordSetList::class);
     }
 }
