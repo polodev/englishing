@@ -5,6 +5,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Modules\ArticleSentence\Models\ArticleSentenceSetList;
 use Modules\ArticleSentence\Models\ArticleSentenceTranslation;
+use Modules\ArticleSentence\ArticleSentenceHelpers;
 
 new class extends Component {
     public $articleSentenceSet;
@@ -29,93 +30,12 @@ new class extends Component {
 
     private function generateJsonData()
     {
-        // Initialize the root data structure with sentence set data
-        $sentenceSet = $this->articleSentenceSet;
-
-        // Build the root structure with sentence set properties
-        $data = [
-            'id' => $sentenceSet->id,
-            'article_id' => $sentenceSet->article_id,
-            'title' => $sentenceSet->title,
-            'content' => $sentenceSet->content,
-            'display_order' => $sentenceSet->display_order,
-            'title_translation' => [
-                'bn' => $sentenceSet->getTranslation('title_translation', 'bn', false) ?: '',
-                'hi' => $sentenceSet->getTranslation('title_translation', 'hi', false) ?: ''
-            ],
-            'content_translation' => [
-                'bn' => $sentenceSet->getTranslation('content_translation', 'bn', false) ?: '',
-                'hi' => $sentenceSet->getTranslation('content_translation', 'hi', false) ?: ''
-            ],
-            'column_order' => is_string($sentenceSet->column_order) ?
-                json_decode($sentenceSet->column_order, true) :
-                ($sentenceSet->column_order ?? ['sentence']),
-            'sentence_set_lists' => []
-        ];
-
-        $sentenceLists = ArticleSentenceSetList::where('article_sentence_set_id', $this->articleSentenceSetId)
-            ->with('translations')
-            ->orderBy('display_order', 'asc')
-            ->get();
-
-        if ($sentenceLists->isNotEmpty()) {
-            foreach ($sentenceLists as $sentenceList) {
-                $translations = $sentenceList->translations->keyBy('locale');
-                $formattedTranslations = [];
-
-                // Ensure all supported locales are present
-                foreach ($this->supportedLocales as $locale) {
-                    $translation = $translations->get($locale);
-                    $formattedTranslations[] = [
-                        'id' => $translation->id ?? null,
-                        'locale' => $locale,
-                        'translation' => $translation->translation ?? '',
-                        'transliteration' => $translation->transliteration ?? '',
-                    ];
-                }
-
-                // Get pronunciation data using correct methods for translatable fields
-                $pronunciation = [
-                    'bn' => $sentenceList->getTranslation('pronunciation', 'bn', false) ?: '',
-                    'hi' => $sentenceList->getTranslation('pronunciation', 'hi', false) ?: ''
-                ];
-
-                $data['sentence_set_lists'][] = [
-                    'id' => $sentenceList->id,
-                    'sentence' => $sentenceList->sentence,
-                    'slug' => $sentenceList->slug,
-                    'pronunciation' => $pronunciation,
-                    'display_order' => $sentenceList->display_order,
-                    'translations' => $formattedTranslations,
-                ];
-            }
-        } else {
-            // Generate stub data if no existing data
-            $data['sentence_set_lists'] = [
-                [
-                    'sentence' => '',
-                    'pronunciation' => [
-                        'bn' => '',
-                        'hi' => ''
-                    ],
-                    'display_order' => 1,
-                    'translations' => [
-                        [
-                            'locale' => 'bn',
-                            'translation' => '',
-                            'transliteration' => '',
-                        ],
-                        [
-                            'locale' => 'hi',
-                            'translation' => '',
-                            'transliteration' => '',
-                        ]
-                    ]
-                ]
-            ];
-        }
-
-        $this->jsonData = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+        // Use the ArticleSentenceHelpers static method to generate JSON data
+        $data = ArticleSentenceHelpers::generateJsonData($this->articleSentenceSet, $this->supportedLocales);
+        
+        // Convert the data array to JSON with pretty printing and unicode support
+        $this->jsonData = json_encode($data, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+        $this->debugInfo[] = 'Generated JSON data using ArticleSentenceHelpers';
     }
 
     public function openModal()
@@ -133,214 +53,35 @@ new class extends Component {
         $this->processing = true;
         $this->debugInfo[] = "Started processing at " . now()->format('Y-m-d H:i:s');
 
-        $data = json_decode($this->jsonData, true);
-        if (json_last_error() !== JSON_ERROR_NONE || !is_array($data)) {
-            $this->errors[] = 'Invalid JSON: '.json_last_error_msg();
-            $this->processing = false;
-            return;
-        }
-
-        // Verify the data has the expected structure
-        if (!isset($data['sentence_set_lists']) || !is_array($data['sentence_set_lists'])) {
-            $this->errors[] = "Missing or invalid 'sentence_set_lists' array in JSON data";
-            $this->processing = false;
-            return;
-        }
-
-        // Start database transaction
-        DB::beginTransaction();
         try {
-            // Initialize arrays to track processed IDs
-            $processedIds = [];
-            $savedTranslationIds = [];
-
-            // 1. Update the Article Sentence Set (parent) data
-            if (isset($data['title'])) {
-                // Process column_order - ensure it's stored as a JSON string in the database
-                $columnOrder = null;
-                if (isset($data['column_order'])) {
-                    // Ensure column_order is saved as a JSON string, not an array
-                    $columnOrder = is_array($data['column_order']) ? json_encode($data['column_order']) : $data['column_order'];
-                }
-
-                // Prepare sentence set data, excluding id and article_id as requested
-                $sentenceSetData = [
-                    'title' => $data['title'] ?? $this->articleSentenceSet->title,
-                    'content' => $data['content'] ?? $this->articleSentenceSet->content,
-                    'display_order' => $data['display_order'] ?? $this->articleSentenceSet->display_order,
-                    'column_order' => $columnOrder,
-                    // Don't update id or article_id as requested
-                ];
-
-                // Update the sentence set
-                $this->articleSentenceSet->update($sentenceSetData);
-                $this->debugInfo[] = "Updated ArticleSentenceSet ID: {$this->articleSentenceSet->id}";
-
-                // Handle title_translation directly for bn and hi
-                if (isset($data['title_translation'])) {
-                    // Set Bengali title translation
-                    if (isset($data['title_translation']['bn'])) {
-                        $this->articleSentenceSet->setTranslation('title_translation', 'bn', $data['title_translation']['bn']);
-                        $this->debugInfo[] = "Set Bengali title translation: {$data['title_translation']['bn']}";
-                    }
-
-                    // Set Hindi title translation
-                    if (isset($data['title_translation']['hi'])) {
-                        $this->articleSentenceSet->setTranslation('title_translation', 'hi', $data['title_translation']['hi']);
-                        $this->debugInfo[] = "Set Hindi title translation: {$data['title_translation']['hi']}";
-                    }
-                }
-
-                // Handle content_translation directly for bn and hi
-                if (isset($data['content_translation'])) {
-                    // Set Bengali content translation
-                    if (isset($data['content_translation']['bn'])) {
-                        $this->articleSentenceSet->setTranslation('content_translation', 'bn', $data['content_translation']['bn']);
-                        $this->debugInfo[] = "Set Bengali content translation: {$data['content_translation']['bn']}";
-                    }
-
-                    // Set Hindi content translation
-                    if (isset($data['content_translation']['hi'])) {
-                        $this->articleSentenceSet->setTranslation('content_translation', 'hi', $data['content_translation']['hi']);
-                        $this->debugInfo[] = "Set Hindi content translation: {$data['content_translation']['hi']}";
-                    }
-                }
-
-                // Save the translations
-                $this->articleSentenceSet->save();
+            // Verify article_sentence_set_id is valid
+            if (empty($this->articleSentenceSetId)) {
+                throw new \Exception("Invalid article_sentence_set_id: Cannot save sentences without a parent set");
             }
 
-            // 2. Process each sentence in the array
-            $processedIds = [];
-            $displayOrder = 1;
-
-            // Filter out items with empty sentences
-            $validItems = [];
-            foreach ($data['sentence_set_lists'] as $index => $item) {
-                if (!empty($item['sentence'])) {
-                    $validItems[] = $item;
-                } else {
-                    $this->debugInfo[] = "Skipped item #" . ($index + 1) . " with empty sentence";
-                }
+            // Start database transaction
+            DB::beginTransaction();
+            $this->debugInfo[] = "Started database transaction";
+            
+            // Use the ArticleSentenceHelpers static method to process the JSON data
+            // The method now returns the ArticleSentenceSet instance (existing or new)
+            $processedSentenceSet = ArticleSentenceHelpers::processJsonData($this->articleSentenceSet, $this->jsonData, $this->debugInfo);
+            
+            // Update the local articleSentenceSet reference if it was modified
+            if ($processedSentenceSet && $processedSentenceSet->id) {
+                $this->articleSentenceSet = $processedSentenceSet;
+                $this->articleSentenceSetId = $processedSentenceSet->id;
+                $this->debugInfo[] = "Updated local reference to ArticleSentenceSet ID: {$this->articleSentenceSetId}";
             }
-
-            // Process only valid items
-            foreach ($validItems as $index => $item) {
-                // Create or update sentence set list using slug as the primary lookup key
-                $slug = $item['slug'] ?? Str::slug($item['sentence']);
-
-                // Always try to find by slug first
-                $sentenceList = ArticleSentenceSetList::where('slug', $slug)
-                    ->where('article_sentence_set_id', $this->articleSentenceSetId)
-                    ->first();
-
-                if (!$sentenceList) {
-                    // Create new record if not found by slug
-                    $sentenceList = new ArticleSentenceSetList();
-                    $sentenceList->article_sentence_set_id = $this->articleSentenceSetId;
-                    $this->debugInfo[] = "Creating new sentence list item with slug: {$slug}";
-                } else {
-                    $this->debugInfo[] = "Updating existing sentence list item with slug: {$slug}";
-                }
-
-                $sentenceList->sentence = $item['sentence'];
-                $sentenceList->display_order = $displayOrder++;
-
-                // Generate a unique slug to avoid duplicates
-                $baseSlug = Str::slug($item['sentence']) ?: Str::uuid();
-                $slug = $baseSlug;
-                $counter = 1;
-
-                // Check if this is a new record or we're changing the slug
-                if (!$sentenceList->exists || $sentenceList->slug !== $baseSlug) {
-                    // Check for duplicate slugs and make unique if needed
-                    while (ArticleSentenceSetList::where('article_sentence_set_id', $this->articleSentenceSetId)
-                        ->where('slug', $slug)
-                        ->where('id', '!=', $sentenceList->id ?? 0)
-                        ->exists()) {
-                        $slug = $baseSlug . '-' . $counter++;
-                    }
-                }
-
-                $sentenceList->slug = $slug;
-
-                // Handle pronunciation using Spatie's translatable functionality
-                if (isset($item['pronunciation']) && is_array($item['pronunciation'])) {
-                    // Handle Bengali pronunciation
-                    if (isset($item['pronunciation']['bn'])) {
-                        $sentenceList->setTranslation('pronunciation', 'bn', $item['pronunciation']['bn']);
-                        $this->debugInfo[] = "Set Bengali pronunciation for sentence: {$item['pronunciation']['bn']}";
-                    }
-
-                    // Handle Hindi pronunciation
-                    if (isset($item['pronunciation']['hi'])) {
-                        $sentenceList->setTranslation('pronunciation', 'hi', $item['pronunciation']['hi']);
-                        $this->debugInfo[] = "Set Hindi pronunciation for sentence: {$item['pronunciation']['hi']}";
-                    }
-                } else {
-                    // Initialize empty pronunciations if not provided
-                    $sentenceList->setTranslation('pronunciation', 'bn', '');
-                    $sentenceList->setTranslation('pronunciation', 'hi', '');
-                }
-
-                $sentenceList->save();
-
-                $processedIds[] = $sentenceList->id;
-
-                // Process translations - only handle sequential format
-                if (isset($item['translations']) && is_array($item['translations'])) {
-                    $this->debugInfo[] = "Processing translations for sentence: {$item['sentence']}";
-
-                    // Process translations in sequential array format (array of objects with locale key)
-                    foreach ($item['translations'] as $trData) {
-                        if (!isset($trData['locale']) || !in_array($trData['locale'], $this->supportedLocales)) {
-                            $this->debugInfo[] = "Skipping translation with invalid locale: " . ($trData['locale'] ?? 'unknown');
-                            continue;
-                        }
-
-                        $locale = $trData['locale'];
-                        $tr = ArticleSentenceTranslation::where('article_sentence_set_list_id', $sentenceList->id)
-                            ->where('locale', $locale)
-                            ->first();
-
-                        if (!$tr) {
-                            $tr = new ArticleSentenceTranslation();
-                            $tr->article_sentence_set_list_id = $sentenceList->id;
-                            $tr->locale = $locale;
-                            $this->debugInfo[] = "Created new translation for locale: {$locale}";
-                        } else {
-                            $this->debugInfo[] = "Updating existing translation for locale: {$locale}";
-                        }
-
-                        $tr->translation = $trData['translation'] ?? '';
-                        $tr->transliteration = $trData['transliteration'] ?? '';
-                        $tr->save();
-                        $savedTranslationIds[] = $tr->id;
-                    }
-                }
-            }
-
-            // Delete missing translations
-            ArticleSentenceTranslation::whereIn('article_sentence_set_list_id', $processedIds)
-                ->whereNotIn('id', $savedTranslationIds)
-                ->delete();
-            $this->debugInfo[] = "Deleted translations that are no longer present in the input";
-
-            // Delete records not in the processed list
-            $deletedCount = ArticleSentenceSetList::where('article_sentence_set_id', $this->articleSentenceSetId)
-                ->whereNotIn('id', $processedIds)
-                ->delete();
-            $this->debugInfo[] = "Deleted {$deletedCount} sentence list items that are no longer present in the input";
 
             // If no errors, commit the transaction
-            if (count($this->errors) === 0) {
-                DB::commit();
-                $this->updateSuccess = true;
-                $this->debugInfo[] = "Committed database transaction";
-            } else {
-                DB::rollBack();
-                $this->debugInfo[] = "Rolled back database transaction due to errors";
-            }
+            DB::commit();
+            $this->updateSuccess = true;
+            $this->debugInfo[] = "Committed database transaction";
+            
+            // Refresh the JSON data to reflect the updated state
+            $this->generateJsonData();
+            
         } catch (\Exception $e) {
             // Ensure transaction is rolled back
             if (DB::transactionLevel() > 0) {
@@ -349,13 +90,8 @@ new class extends Component {
 
             // Provide more detailed error information
             $this->errors[] = "Error: " . $e->getMessage();
-            $this->debugInfo[] = "Exception caught: " . $e->getMessage();
-            $this->debugInfo[] = "Error code: " . $e->getCode();
-
-            // For SQL errors, try to extract more detailed information
-            if (strpos($e->getMessage(), 'SQLSTATE') !== false) {
-                $this->debugInfo[] = "SQL error detected - check for duplicate entries or constraint violations";
-            }
+            $this->debugInfo[] = "ERROR: " . $e->getMessage() . " at line " . $e->getLine();
+            $this->processing = false;
         }
         $this->processing = false;
     }

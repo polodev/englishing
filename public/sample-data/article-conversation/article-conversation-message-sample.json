@@ -1,0 +1,165 @@
+{
+  "id": 1,
+  "article_id": 10,
+  "title": "At the Restaurant: Ordering Food",
+  "content": "This conversation demonstrates common phrases and vocabulary used when ordering food at a restaurant.",
+  "display_order": 1,
+  "title_translation": {
+    "bn": "রেস্টুরেন্টে: খাবার অর্ডার করা",
+    "hi": "रेस्तरां में: भोजन ऑर्डर करना"
+  },
+  "content_translation": {
+    "bn": "এই কথোপকথনটি রেস্টুরেন্টে খাবার অর্ডার করার সময় ব্যবহৃত সাধারণ বাক্যাংশ এবং শব্দভাণ্ডার দেখায়।",
+    "hi": "यह वार्तालाप रेस्तरां में भोजन ऑर्डर करते समय उपयोग किए जाने वाले सामान्य वाक्यांशों और शब्दावली को प्रदर्शित करता है।"
+  },
+  "column_order": ["speaker", "message"],
+  "conversation_messages": [
+    {
+      "id": 1,
+      "speaker": "Waiter",
+      "message": "Good evening! Welcome to our restaurant. Here's the menu. Would you like something to drink while you decide?",
+      "slug": "waiter-greeting",
+      "display_order": 1,
+      "translations": [
+        {
+          "locale": "bn",
+          "message_translation": "শুভ সন্ধ্যা! আমাদের রেস্টুরেন্টে স্বাগতম। এখানে মেনু রয়েছে। আপনি যখন সিদ্ধান্ত নিচ্ছেন তখন কিছু পানীয় নেবেন?",
+          "message_transliteration": "Shubho shondhya! Amader restaurante shagotom. Ekhane menu royeche. Apni jokhon siddhanto nicchen tokhon kichu paniyo neben?",
+          "speaker_translation": "পরিবেশক"
+        },
+        {
+          "locale": "hi",
+          "message_translation": "शुभ संध्या! हमारे रेस्तरां में आपका स्वागत है। यहां मेनू है। जब आप तय कर रहे हों तो क्या आप कुछ पीना चाहेंगे?",
+          "message_transliteration": "Shubh sandhya! Hamare restaurant mein aapka swagat hai. Yahan menu hai. Jab aap tay kar rahe hon to kya aap kuchh peena chahenge?",
+          "speaker_translation": "वेटर"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "speaker": "Customer",
+      "message": "Yes, I'd like a glass of water, please. And can you tell me what today's specials are?",
+      "slug": "customer-first-response",
+      "display_order": 2,
+      "translations": [
+        {
+          "locale": "bn",
+          "message_translation": "হ্যাঁ, আমি একটি গ্লাস পানি চাই, দয়া করে। এবং আপনি কি আমাকে বলতে পারেন আজকের বিশেষ খাবারগুলি কী কী?",
+          "message_transliteration": "Hyan, ami ekti glass pani chai, doya kore. Ebong apni ki amake bolte paren ajker bishesh khabarguli ki ki?",
+          "speaker_translation": "ক্রেতা"
+        },
+        {
+          "locale": "hi",
+          "message_translation": "हां, मुझे एक गिलास पानी चाहिए, कृपया। और क्या आप मुझे बता सकते हैं कि आज के स्पेशल क्या हैं?",
+          "message_transliteration": "Haan, mujhe ek gilas pani chahiye, kripya. Aur kya aap mujhe bata sakte hain ki aaj ke special kya hain?",
+          "speaker_translation": "ग्राहक"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "speaker": "Waiter",
+      "message": "Certainly! Today's specials are grilled salmon with asparagus and chicken alfredo pasta. Both come with a side salad.",
+      "slug": "waiter-specials",
+      "display_order": 3,
+      "translations": [
+        {
+          "locale": "bn",
+          "message_translation": "অবশ্যই! আজকের বিশেষ খাবার হল অ্যাসপারাগাস সহ গ্রিলড সালমন এবং চিকেন আলফ্রেডো পাস্তা। উভয়ই একটি সাইড সালাদ সহ আসে।",
+          "message_transliteration": "Obosshoi! Ajker bishesh khabar holo asparagus shoho grilled salmon ebong chicken alfredo pasta. Ubhoyi ekti side salad shoho ashe.",
+          "speaker_translation": "পরিবেশক"
+        },
+        {
+          "locale": "hi",
+          "message_translation": "बिल्कुल! आज के स्पेशल हैं स्पैरेगस के साथ ग्रिल्ड सैल्मन और चिकन अल्फ्रेडो पास्ता। दोनों के साथ साइड सलाद भी आता है।",
+          "message_transliteration": "Bilkul! Aaj ke special hain asparagus ke saath grilled salmon aur chicken alfredo pasta. Donon ke saath side salad bhi aata hai.",
+          "speaker_translation": "वेटर"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "speaker": "Customer",
+      "message": "The salmon sounds good. I'll have that. And can I get a glass of white wine as well?",
+      "slug": "customer-order",
+      "display_order": 4,
+      "translations": [
+        {
+          "locale": "bn",
+          "message_translation": "সালমোন ভালো শোনাচ্ছে। আমি সেটাই নেব। এবং আমি কি একটি গ্লাস সাদা ওয়াইনও পেতে পারি?",
+          "message_transliteration": "Salmon bhalo shonacche. Ami shetai nebo. Ebong ami ki ekti glass shada wine-o pete pari?",
+          "speaker_translation": "ক্রেতা"
+        },
+        {
+          "locale": "hi",
+          "message_translation": "सैल्मन अच्छा लगता है। मैं वही लूंगा। और क्या मुझे एक गिलास सफेद वाइन भी मिल सकती है?",
+          "message_transliteration": "Salmon accha lagta hai. Main wahi lunga. Aur kya mujhe ek gilas safed wine bhi mil sakti hai?",
+          "speaker_translation": "ग्राहक"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "speaker": "Waiter",
+      "message": "Excellent choice. Would you like a Chardonnay or Sauvignon Blanc with your salmon?",
+      "slug": "waiter-wine-options",
+      "display_order": 5,
+      "translations": [
+        {
+          "locale": "bn",
+          "message_translation": "চমৎকার পছন্দ। আপনি কি আপনার সালমোনের সাথে শারদোনে বা সভিনন ব্লাঙ্ক পছন্দ করবেন?",
+          "message_transliteration": "Chomotkar pochondo. Apni ki apnar salmon-er shathe Chardonnay ba Sauvignon Blanc pochondo korben?",
+          "speaker_translation": "পরিবেশক"
+        },
+        {
+          "locale": "hi",
+          "message_translation": "उत्कृष्ट पसंद। आप अपने सैल्मन के साथ शार्डोने या सॉविन्यों ब्लांक पसंद करेंगे?",
+          "message_transliteration": "Utkrisht pasand. Aap apne salmon ke saath Chardonnay ya Sauvignon Blanc pasand karenge?",
+          "speaker_translation": "वेटर"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "speaker": "Customer",
+      "message": "I'll try the Chardonnay, please.",
+      "slug": "customer-wine-choice",
+      "display_order": 6,
+      "translations": [
+        {
+          "locale": "bn",
+          "message_translation": "আমি শারদোনে চেষ্টা করব, দয়া করে।",
+          "message_transliteration": "Ami Chardonnay cheshta korbo, doya kore.",
+          "speaker_translation": "ক্রেতা"
+        },
+        {
+          "locale": "hi",
+          "message_translation": "मैं शार्डोने की कोशिश करूंगा, कृपया।",
+          "message_transliteration": "Main Chardonnay ki koshish karunga, kripya.",
+          "speaker_translation": "ग्राहक"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "speaker": "Waiter",
+      "message": "Great. I'll bring your water right away and place your order. The salmon and Chardonnay will be out shortly.",
+      "slug": "waiter-confirm-order",
+      "display_order": 7,
+      "translations": [
+        {
+          "locale": "bn",
+          "message_translation": "দারুণ। আমি আপনার পানি এখনই নিয়ে আসব এবং আপনার অর্ডার দেব। সালমন এবং শারদোনে শীঘ্রই বেরিয়ে আসবে।",
+          "message_transliteration": "Darun. Ami apnar pani ekhoni niye ashbo ebong apnar order debo. Salmon ebong Chardonnay shighroi beriye ashbe.",
+          "speaker_translation": "পরিবেশক"
+        },
+        {
+          "locale": "hi",
+          "message_translation": "बढ़िया। मैं आपका पानी तुरंत लाऊंगा और आपका ऑर्डर लगा दूंगा। सैल्मन और शार्डोने जल्द ही आ जाएंगे।",
+          "message_transliteration": "Badhiya. Main aapka pani turant launga aur aapka order laga dunga. Salmon aur Chardonnay jald hi aa jayenge.",
+          "speaker_translation": "वेटर"
+        }
+      ]
+    }
+  ]
+}
