@@ -3,15 +3,15 @@
 use Livewire\Volt\Component;
 use Illuminate\Support\Str;
 use Modules\Article\Models\Article;
-use Modules\ArticleConversation\Models\ArticleConversationSet;
+use Modules\ArticleConversation\Models\ArticleConversation;
 
 new class extends Component {
     public bool $showModal = false;
     public bool $showSuccessMessage = false;
-    public ?int $createdSetId = null;
-    public ?string $createdSetTitle = null;
+    public ?int $createdConversationId = null;
+    public ?string $createdConversationTitle = null;
 
-    // Article this set belongs to
+    // Article this conversation belongs to
     public ?int $articleId = null;
     public ?Article $article = null;
 
@@ -35,12 +35,12 @@ new class extends Component {
         if ($this->articleId) {
             $this->article = Article::find($this->articleId);
 
-            // Set default display order to be after the last set
-            $lastSet = ArticleConversationSet::where('article_id', $this->articleId)
+            // Set default display order to be after the last conversation
+            $lastConversation = ArticleConversation::where('article_id', $this->articleId)
                 ->orderBy('display_order', 'desc')
                 ->first();
 
-            $this->displayOrder = $lastSet ? $lastSet->display_order + 1 : 1;
+            $this->displayOrder = $lastConversation ? $lastConversation->display_order + 1 : 1;
         }
     }
 
@@ -68,7 +68,7 @@ new class extends Component {
 
         $this->reset([
             'title', 'content', 'title_translation', 'content_translation',
-            'showSuccessMessage', 'createdSetId', 'createdSetTitle'
+            'showSuccessMessage', 'createdConversationId', 'createdConversationTitle'
         ]);
         $this->showModal = true;
     }
@@ -79,8 +79,8 @@ new class extends Component {
         $this->showModal = false;
     }
 
-    // Create a new article conversation set
-    public function createArticleConversationSet()
+    // Create a new article conversation
+    public function createArticleConversation()
     {
         if (!$this->articleId) {
             session()->flash('error', 'No article selected. Please select an article first.');
@@ -93,8 +93,8 @@ new class extends Component {
         $titleTranslationData = array_filter($this->title_translation, fn($value) => !empty($value));
         $contentTranslationData = array_filter($this->content_translation, fn($value) => !empty($value));
 
-        // Create the article conversation set
-        $set = ArticleConversationSet::create([
+        // Create the article conversation
+        $conversation = ArticleConversation::create([
             'article_id' => $this->articleId,
             'title' => $this->title,
             'content' => $this->content,
@@ -104,30 +104,30 @@ new class extends Component {
 
         // Set translations using Spatie's translatable
         foreach ($titleTranslationData as $locale => $value) {
-            $set->setTranslation('title_translation', $locale, $value);
+            $conversation->setTranslation('title_translation', $locale, $value);
         }
 
         foreach ($contentTranslationData as $locale => $value) {
-            $set->setTranslation('content_translation', $locale, $value);
+            $conversation->setTranslation('content_translation', $locale, $value);
         }
 
-        $set->save();
+        $conversation->save();
 
         // Show success message
-        $this->createdSetId = $set->id;
-        $this->createdSetTitle = $set->title;
+        $this->createdConversationId = $conversation->id;
+        $this->createdConversationTitle = $conversation->title;
         $this->showSuccessMessage = true;
 
         // Emit event for parent components to refresh
-        $this->dispatch('article-conversation-set-created', ['articleId' => $this->articleId]);
+        $this->dispatch('article-conversation-created', ['articleId' => $this->articleId]);
     }
 
-    // Reset form for adding another set
-    public function addAnotherSet()
+    // Reset form for adding another conversation
+    public function addAnotherConversation()
     {
         $this->reset([
             'title', 'content', 'title_translation', 'content_translation',
-            'showSuccessMessage', 'createdSetId', 'createdSetTitle'
+            'showSuccessMessage', 'createdConversationId', 'createdConversationTitle'
         ]);
 
         // Increment display order for the next set
@@ -148,7 +148,7 @@ new class extends Component {
         <svg xmlns="http://www.w3.org/2000/svg" class="-ml-0.5 mr-2 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
-        Add Conversation Set
+        Add Conversation
     </button>
 
     <!-- Modal -->
@@ -171,15 +171,15 @@ new class extends Component {
                             </div>
                             <div class="ml-3">
                                 <p class="text-sm text-green-700 dark:text-green-200">
-                                    Conversation Set "{{ $createdSetTitle }}" has been created successfully!
+                                    Conversation "{{ $createdConversationTitle }}" has been created successfully!
                                 </p>
                             </div>
                         </div>
                     </div>
 
                     <div class="flex justify-between">
-                        <button type="button" wire:click="addAnotherSet" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 disabled:opacity-25 transition">
-                            Add Another Conversation Set
+                        <button type="button" wire:click="addAnotherConversation" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 disabled:opacity-25 transition">
+                            Add Another Conversation
                         </button>
                         <button type="button" wire:click="closeModal" class="inline-flex items-center px-4 py-2 bg-gray-300 dark:bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-gray-700 dark:text-white uppercase tracking-widest hover:bg-gray-400 dark:hover:bg-gray-500 active:bg-gray-500 dark:active:bg-gray-400 focus:outline-none focus:border-gray-500 focus:ring focus:ring-gray-200 disabled:opacity-25 transition">
                             Close
@@ -189,13 +189,13 @@ new class extends Component {
             @else
                 <!-- Modal Header -->
                 <div class="px-6 py-4 bg-gray-100 dark:bg-gray-700 border-b border-gray-200 dark:border-gray-600">
-                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Add New Conversation Set to Article</h3>
+                    <h3 class="text-lg font-medium text-gray-900 dark:text-white">Add New Conversation to Article</h3>
                     @if($article)
                         <p class="text-sm text-gray-600 dark:text-gray-400">Article: {{ $article->title }}</p>
                     @endif
                 </div>
 
-                <form wire:submit.prevent="createArticleConversationSet" class="p-6 dark:bg-gray-800">
+                <form wire:submit.prevent="createArticleConversation" class="p-6 dark:bg-gray-800">
                     <!-- Title Input -->
                     <div class="mb-4">
                         <label for="title" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Title</label>
@@ -234,7 +234,7 @@ new class extends Component {
                     <!-- Content Input -->
                     <div class="mb-4">
                         <label for="content" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Content</label>
-                        <textarea id="content" wire:model="content" rows="5" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Write your conversation set content here..."></textarea>
+                        <textarea id="content" wire:model="content" rows="5" class="mt-1 block w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50" placeholder="Write your conversation content here..."></textarea>
                         @error('content') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                     </div>
 
@@ -265,7 +265,7 @@ new class extends Component {
                             Cancel
                         </button>
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring focus:ring-blue-200 disabled:opacity-25 transition">
-                            Create Conversation Set
+                            Create Conversation
                         </button>
                     </div>
                 </form>

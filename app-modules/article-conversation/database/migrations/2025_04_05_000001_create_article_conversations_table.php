@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('article_id')->nullable();
             $table->foreignId('user_id')->nullable();
+            $table->integer('display_order')->default(0);
             $table->string('title');
             $table->string('slug');
             $table->text('content')->nullable();

@@ -166,8 +166,8 @@
 
                 <!-- Article Triple Word Sets Section -->
                 @include('backend::article.partials._article_triple_word_set_section')
-                <!-- Article Conversation Sets Section -->
-                @include('backend::article.partials._article_conversation_set_section')
+                <!-- Article Conversation Section -->
+                @include('backend::article.partials._article_conversation_section')
 
                 <!-- Associated Articles Section -->
                 @if(count($associatedArticles) > 0)

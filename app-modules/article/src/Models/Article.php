@@ -9,7 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\ArticleSentence\Models\ArticleSentenceSet;
+use Modules\ArticleDoubleWord\Models\ArticleDoubleWordSet;
 use Modules\ArticleExpression\Models\ArticleExpressionSet;
+use Modules\ArticleTripleWord\Models\ArticleTripleWordSet;
+use Modules\ArticleConversation\Models\ArticleConversation;
 use Modules\ArticleDoubleSentence\Models\ArticleDoubleSentenceSet;
 
 class Article extends Model
@@ -100,6 +103,14 @@ class Article extends Model
     {
         return $this->hasOne(ArticleWordSet::class);
     }
+    public function doubleWordSet(): HasOne
+    {
+        return $this->hasOne(ArticleDoubleWordSet::class);
+    }
+    public function tripleWordSet(): HasOne
+    {
+        return $this->hasOne(ArticleTripleWordSet::class);
+    }
 
     /**
      * Get the expression set for this article.
@@ -121,5 +132,12 @@ class Article extends Model
     public function doubleSentenceSet(): HasOne
     {
         return $this->hasOne(ArticleDoubleSentenceSet::class);
+    }
+    /**
+     * Get the sentence set for this article.
+     */
+    public function conversation(): HasOne
+    {
+        return $this->hasOne(ArticleConversation::class);
     }
 }
