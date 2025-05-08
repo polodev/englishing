@@ -8,6 +8,11 @@
         "framework"
     ],
     "license": "MIT",
+    "config": {
+        "platform": {
+            "php": "8.2.28"
+        }
+    },
     "require": {
         "php": "^8.2",
         "internachi/modular": "^2.3",
